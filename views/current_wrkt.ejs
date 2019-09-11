@@ -1,0 +1,34 @@
+<% include partials/header %>
+
+<h1>Twój ostatni trening: </h1>
+
+
+<% result.forEach(function(column){ %>
+
+  <table class="lastWrkt">
+    <tr>
+      <th>Data</th>
+      <th>Nazwa treningu</th>
+      <th>Rodzaj treningu</th>
+      <th>Dzien Treningowy</th>
+      <th>Nazwa Ćwiczenia</th>
+      <th>Numer Serii</th>
+      <th>Ilość Powtórzeń</th>
+      <th>Ciężar</th>
+    </tr>
+    <tr>
+      <td><%= column["Data"] %></td>
+      <td><%= column["NazwaTreningu"] %></td>
+      <td><%= column["RodzajTreningu"] %></td>
+      <td><%= column["DzienTreningowy"] %></td>
+      <td><%= column["NazwaCwiczenia"] %></td>
+      <td><%= column["NumerSerii"] %></td>
+      <td><%= column["IloscPowtorzen"] %></td>
+      <td><%= column["Ciezar"] %></td>
+    </tr>
+  </table>
+  <% }) %> 
+     
+<% include partials/footer %>
+         
+  

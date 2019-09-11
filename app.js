@@ -17,6 +17,19 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
+app.get('/crrnt_wrkt',function(req,res){
+
+    var query = "select * from WRKT_LOG where Data = (select Max(Data) from WRKT_LOG);";
+    console.log(query);
+
+    sql.query(connectionString, query, (err, rows) => {
+      console.log(rows);
+    res.render('current_wrkt', {result: rows});
+    });
+});
+
+
+
 app.get('/query',function(req,res){
     console.log(req.query["selectbox"]);
     var table = req.query["selectbox"];
@@ -63,7 +76,7 @@ app.get('/dlt',function(req,res){
             };
         });
 });
-    
+
     
     
     

@@ -1,10 +1,34 @@
 
 body {
-    color: purple;
-    background-color: yellow;
+    color: black;
+    background-color: ghostwhite;
 }
 
 .homepage {
     height: 2%;
     width: 2%;
 }
+
+.crrnt_wrkt {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.lastWrkt {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.lastWrkt  th {
+    border: 2px solid black;
+    background-color: rgb(2, 107, 50);
+    color: white;
+    text-align: center;
+}
+
+.lastWrkt td{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    text-align: center;
+}
+
