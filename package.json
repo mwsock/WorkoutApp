@@ -1,0 +1,27 @@
+{
+  "name": "wrkt",
+  "version": "1.0.0",
+  "description": "Workout Web Application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwsock/WorkoutApp.git"
+  },
+  "keywords": [
+    "wrkt",
+    "node",
+    "app"
+  ],
+  "author": "mwsock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwsock/WorkoutApp/issues"
+  },
+  "homepage": "https://github.com/mwsock/WorkoutApp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
