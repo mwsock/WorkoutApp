@@ -14,13 +14,12 @@
 <p><a href="/crrnt_wrkt" alt="" class="crrnt_wrkt">Ostatni Trening</a></p>
 
     <form action="query" method='GET'>
-        <select name="selectbox" id="" >  
+        <select name="selectbox" id="" onchange="this.form.submit();" >  
             <option hidden disabled selected value> -- Wybierz... -- </option>
             <option value="EXERCICES">Pokaż Ćwiczenia</option>
             <option value="WRKT_PLAN">Pokaż Plany Treningowe</option>
         </select>
 
-        <input type="submit" value="Zatwierdź">
     </form>
 
     <form action='/insrt' method='POST'>

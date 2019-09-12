@@ -21,12 +21,29 @@ app.get('/crrnt_wrkt',function(req,res){
 
     var query = "select * from WRKT_LOG where Data = (select Max(Data) from WRKT_LOG);";
     console.log(query);
-
+  
     sql.query(connectionString, query, (err, rows) => {
-      console.log(rows);
-    res.render('current_wrkt', {result: rows});
+        console.log(rows);
+    
+        var query2 = "select * from WRKT_PLAN;";
+        console.log(query2);
+
+        sql.query(connectionString, query2, (err, rows2) => {
+            console.log(rows2);
+            res.render('current_wrkt', {result: rows,result2: rows2});
+            /*var query3 = "select * from WRKT_PLAN;";
+            console.log(query3);
+    
+            sql.query(connectionString, query2, (err, rows2) => {
+                console.log(rows2);
+                //res.render('current_wrkt', {result: rows,result2: rows2});   */
+
+        });
+
+       
     });
 });
+
 
 
 
