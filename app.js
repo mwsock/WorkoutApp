@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
 
 app.get('/crrnt_wrkt',function(req,res){
 
-    var query = "select * from WRKT_LOG where Data = (select Max(Data) from WRKT_LOG);";
+    var query = "select * from WRKT_LOG where Data = (select MIN(Data) from WRKT_LOG);";
     console.log(query);
   
     sql.query(connectionString, query, (err, rows) => {
@@ -31,12 +31,6 @@ app.get('/crrnt_wrkt',function(req,res){
         sql.query(connectionString, query2, (err, rows2) => {
             console.log(rows2);
             res.render('current_wrkt', {result: rows,result2: rows2});
-            /*var query3 = "select * from WRKT_PLAN;";
-            console.log(query3);
-    
-            sql.query(connectionString, query2, (err, rows2) => {
-                console.log(rows2);
-                //res.render('current_wrkt', {result: rows,result2: rows2});   */
 
         });
 
@@ -44,7 +38,16 @@ app.get('/crrnt_wrkt',function(req,res){
     });
 });
 
+app.get('/addWrkt', function(req,res){
 
+   var planID = req.query["WrktName"];
+   var query = "select * from CUSTOM_WRKT_DESC where SchemaPlanID=" + planID + ";";
+
+   sql.query(connectionString, query, (err, rows) => {
+    console.log(rows);
+     res.send(rows);
+    });
+});
 
 
 app.get('/query',function(req,res){
