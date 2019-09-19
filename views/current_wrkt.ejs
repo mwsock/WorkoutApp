@@ -34,33 +34,21 @@
   </tbody>
   </table>
 </div>
-
+<!--<form action="/addWrkt" method="GET">--->
 <p>Dodaj nowy trening:
-  <form action="/addWrkt" method="GET">
+    <form action="/addWrkt" method="GET">
     
-    <select name="WrktName" id="WrktID" onchange="this.form.submit()">
+    <select name="WrktName" id="WrktID" onchange="this.form.submit();">
       <option hidden disabled selected value> -- Wybierz... -- </option>
         <% result2.forEach(function(select){ %>
-        <option value='<%= select["ID"] %>''><%= select["DTYPE"] %></option>
+        <option value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
         <% }) %> 
        
-  
+        <p id="tst">  </p>
+  <input type='submit' value='ok'>
   </form>
-<!--
-  </select>
-  <select name="DzienTreningowy" id="">
-    <option hidden disabled selected value> -- Wybierz... -- </option>
-    <option><%= %></option>
-  </select>
-  <select name="NazwaCwiczenia" id="">
-    <option hidden disabled selected value> -- Wybierz... -- </option>
-    <option><%= %></option>
-  </select>
-  <input type="number" name="NumerSerii" placeholder="Numer Serii" min="1" max="10">
-  <input type="number" name="IloscPowtorzen" placeholder="Ilość Powtórzeń" min="1" max="100">
-  <input type="number" name="Ciezar" placeholder="Ciężar" min="1" max="1000" step="0.25">
-  <input type="submit" value="Dodaj">
--->
+
+
 </p>    
 <% include partials/footer %>
          
