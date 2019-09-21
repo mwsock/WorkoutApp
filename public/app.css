@@ -9,13 +9,13 @@ body {
     width: 2%;
 }
 
-.crrnt_wrkt {
+.crrnt_wrkt, .selectWrkt {
     text-decoration: none;
     font-weight: bold;
 }
 
 
-div.wrktTbl {
+div.wrktTbl, .selectWrkt {
   display: block;
   margin: auto;
  
@@ -23,7 +23,7 @@ div.wrktTbl {
   width: 100%;
 }
 
-.tblHdr {
+.tblHdr, .selectWrkt {
 
    text-align: center;
 }
@@ -42,6 +42,7 @@ div.wrktTbl {
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
+  border:1px solid #dcdcdc;
 }
  
 th {
@@ -142,4 +143,32 @@ td.text-center {
 
 td.text-right {
   text-align: right;
+}
+
+
+.wrktBttn {
+    background-color: #EBEBEB;
+	border-radius:3px;
+	border:1px solid #dcdcdc;
+	/*display:inline-block;*/
+	cursor:pointer;
+	color:black;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #ffffff;
+    display: block;
+    margin: 10px auto;
+    width: auto%;
+}
+.wrktBttn:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+	background-color:#f6f6f6;
+}
+.wrktBttn:active {
+	position:relative;
+	top:1px;
 }

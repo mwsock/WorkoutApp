@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
 
 app.get('/crrnt_wrkt',function(req,res){
 
-    var query = "select * from WRKT_LOG where Data = (select MIN(Data) from WRKT_LOG);";
+    var query = "select format(Data,'dd.MM.yyyy') as Data,RodzajTreningu,DzienTreningowy,NazwaCwiczenia,NumerSerii,IloscPowtorzen,Ciezar from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG);";
     //console.log(query);
   
     sql.query(connectionString, query, (err, rows) => {
@@ -58,17 +58,18 @@ app.post('/insrtWrkt',function(req,res){
   for(i=0;i<req.body['WrktId'].length;i++){
     var insrt = 'Insert into SETS_REPS (ID_SCHEMA,SETNUMBER,REPNUMBER,WEIGHT) values (' +req.body['WrktId'][i]+','+req.body['NumerSerii'][i]+','+req.body['IloscPowtorzen'][i]+','+req.body['Ciezar'][i] +');'
 
-      console.log(insrt);
+      console.log(req.body['WrktId'].length, i);
 
         sql.query(connectionString, insrt, (err, results) => {
           if (err){
-            res.send(err);
-          }else{
-            res.send('Trening dodany do bazy');
-          
-          };
+              res.send(err);
+                  };
+        
         });
-   };
+
+  };
+   
+    res.redirect('/crrnt_wrkt');
 });
 
 
