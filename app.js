@@ -51,6 +51,26 @@ app.get('/addWrkt', function(req,res){
 });
 
 
+app.get('/newWrktPlan', function(req,res){
+
+  var query = "select * from WRKT_PLAN;";
+        
+
+        sql.query(connectionString, query, (err, rows) => {
+
+          var query2 = "select * from EXERCICES;";
+
+          sql.query(connectionString, query2, (err, rows2) => {
+            //console.log(rows2);
+            res.render('newWrktPlan', {result: rows,result2: rows2});
+
+          });
+ 
+        });
+
+});
+
+
 app.post('/insrtWrkt',function(req,res){
 
 
@@ -70,6 +90,28 @@ app.post('/insrtWrkt',function(req,res){
   };
    
     res.redirect('/crrnt_wrkt');
+});
+
+
+app.post('/insrtWrktPlan',function(req,res){
+
+var i;
+  for(i=0;i<req.body['DzienTreningowy'].length;i++){
+    var insrt = 'Insert into WRKT_SCHEMA (ID_PLAN,VARIANT,EXERCISE) values (' +req.body['WrktName']+','+req.body['DzienTreningowy'][i]+','+req.body['Cwiczenie'][i]+');'
+
+      console.log(insrt);
+
+        sql.query(connectionString, insrt, (err, results) => {
+          if (err){
+              res.send(err);
+                  };
+        
+        });
+
+  }; 
+
+  res.send('Dodano trening');
+
 });
 
 

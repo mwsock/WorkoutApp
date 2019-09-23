@@ -13,7 +13,7 @@
         <th class="text-left">Ciężar</th>
       </thead>
       <% result3.forEach(function(select){ %>
-      <tbody class="table-hover" id='<%= select["WrktSchemaPlanId"] %>'>
+      <tbody class="table-hover" >
           <td class="text-left"><%= select["DzienTreningowy"] %></td>
           <td class="text-left"><%= select["NazwaCwiczenia"] %></td>
           <td style='display:none;'><input type="hidden" name='WrktId' value ='<%= select["WrktSchemaPlanId"] %>'></td>

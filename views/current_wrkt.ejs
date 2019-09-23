@@ -41,12 +41,11 @@
     <form action="/addWrkt" method="GET">
     
     <select name="WrktName" id="WrktID" onchange="this.form.submit();">
-      <option hidden disabled selected value> -- Wybierz... -- </option>
+      <option hidden disabled selected value> Wybierz Trening</option>
         <% result2.forEach(function(select){ %>
-        <option value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+        <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
         <% }) %> 
-       
-        <p id="tst">  </p>
+    </select>
   </form>
 </div>
 

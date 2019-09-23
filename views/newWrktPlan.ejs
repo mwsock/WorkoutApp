@@ -1,0 +1,49 @@
+<% include partials/header %>
+
+
+
+<div class="wrktTbl">
+        <form action='/insrtWrktPlan' method='POST' >
+
+            <div class="selectWrkt">
+                    <p>Wybierz trening do zdefiniowania:
+                        
+                        <select name="WrktName" id="WrktID">
+                          <option hidden disabled selected value> Wybierz Trening</option>
+                            <% result.forEach(function(select){ %>
+                            <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+                            <% }) %> 
+                        </select>
+            </div>
+
+          <table class="lastWrkt">
+            <thead>
+              <th class="text-center">Dzień Treningowy</th>
+              <th class="text-center">Nazwa Ćwiczenia</th>
+            </thead>
+            
+            <tbody id='tb'>
+
+                <td class="text-center"> <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required></td>
+                <td class="text-center">
+                     <select name="Cwiczenie" id="exerciseID">
+                            <option hidden disabled selected value> Wybierz Ćwiczenie</option>
+                            <% result2.forEach(function(select){ %>
+                            <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+                            <% }) %> 
+                    </select>
+                </td> 
+            
+          </table>
+          <input type='button' class='wrktBttn' onclick='addField()' value='Dodaj nowe ćwiczenie'>
+          <input type='button' class='wrktBttn' onclick='removeField()' value='Usuń ćwiczenie'>
+          <input class='wrktBttn' id='wrktAddbttn' type="submit" value="Zapisz Trening">
+         
+      </form>
+      
+</div>
+
+
+
+
+<% include partials/footer %>
