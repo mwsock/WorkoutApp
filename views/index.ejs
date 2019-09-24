@@ -11,30 +11,11 @@
 <body>
 <p ><a href="/"><img src="images/homepageBttn.png" alt="" class="homepage"></a></p>
 
+<p><a href="/exercices" alt="" class="hrefBttn">Ćwiczenia</a></p>
+
 <p><a href="/newWrktPlan" alt="" class="hrefBttn">Zdefiniuj nowy Trening</a></p>
 
 <p><a href="/crrnt_wrkt" alt="" class="hrefBttn">Ostatni Trening</a></p>
-
-    <form action="query" method='GET'>
-        <select name="selectbox" id="" onchange="this.form.submit();" >  
-            <option hidden disabled selected value> -- Wybierz... -- </option>
-            <option value="EXERCICES">Pokaż Ćwiczenia</option>
-            <option value="WRKT_PLAN">Pokaż Plany Treningowe</option>
-        </select>
-
-    </form>
-
-    <form action='/insrt' method='POST'>
-        <p>Dodaj nowe ćwiczenie:</p>
-        <input type='text' name='search' placeholder="Wpisz nazwę ćwiczenia...">
-        <input type="submit" value="Zatwierdź">
-    </form>
-
-    <form action='/dlt' method='GET'>
-        <p>Usuń ćwiczenie:</p>
-        <input type='text' name='search' placeholder="Wpisz nazwę ćwiczenia...">
-        <input type="submit" value="Zatwierdź">
-    </form>
 
  
 </body>

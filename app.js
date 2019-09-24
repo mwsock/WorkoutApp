@@ -118,16 +118,14 @@ var i;
 });
 
 
-app.get('/query',function(req,res){
-    console.log(req.query["selectbox"]);
-    var table = req.query["selectbox"];
+app.get('/exercices',function(req,res){
 
-    var query = "select DTYPE from " + table +";";
+    var query = "select DTYPE from EXERCICES;"
     //console.log(query);
 
     sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);
-    res.render('exercices', {result: rows});
+    res.render('exercices', {result: rows, info:''});
     });
 });
 
@@ -143,7 +141,12 @@ app.post('/insrt',function(req,res){
             if (err){
               res.send(err);
             }else{
-              res.send('Rekord dodany do bazy');
+              var query = "select DTYPE from EXERCICES;"
+              sql.query(connectionString, query, (err, rows) => {
+                //console.log(rows);
+              res.render('exercices', {result: rows, info:'Ćwiczenie zostało dodane!'});
+              });
+
             };
         });
 });
@@ -160,7 +163,12 @@ app.get('/dlt',function(req,res){
             if (err){
               res.send(err);
             }else{
-              res.send('Rekord usunięty z bazy');
+              var query = "select DTYPE from EXERCICES;"
+              sql.query(connectionString, query, (err, rows) => {
+                //console.log(rows);
+              res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
+              });
+
             };
         });
 });
