@@ -42,7 +42,9 @@ app.get('/crrnt_wrkt',function(req,res){
 app.get('/addWrkt', function(req,res){
 
    var WrktSchemaPlanId = req.query["WrktName"];
-   var query = "select * from CUSTOM_WRKT_DESC where SchemaPlanID=" + WrktSchemaPlanId + ";";
+   var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
+                inner join EXERCICES ex on ws.EXERCISE = ex.ID\
+                where ws.ID_PLAN=" + WrktSchemaPlanId + ";";
 
    sql.query(connectionString, query, (err, rows) => {
     //console.log(rows);
@@ -78,7 +80,8 @@ app.post('/insrtWrkt',function(req,res){
   for(i=0;i<req.body['WrktId'].length;i++){
     var insrt = 'Insert into SETS_REPS (ID_SCHEMA,SETNUMBER,REPNUMBER,WEIGHT) values (' +req.body['WrktId'][i]+','+req.body['NumerSerii'][i]+','+req.body['IloscPowtorzen'][i]+','+req.body['Ciezar'][i] +');'
 
-      console.log(req.body['WrktId'].length, i);
+    console.log(insrt);
+     // console.log(req.body['WrktId'].length, i);
 
         sql.query(connectionString, insrt, (err, results) => {
           if (err){
@@ -86,7 +89,7 @@ app.post('/insrtWrkt',function(req,res){
                   };
         
         });
-
+    
   };
    
     res.redirect('/crrnt_wrkt');
