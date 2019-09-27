@@ -30,8 +30,7 @@ app.get('/crrnt_wrkt',function(req,res){
 
         sql.query(connectionString, query2, (err, rows2) => {
             //console.log(rows2);
-            res.render('current_wrkt', {result: rows,result2: rows2});
-
+            res.render('current_wrkt', {result: rows,result2: rows2});    
         });
 
        
@@ -42,16 +41,28 @@ app.get('/crrnt_wrkt',function(req,res){
 app.get('/addWrkt', function(req,res){
 
    var WrktSchemaPlanId = req.query["WrktName"];
+   var variantPlan = req.query["variant"];
    var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                 inner join EXERCICES ex on ws.EXERCISE = ex.ID\
-                where ws.ID_PLAN=" + WrktSchemaPlanId + ";";
+                where ws.ID_PLAN=" + WrktSchemaPlanId + " and ws.VARIANT= " + variantPlan +";";
 
-   sql.query(connectionString, query, (err, rows) => {
+    sql.query(connectionString, query, (err, rows) => {
     //console.log(rows);
-    res.render('new_wrkt', {result3: rows});
+    res.render('new_wrkt', {result: rows});
     });
 });
 
+
+app.get('/addWrkt/:id', function(req,res){
+
+  var id = (req.params["id"])
+  var query = "select VARIANT from WRKT_SCHEMA where ID_PLAN = "+ id +" group by VARIANT ;";
+
+    sql.query(connectionString, query, (err, rows) => {
+        //console.log(rows);
+        res.send(rows);
+    });
+});
 
 app.get('/newWrktPlan', function(req,res){
 

@@ -37,19 +37,24 @@
 <!--<form action="/addWrkt" method="GET">--->
 
 <div class="selectWrkt">
-<p>Dodaj nowy trening:
+<p>Dodaj nowy trening:</p>  
+ 
     <form action="/addWrkt" method="GET">
-    
-    <select name="WrktName" id="WrktID" onchange="this.form.submit();">
-      <option hidden disabled selected value> Wybierz Trening</option>
+
+    <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajax('GET','variantID')">
+      <option hidden disabled selected value>Trening</option>
         <% result2.forEach(function(select){ %>
         <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
         <% }) %> 
     </select>
+    <select name="variant" id="variantID" disabled onchange="this.form.submit();">
+        <option hidden disabled selected value>Dzień Treningowy</option>
+          
+      </select>
   </form>
 </div>
 
-</p>    
+  
 <% include partials/footer %>
          
   

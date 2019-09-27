@@ -1,44 +1,25 @@
-window.onload = ajaxInit();
+function ajax(type,element){
 
-function ajaxInit(){
-    var XHR = null;
-    
-    
-try {
-
-   
-
-    XHR = new XMLHttpRequest();
-
-  
-} catch (error) {
-    alert(error.description)
-};
-
-return XHR;
-
-};
-
-function fileToDiv(id, URL){
-
-    XHR = ajaxInit();
-
-    if (XHR != null){
-        XHR.open("GET",URL, true);
-
-
-        XHR.onreadystatechange = function (){
-
-            if (XHR.readyState == 4){
-              
-                console.log(XHR.responseJSON);
+    var id = document.getElementById("WrktID").value;
+    var url = "/addWrkt/"+id;
+    var xhr = new XMLHttpRequest();
+    xhr.open(type, url);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            //alert('AJAX WORKS: ' + xhr.responseText);
+            
+            var ajaxObject = JSON.parse(xhr.responseText);
+            ajaxObject.forEach(function(rslt){
                 
-            }
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + " <option class='WrktIDopt'> " + rslt["VARIANT"] + "</option>";
+                
+            });
+            
         }
-
-        XHR.send(null);
-
-
-    }
+        else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
 
 };

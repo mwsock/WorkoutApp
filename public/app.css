@@ -176,7 +176,7 @@ td.text-right {
 	top:1px;
 }
 
-#WrktID, .WrktIDopt {
+#WrktID, .WrktIDopt, #variantID {
     background-color: white;
 	border-radius:3px;
 	border:1px solid #dcdcdc;
@@ -196,4 +196,8 @@ td.text-right {
 	background:linear-gradient(to bottom, ghostwhite 5%, white 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
 	background-color:#f6f6f6;
+}
+
+.formContainer{
+
 }

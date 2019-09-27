@@ -34,3 +34,15 @@ function removeField(){//removes tr from WrktPlan table
     };
 };
 
+function selectUnblock(){
+    document.getElementById('variantID').innerHTML= "<option hidden disabled selected value>Dzień Treningowy</option>";
+    document.getElementById('variantID').removeAttribute('disabled');
+};
+
+
+function matchVariant(){
+   var planID = document.getElementsByClassName('WrktIDopt')[1].getAttribute('value');
+   var varID = document.getElementById('variantID').getAttribute('value');
+
+   console.log(planID);
+}
