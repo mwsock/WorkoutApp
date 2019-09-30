@@ -2,7 +2,9 @@
 body {
     color: black;
     background-color: ghostwhite;
+    font-family: 'Arial';
 }
+
 
 .homepage {
     height: 2%;
@@ -198,6 +200,3 @@ td.text-right {
 	background-color:#f6f6f6;
 }
 
-.formContainer{
-
-}

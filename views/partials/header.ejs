@@ -7,11 +7,28 @@
     <title>WRKT</title>
     <link rel="shortcut icon" type="image/png" href="images/icon.png"/>
     <link rel='stylesheet' href='app.css'>
+    <link rel='stylesheet' href='semantic_ui.css'>
     <script src="ajax.js" async ></script>
     <script src="script.js" async ></script>
 </head>
 <body>
-<p ><a href="/"><img src="images/homepageBttn.png" alt="" class="homepage"></a></p>
+    
+        <ul class="ui top attached tabular menu">
+            <p><a href="/"alt="" class="item start" onclick="selectMenuBttn()" >Strona Główna</a></p>
+           
+            <p><a href="/exercices" alt="" class="item" onclick="selectMenuBttn()" >Ćwiczenia</a></p>
+
+            <p><a href="/newWrktPlan" alt="" class="item" onclick="selectMenuBttn()">Zdefiniuj nowy Trening</a></p>
+
+            <p><a href="/crrnt_wrkt" alt="" class="item" onclick="selectMenuBttn()">Ostatni Trening</a></p>
+
+            <div class="right menu">
+                <div class="item">
+                    <p><a href="#" alt="" class="ui item" >Zaloguj</a></p>
+                </div>
+            </div>
+        </ul>
+
 
 
     </form>

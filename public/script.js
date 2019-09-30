@@ -40,9 +40,7 @@ function selectUnblock(){
 };
 
 
-function matchVariant(){
-   var planID = document.getElementsByClassName('WrktIDopt')[1].getAttribute('value');
-   var varID = document.getElementById('variantID').getAttribute('value');
+function selectMenuBttn(){
+    
+};
 
-   console.log(planID);
-}
