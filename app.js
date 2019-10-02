@@ -124,7 +124,7 @@ var i;
 
   }; 
 
-  res.send('Dodano trening');
+  res.redirect('/newWrktPlan');
 
 });
 

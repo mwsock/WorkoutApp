@@ -57,7 +57,7 @@ th {
   font-size:23px;
   font-weight: 100;
   padding:10px;
-  text-align:left;
+  text-align:center;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   vertical-align:middle;
   width:100%;
@@ -79,14 +79,15 @@ tr {
   font-size:16px;
   font-weight:normal;
   text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  text-align: center;
 }
- /*
+
 tr:hover td {
   background:#4E5066;
   color:#FFFFFF;
   border-top: 1px solid #22262e;
 }
- */
+
 tr:first-child {
   border-top:none;
 }
@@ -98,10 +99,10 @@ tr:last-child {
 tr:nth-child(odd) td {
   background:#EBEBEB;
 }
- /*
+ 
 tr:nth-child(odd):hover td {
   background:#4E5066;
-}*/
+}
 
 tr:last-child td:first-child {
   border-bottom-left-radius:3px;
@@ -114,7 +115,7 @@ tr:last-child td:last-child {
 td {
   background:#FFFFFF;
   padding:5px;
-  text-align:left;
+  text-align:center;
   vertical-align:middle;
   font-weight:300;
   font-size:18px;
@@ -127,7 +128,7 @@ td:last-child {
 }
 
 th.text-left {
-  text-align: left;
+  text-align: center;
 }
 
 th.text-center {
@@ -139,7 +140,7 @@ th.text-right {
 }
 
 td.text-left {
-  text-align: left;
+  text-align: center;
 }
 
 td.text-center {
@@ -200,3 +201,6 @@ td.text-right {
 	background-color:#f6f6f6;
 }
 
+a.item:hover{
+border-bottom:  solid black!important;
+}
