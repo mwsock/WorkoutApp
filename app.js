@@ -2,40 +2,47 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const path = require('path');
-
-var request = require('request');
 const bodyParser = require('body-parser');
 const sql = require("msnodesqlv8");
+
  
 const connectionString = "server=LAPTOP-ACER-573;Database=Workout;Trusted_Connection=Yes;Driver={SQL Server Native Client 11.0}";
 
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
+
 app.set('view engine','ejs');
 
+
 app.get('/', function(req, res) {
-    res.render('index.ejs');
+
+  var query = "select format(Data,'dd.MM.yyyy') as Data,RodzajTreningu,DzienTreningowy,NazwaCwiczenia,NumerSerii,IloscPowtorzen,Ciezar from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG);";
+  //console.log(query);
+
+  sql.query(connectionString, query, (err, rows) => {
+      //console.log(rows);
+      res.render('index', {result: rows});
+  });
+
+    
 });
 
 app.get('/crrnt_wrkt',function(req,res){
 
-    var query = "select format(Data,'dd.MM.yyyy') as Data,RodzajTreningu,DzienTreningowy,NazwaCwiczenia,NumerSerii,IloscPowtorzen,Ciezar from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG);";
-    //console.log(query);
-  
-    sql.query(connectionString, query, (err, rows) => {
-        //console.log(rows);
     
-        var query2 = "select * from WRKT_PLAN;";
+    
+        var query = "select * from WRKT_PLAN;";
         //console.log(query2);
 
-        sql.query(connectionString, query2, (err, rows2) => {
+        sql.query(connectionString, query, (err, rows) => {
             //console.log(rows2);
-            res.render('current_wrkt', {result: rows,result2: rows2});    
+            res.render('current_wrkt', {result: rows});    
         });
 
        
     });
-});
+
 
 
 app.get('/addWrkt', function(req,res){

@@ -2,6 +2,39 @@
 
 
 
+<div class="wrktTbl">
+        <h1 class="tblHdr">Twój ostatni trening: </h1>
+        
+    
+      <table class="lastWrkt">
+       
+        <thead>
+          <th  class="text-left">Data</th>
+          <th  class="text-left">Rodzaj treningu</th>
+          <th  class="text-left">Dzien Treningowy</th>
+          <th  class="text-left">Nazwa Ćwiczenia</th>
+          <th  class="text-left">Numer Serii</th>
+          <th  class="text-left">Ilość Powtórzeń</th>
+          <th  class="text-left">Ciężar</th>
+      </thead>
+      <tbody class="table-hover">
+          <% result.forEach(function(column){ %>
+        <tr>  
+          <td  class="text-left"><%= column["Data"] %></td>
+          <td  class="text-left"><%= column["RodzajTreningu"] %></td>
+          <td  class="text-left"><%= column["DzienTreningowy"] %></td>
+          <td  class="text-left"><%= column["NazwaCwiczenia"] %></td>
+          <td  class="text-left"><%= column["NumerSerii"] %></td>
+          <td  class="text-left"><%= column["IloscPowtorzen"] %></td>
+          <td  class="text-left"><%= column["Ciezar"] %></td>
+        </tr>
+        <% }) %> 
+      </tbody>
+      </table>
+    </div>
+    <!--<form action="/addWrkt" method="GET">--->
+
+
    
 <% include partials/footer %>
          
