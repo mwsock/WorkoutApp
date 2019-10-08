@@ -47,15 +47,30 @@ app.get('/crrnt_wrkt',function(req,res){
 
 app.get('/addWrkt', function(req,res){
 
+  console.log(req.query);
    var WrktSchemaPlanId = req.query["WrktName"];
    var variantPlan = req.query["variant"];
    var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                 inner join EXERCICES ex on ws.EXERCISE = ex.ID\
                 where ws.ID_PLAN=" + WrktSchemaPlanId + " and ws.VARIANT= " + variantPlan +";";
-
+    var test = req.query;
     sql.query(connectionString, query, (err, rows) => {
     //console.log(rows);
-    res.render('new_wrkt', {result: rows});
+    res.render('new_wrkt', {result: rows, rslt: test});
+    }); 
+});
+
+app.get("/addWrkt/:planId/:variantId", function(req,res){
+//console.log(req.params);
+  var planId = req.params["planId"];
+  var variantId = req.params["variantId"];
+  var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
+               inner join EXERCICES ex on ws.EXERCISE = ex.ID\
+               where ws.ID_PLAN=" + planId + " and ws.VARIANT= " + variantId +";";
+               console.log(query);
+    sql.query(connectionString, query, (err, rows) => {
+      //console.log(rows);
+      res.send(rows);
     });
 });
 

@@ -4,25 +4,42 @@
 
 
 
+<form action="/addWrkt" method="GET">
+  <div class="selectWrkt">
+  <p>Dodaj nowy trening:</p>  
+  
+      
 
-<div class="selectWrkt">
-<p>Dodaj nowy trening:</p>  
- 
-    <form action="/addWrkt" method="GET">
-
-    <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajax('GET','variantID')">
-      <option hidden disabled selected value>Trening</option>
-        <% result.forEach(function(select){ %>
-        <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
-        <% }) %> 
-    </select>
-    <select name="variant" id="variantID" disabled onchange="this.form.submit();">
-        <option hidden disabled selected value>Dzień Treningowy</option>
-          
+      <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
+        <option hidden disabled selected value>Trening</option>
+          <% result.forEach(function(select){ %>
+          <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+          <% }) %> 
       </select>
-  </form>
-</div>
+      <select name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
+          <option hidden disabled selected value>Dzień Treningowy</option>
+            
+        </select>
+  </div>
 
+
+  <div class="wrktTbl">
+    <h1 class="tblHdr">Podaj ilość wykonanych serii: </h1>
+
+  <table class="lastWrkt">
+  
+    <thead>
+      <th  class="text-left">Ćwiczenie</th>
+      <th  class="text-left">Ilość serii</th>
+  </thead>
+  <tbody id='tRows' class="table-hover">
+
+  </tbody>
+  </table>
+  </div>
+
+  <input type="submit" style="display:inherit;" class='wrktBttn' value="Dalej">
+</form>
   
 <% include partials/footer %>
          
