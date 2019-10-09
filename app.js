@@ -53,10 +53,11 @@ app.get('/addWrkt', function(req,res){
    var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                 inner join EXERCICES ex on ws.EXERCISE = ex.ID\
                 where ws.ID_PLAN=" + WrktSchemaPlanId + " and ws.VARIANT= " + variantPlan +";";
-    var test = req.query;
+    const test = req.query;
+    const keys = Object.entries(test);
     sql.query(connectionString, query, (err, rows) => {
     //console.log(rows);
-    res.render('new_wrkt', {result: rows, rslt: test});
+    res.render('new_wrkt', {result: rows, keys: keys});
     }); 
 });
 
