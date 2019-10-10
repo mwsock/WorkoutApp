@@ -50,15 +50,18 @@ app.get('/addWrkt', function(req,res){
   console.log(req.query);
    var WrktSchemaPlanId = req.query["WrktName"];
    var variantPlan = req.query["variant"];
-   var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
+   var query = "select p.DTYPE, ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                 inner join EXERCICES ex on ws.EXERCISE = ex.ID\
+                inner join WRKT_PLAN p on p.ID = ws.ID_PLAN\
                 where ws.ID_PLAN=" + WrktSchemaPlanId + " and ws.VARIANT= " + variantPlan +";";
-    const test = req.query;
-    const keys = Object.entries(test);
+    const values = req.query;
+    const keys = Object.keys(values);
+
     sql.query(connectionString, query, (err, rows) => {
     //console.log(rows);
-    res.render('new_wrkt', {result: rows, keys: keys});
+       res.render('new_wrkt', {result: rows, keys: keys, values: values});
     }); 
+    
 });
 
 app.get("/addWrkt/:planId/:variantId", function(req,res){

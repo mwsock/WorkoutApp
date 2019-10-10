@@ -27,6 +27,7 @@ function ajaxVariant(type,element){
 
 function ajaxSeries(type,element){
 
+    document.getElementById(element).innerHTML = "" //reset table
     var planId = document.getElementById("WrktID").value;
     var variantId = document.getElementById("variantID").value;
     var url = "/addWrkt/"+ planId + '/' + variantId;
@@ -39,9 +40,20 @@ function ajaxSeries(type,element){
             
             var ajaxObject = JSON.parse(xhr.responseText);
             ajaxObject.forEach(function(rslt){
+
+                function optNmbr(){
+                    var i = 0;
+                    for(i; i<11; i++){
+                    var oN = oN +  "<option>"+ i +"</option>"
+                    
+                    };
+                    return oN;
+                };
                 
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr> <td class='text-left'>"+ rslt["NazwaCwiczenia"] + "</td> <td class='text-left'> \
-                                                             <input type='number' name=" + rslt["SchemaId"] + " placeholder='Numer' min='1' max='10' required> </td> </tr>";
+                                                             <select name="+ rslt["SchemaId"] + " placeholder='Numer' required>" +  optNmbr() + " </select></td> </tr>"  
+                                                            
+                                                            
                 
             });
             

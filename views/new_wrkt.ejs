@@ -1,40 +1,47 @@
 <% include partials/header %>
 
-
-<div>
-  
-  <% for(const key of keys){ %>
-  <li><%= key %></li>
-  <% }; %> 
-<%= keys.length %>
-<!--  <%= keys %> -->
- 
-</div>
   
   <div class="wrktTbl">
+    <h2 class="tblHdr"><%=result[0]["DTYPE"]%> Dzień Treningowy: <%=result[0]["DzienTreningowy"] %> </h2>
   <form action='/insrtWrkt' method='POST'>
     <table class="lastWrkt">
       <thead>
-        <th class="text-left">Dzień Treningowy</th>
+       <!-- <th class="text-left">Dzień Treningowy</th> -->
         <th class="text-left">Nazwa Ćwiczenia</th>
         <th class="text-left">Numer Serii</th>
         <th class="text-left">Ilość Powtórzeń</th>
         <th class="text-left">Ciężar</th>
       </thead>
       <tbody class="table-hover" >
-     <% result.forEach(function(select){ %>   
+    <% result.forEach(function(select){ %>   
 
-    <% var i = 1; %>
-    <% for(i; i < 3; i++){ %>
-         <tr>
-          <td class="text-left"><%= select["DzienTreningowy"] %></td>
-          <td class="text-left"><%= select["NazwaCwiczenia"] %></td>
-          <td style='display:none;'><input type="hidden" name='WrktId' value ='<%= select["SchemaId"] %>'></td>
-          <td class="text-left"> <%=i%> </td>
-          <td class="text-left"> <input type="number" name="IloscPowtorzen" placeholder="Ilość Powtórzeń" min="1" max="100" required></td>
-          <td class="text-left"> <input type="number" name="Ciezar" placeholder="Ciężar" min="1" max="1000" step="0.25" required></td>
-        </tr>
-   <%   };  %>
+    <% var t = 0 %>
+
+        <% for(const key of keys){ %>
+
+        <% t=t+1 %>
+
+            <% if(key ==  select["SchemaId"]) { %>
+
+            <% var liczba =  values[key]; %>
+ 
+                <% var i = 0; %>
+                <% for(i; i < liczba; i++){ %>
+                    <tr>
+                    <!--  <td class="text-left"><%= select["DzienTreningowy"] %></td> -->
+                      <td class="text-left"><%= select["NazwaCwiczenia"] %></td>
+                      <td style='display:none;'><input type="hidden" name='WrktId' value ='<%= select["SchemaId"] %>'></td>
+                      <td class="text-left"> <%=i+1%> </td>
+                      <td class="text-left"> <input type="number" name="IloscPowtorzen" placeholder="Ilość Powtórzeń" min="1" max="100" required></td>
+                      <td class="text-left"> <input type="number" name="Ciezar" placeholder="Ciężar" min="1" max="1000" step="0.25" required></td>
+                    </tr>
+                <% }; %>
+
+            <% }; %>
+            
+        <% }; %> 
+
+
       <% }) %>   
       </tbody>
     </table>
