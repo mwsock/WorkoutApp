@@ -47,7 +47,7 @@ app.get('/crrnt_wrkt',function(req,res){
 
 app.get('/addWrkt', function(req,res){
 
-  console.log(req.query);
+ // console.log(req.query);
    var WrktSchemaPlanId = req.query["WrktName"];
    var variantPlan = req.query["variant"];
    var query = "select p.DTYPE, ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
@@ -71,7 +71,7 @@ app.get("/addWrkt/:planId/:variantId", function(req,res){
   var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                inner join EXERCICES ex on ws.EXERCISE = ex.ID\
                where ws.ID_PLAN=" + planId + " and ws.VARIANT= " + variantId +";";
-               console.log(query);
+               //console.log(query);
     sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);
       res.send(rows);
@@ -112,24 +112,32 @@ app.get('/newWrktPlan', function(req,res){
 
 app.post('/insrtWrkt',function(req,res){
 
-
+  const {WrktId, NumerSerii, IloscPowtorzen, Ciezar} = req.body;
+  const body = {WrktId, NumerSerii, IloscPowtorzen, Ciezar};
+ 
+  //console.log(bd[0]);
   var i;
-  for(i=0;i<req.body['WrktId'].length;i++){
-    var insrt = 'Insert into SETS_REPS (ID_SCHEMA,SETNUMBER,REPNUMBER,WEIGHT) values (' +req.body['WrktId'][i]+','+req.body['NumerSerii'][i]+','+req.body['IloscPowtorzen'][i]+','+req.body['Ciezar'][i] +');'
 
-    console.log(insrt);
-     // console.log(req.body['WrktId'].length, i);
+  for(i=0;i<body['WrktId'].length;i++){
+    
+   //console.log(body['Ciezar'][i]);
+
+    var insrt = 'Insert into SETS_REPS (ID_SCHEMA,SETNUMBER,REPNUMBER,WEIGHT) values (' + body['WrktId'][i] +','+ body['NumerSerii'][i] +','+ body['IloscPowtorzen'][i] +','+ body['Ciezar'][i] +');'
+    
+    //console.log(insrt);
 
         sql.query(connectionString, insrt, (err, results) => {
           if (err){
               res.send(err);
                   };
         
-        });
+        }); 
+     
+      };
+  
     
-  };
    
-    res.redirect('/crrnt_wrkt');
+  res.redirect('/crrnt_wrkt');
 });
 
 
