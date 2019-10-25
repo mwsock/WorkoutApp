@@ -51,7 +51,7 @@ function ajaxSeries(type,element){
                 };
                 
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr> <td class='text-left'>"+ rslt["NazwaCwiczenia"] + "</td> <td class='text-left'> \
-                                                             <select name="+ rslt["SchemaId"] + " placeholder='Numer' required>" +  optNmbr() + " </select></td> </tr>"  
+                                                             <select name="+ rslt["SchemaId"] + " placeholder='Numer' class='WrktSeriesOpt' required>" +  optNmbr() + " </select></td> </tr>"  
                                                             
                                                             
                 

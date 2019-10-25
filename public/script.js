@@ -1,21 +1,26 @@
-function checkWrkt(){
-    ///alert('works');
 
-    var inpt = document.getElementsByTagName('input');
-    Array.from(inpt).forEach(ss => {
-        if(ss.innerHTML != ""){
-            alert('mozna insertować');
-        }else{
-            alert('nie mozna insertowac');
+
+function checkWrkt(event){
+    ///alert('works');
+    let x = 0;
+    const inpt = document.getElementsByClassName('WrktSeriesOpt');
+
+    Array.from(inpt).forEach(function(ss){
+        if(ss.value != '0'){
+            x += parseInt(ss.value);
         };
+        
     });
     
-   
+   if(x<2){
+    alert("Musisz wskazać conajmniej dwie serie by móc zapisać trening.");
+    event.preventDefault();
+   };
 
 };
 
 
-//document.getElementById('wrktAddbttn').addEventListener('click',checkWrkt); /*zastąpione atrybutem 'required' w htmlu*/
+//document.getElementById('wrktSeriesBttn').addEventListener('click',checkWrkt); /* tam gdzie wszystkie inputy wymagane zastąpione atrybutem 'required' w htmlu*/
 
 function addField() //adds new row to WrktPlan table
 {
@@ -43,4 +48,5 @@ function selectUnblock(){
 function selectMenuBttn(){
     
 };
+
 
