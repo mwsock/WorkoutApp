@@ -18,9 +18,18 @@ function checkWrkt(event){
    };
 
 };
+function sample(){
+    alert('ok');
+};
+
+//call ajax script to show praticular info 'bout exercise's series and reps
+let clickableTd = document.getElementsByClassName('wrktInfo');
+let i = 0;
+for(i;i<clickableTd.length;i++){
+    clickableTd[i].addEventListener('click',sample); 
+};
 
 
-//document.getElementById('wrktSeriesBttn').addEventListener('click',checkWrkt); /* tam gdzie wszystkie inputy wymagane zastąpione atrybutem 'required' w htmlu*/
 
 function addField() //adds new row to WrktPlan table
 {

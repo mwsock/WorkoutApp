@@ -17,8 +17,9 @@ app.set('view engine','ejs');
 
 app.get('/', function(req, res) {
 
-  var query = "select format(Data,'dd.MM.yyyy') as Data,RodzajTreningu,DzienTreningowy,NazwaCwiczenia,NumerSerii,IloscPowtorzen,Ciezar from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG);";
-  //console.log(query);
+  var query = "select format(Data,'dd.MM.yyyy') as Data, RodzajTreningu, DzienTreningowy, NazwaCwiczenia, count(NumerSerii) as IloscSerii, count(IloscPowtorzen) as IloscPowtorzen, \
+  sum(Ciezar*IloscPowtorzen) as Objetosc from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG) group by format(Data,'dd.MM.yyyy'), RodzajTreningu, DzienTreningowy, NazwaCwiczenia \
+  order by Objetosc desc;"  //console.log(query);
 
   sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);

@@ -11,24 +11,23 @@
        
         <thead>
           <th  class="text-left">Nazwa Ćwiczenia</th>
-          <th  class="text-left">Numer Serii</th>
+          <th  class="text-left">Ilość Serii</th>
           <th  class="text-left">Ilość Powtórzeń</th>
-          <th  class="text-left">Ciężar</th>
+          <th  class="text-left">Objętość</th>
       </thead>
       <tbody class="table-hover">
           <% result.forEach(function(column){ %>
-        <tr>  
-          <td  class="text-left"><%= column["NazwaCwiczenia"] %></td>
-          <td  class="text-left"><%= column["NumerSerii"] %></td>
-          <td  class="text-left"><%= column["IloscPowtorzen"] %></td>
-          <td  class="text-left"><%= column["Ciezar"] %> kg</td>
+        <tr class="">  
+          <td  class="text-left wrktInfo"><%= column["NazwaCwiczenia"] %></td>
+          <td  class="text-left wrktInfo"><%= column["IloscSerii"] %></td>
+          <td  class="text-left wrktInfo"><%= column["IloscPowtorzen"] %></td>
+          <td  class="text-left wrktInfo"><%= column["Objetosc"] %> kg</td>
         </tr>
         <% }) %> 
       </tbody>
       </table>
     </div>
     <!--<form action="/addWrkt" method="GET">--->
-
 
    
 <% include partials/footer %>
