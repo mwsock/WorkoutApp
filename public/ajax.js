@@ -65,3 +65,25 @@ function ajaxSeries(type,element){
     xhr.send();
 
 };
+
+
+function ajaxDropDown(){
+    let name = 'Dipsy'
+    var url = "/"+name;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            
+            let ajaxObject = JSON.parse(xhr.responseText);
+
+            ajaxObject.forEach(function(rslt){
+            alert('AJAX WORKS: ' + rslt['NazwaCwiczenia'] + ' ' + rslt['NumerSerii'] + ' ' + rslt['IloscPowtorzen'] + ' ' + rslt['Ciezar']);
+            });
+
+        }else{
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+};

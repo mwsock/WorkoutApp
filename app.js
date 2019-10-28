@@ -7,7 +7,7 @@ const sql = require("msnodesqlv8");
 
  
 const connectionString = "server=LAPTOP-ACER-573;Database=Workout;Trusted_Connection=Yes;Driver={SQL Server Native Client 11.0}";
-
+//tutaj trzeba zmienić w związku z przejściem na linuxa
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -43,6 +43,22 @@ app.get('/crrnt_wrkt',function(req,res){
 
        
     });
+
+  app.get('/:NazwaCwiczenia',function(req,res){
+
+    let NazwaCwiczenia = req.params['NazwaCwiczenia'];
+
+    query = "select NazwaCwiczenia, NumerSerii, IloscPowtorzen, Ciezar from WRKT_LOG\
+             where Data = (select MAX(Data) from WRKT_LOG) and NazwaCwiczenia = '"+ NazwaCwiczenia +"' order by NumerSerii asc;"
+
+    sql.query(connectionString, query, (err, rows) => {
+      
+      res.send(rows);   
+      console.log(rows);
+    });
+
+
+  });  
 
 
 

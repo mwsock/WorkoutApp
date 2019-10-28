@@ -22,11 +22,12 @@ function sample(){
     alert('ok');
 };
 
-//call ajax script to show praticular info 'bout exercise's series and reps
+//calls ajax script to show praticular info 'bout exercise's series and reps
 let clickableTd = document.getElementsByClassName('wrktInfo');
 let i = 0;
 for(i;i<clickableTd.length;i++){
-    clickableTd[i].addEventListener('click',sample); 
+    let name = clickableTd[i].innerHTML;
+    clickableTd[i].addEventListener('click',ajaxDropDown); 
 };
 
 
