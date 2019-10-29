@@ -3,7 +3,7 @@ const app = express();
 const router = express.Router();
 const path = require('path');
 const bodyParser = require('body-parser');
-const sql = require("msnodesqlv8");
+//const sql = require("msnodesqlv8");
 
  
 const connectionString = "server=LAPTOP-ACER-573;Database=Workout;Trusted_Connection=Yes;Driver={SQL Server Native Client 11.0}";
@@ -21,12 +21,12 @@ app.get('/', function(req, res) {
   sum(Ciezar*IloscPowtorzen) as Objetosc from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG) group by format(Data,'dd.MM.yyyy'), RodzajTreningu, DzienTreningowy, NazwaCwiczenia \
   order by Objetosc desc;"  //console.log(query);
 
-  sql.query(connectionString, query, (err, rows) => {
+  /*sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);
-      res.render('index', {result: rows});
-  });
+      res.render('index' , {result: rows});
+  });*/
 
-    
+    res.send('Hello World');
 });
 
 app.get('/crrnt_wrkt',function(req,res){
