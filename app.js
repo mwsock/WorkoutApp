@@ -21,12 +21,14 @@ app.get('/', function(req, res) {
   sum(Ciezar*IloscPowtorzen) as Objetosc from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG) group by format(Data,'dd.MM.yyyy'), RodzajTreningu, DzienTreningowy, NazwaCwiczenia \
   order by Objetosc desc;"  //console.log(query);
 
-  /*sql.query(connectionString, query, (err, rows) => {
+  //sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);
+      rows = [{Data:'01.01.2019', RodzajTreningu:'FBW', DzienTreningowy:'5', NazwaCwiczenia:'tst', IloscSerii:'5', IloscPowtorzen:'5', Objetosc:'5'}];
+      console.log(rows);
       res.render('index' , {result: rows});
-  });*/
+  //});
 
-    res.send('Hello World');
+    //res.send('Hello World');
 });
 
 app.get('/crrnt_wrkt',function(req,res){
