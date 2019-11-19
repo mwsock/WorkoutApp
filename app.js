@@ -3,11 +3,43 @@ const app = express();
 const router = express.Router();
 const path = require('path');
 const bodyParser = require('body-parser');
-//const sql = require("msnodesqlv8");
+const mongoose = require ('mongoose');
 
- 
-const connectionString = "server=LAPTOP-ACER-573;Database=Workout;Trusted_Connection=Yes;Driver={SQL Server Native Client 11.0}";
-//tutaj trzeba zmienić w związku z przejściem na linuxa
+
+//połączenie do mongodb
+mongoose.connect('mongodb://localhost/WRKT_LOG',{
+  useUnifiedTopology: true,
+  useNewUrlParser: true});
+
+  const WRKTschema = new mongoose.Schema({
+    Data: {type:Date}, 
+    RodzajTreningu: {type:String}, 
+    DzienTreningowy:{type:Number}, 
+    NazwaCwiczenia:{type:String}, 
+    IloscSerii:{type:Number}, 
+    IloscPowtorzen:{type:Number}, 
+    Objetosc: {type:Number}
+  });
+  const wrkt = mongoose.model('WRKT', WRKTschema);
+
+  const exerciseSchema = new mongoose.Schema({
+    dtype: {type:String}
+  });
+  const exercise = mongoose.model('exercices', exerciseSchema);
+
+    /*
+
+      let rows = new wrkt({Data:'01.01.2019', RodzajTreningu:'FBW', DzienTreningowy:'5', NazwaCwiczenia:'tst', IloscSerii:'5', IloscPowtorzen:'5', Objetosc:'5'});
+      
+      
+      rows.save(function(err,rows){
+          if(err){
+            console.log('error')
+          }else{
+            console.log(rows);
+          }
+      });*/
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,14 +53,16 @@ app.get('/', function(req, res) {
   sum(Ciezar*IloscPowtorzen) as Objetosc from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG) group by format(Data,'dd.MM.yyyy'), RodzajTreningu, DzienTreningowy, NazwaCwiczenia \
   order by Objetosc desc;"  //console.log(query);
 
-  //sql.query(connectionString, query, (err, rows) => {
-      //console.log(rows);
-      rows = [{Data:'01.01.2019', RodzajTreningu:'FBW', DzienTreningowy:'5', NazwaCwiczenia:'tst', IloscSerii:'5', IloscPowtorzen:'5', Objetosc:'5'}];
-      console.log(rows);
-      res.render('index' , {result: rows});
-  //});
 
-    //res.send('Hello World');
+      
+      wrkt.find({}, function(err, wLog){
+          if(err){
+            console.log('error')
+          }else{
+            res.render('index' , {result: wLog});
+          }
+      });
+
 });
 
 app.get('/crrnt_wrkt',function(req,res){
@@ -46,7 +80,7 @@ app.get('/crrnt_wrkt',function(req,res){
        
     });
 
-  app.get('/:NazwaCwiczenia',function(req,res){
+  /*app.get('/:NazwaCwiczenia',function(req,res){
 
     let NazwaCwiczenia = req.params['NazwaCwiczenia'];
 
@@ -60,7 +94,7 @@ app.get('/crrnt_wrkt',function(req,res){
     });
 
 
-  });  
+  });  */
 
 
 
@@ -182,37 +216,57 @@ var i;
 });
 
 
+
+
 app.get('/exercices',function(req,res){
 
-    var query = "select DTYPE from EXERCICES;"
-    //console.log(query);
-
-    sql.query(connectionString, query, (err, rows) => {
-      //console.log(rows);
-    res.render('exercices', {result: rows, info:''});
+    exercise.find({},function(err,rows){
+      if(err){
+        console.log('error')
+      }else{
+        res.render('exercices', {result: rows, info:''});
+      }
     });
+    
+    
 });
 
 
 app.post('/insrt',function(req,res){
   //console.log(req.body.search);
-  var exerc = req.body.search;
+  const exerc = req.body.search;
 
-  var  query = "Insert into EXERCICES (DTYPE) values ('" + exerc + "');";
+  const  newExercise = {dtype: exerc};
   //console.log(query);
 
-      sql.query(connectionString, query, (err, results) => {
+  exercise.create(newExercise, function(err, newlyCreated){
+    if(err){
+      console.log('error')
+    }else{
+      
+      exercise.find({},function(err,rows){
+        if(err){
+          console.log('error')
+        }else{
+          res.render('exercices', {result: rows, info:'Ćwiczenie zostało dodane!'});
+        }
+      });
+    }
+  });
+  
+
+      /*sql.query(connectionString, query, (err, results) => {
             if (err){
               res.send(err);
             }else{
               var query = "select DTYPE from EXERCICES;"
               sql.query(connectionString, query, (err, rows) => {
                 //console.log(rows);
-              res.render('exercices', {result: rows, info:'Ćwiczenie zostało dodane!'});
+              
               });
 
             };
-        });
+        });*/
 });
 
 
