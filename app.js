@@ -9,7 +9,9 @@ const mongoose = require ('mongoose');
 //połączenie do mongodb
 mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useUnifiedTopology: true,
-  useNewUrlParser: true});
+  useNewUrlParser: true,
+  useFindAndModify: false 
+});
 
   const WRKTschema = new mongoose.Schema({
     Data: {type:Date}, 
@@ -25,20 +27,14 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   const exerciseSchema = new mongoose.Schema({
     dtype: {type:String}
   });
-  const exercise = mongoose.model('exercices', exerciseSchema);
+  const exercise = mongoose.model('exercice', exerciseSchema);
 
-    /*
-
-      let rows = new wrkt({Data:'01.01.2019', RodzajTreningu:'FBW', DzienTreningowy:'5', NazwaCwiczenia:'tst', IloscSerii:'5', IloscPowtorzen:'5', Objetosc:'5'});
-      
-      
-      rows.save(function(err,rows){
-          if(err){
-            console.log('error')
-          }else{
-            console.log(rows);
-          }
-      });*/
+  const planSchema = new mongoose.Schema({
+    _id: {type:String},
+    wrktPlan: {type:String},
+    cDATE: {type: Date}
+  });
+  const wrktPlan = mongoose.model('plan', planSchema);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -143,22 +139,24 @@ app.get('/addWrkt/:id', function(req,res){
     });
 });
 
+
 app.get('/newWrktPlan', function(req,res){
-
-  var query = "select * from WRKT_PLAN;";
         
-
-        sql.query(connectionString, query, (err, rows) => {
-
-          var query2 = "select * from EXERCICES;";
-
-          sql.query(connectionString, query2, (err, rows2) => {
-            //console.log(rows2);
-            res.render('newWrktPlan', {result: rows,result2: rows2});
-
-          });
- 
-        });
+  wrktPlan.find({},function(err,rows){
+    if(err){
+      console.log('error');
+    }else{
+      console.log(rows);
+      exercise.find({},function(err,rows2){
+        if(err){
+          console.log('error')
+        }else{
+          console.log(rows2);
+          res.render('newWrktPlan', {result: rows,result2: rows2});
+        }
+      });
+    }
+  });
 
 });
 
@@ -236,9 +234,6 @@ app.post('/insrt',function(req,res){
   //console.log(req.body.search);
   const exerc = req.body.search;
 
-  const  newExercise = {dtype: exerc};
-  //console.log(query);
-
   exercise.create(newExercise, function(err, newlyCreated){
     if(err){
       console.log('error')
@@ -253,42 +248,29 @@ app.post('/insrt',function(req,res){
       });
     }
   });
-  
 
-      /*sql.query(connectionString, query, (err, results) => {
-            if (err){
-              res.send(err);
-            }else{
-              var query = "select DTYPE from EXERCICES;"
-              sql.query(connectionString, query, (err, rows) => {
-                //console.log(rows);
-              
-              });
-
-            };
-        });*/
 });
 
 
 app.get('/dlt',function(req,res){
   //console.log(req.query.search);
-  var exerc = req.query.search;
+  const exerc = req.query.search;
 
-  var  query = "delete from EXERCICES where DTYPE = '" + exerc + "';";
-  //console.log(query);
+  exercise.findOneAndRemove(newExercise, function(err, crrntlyRemoved){
+    if(err){
+      console.log('error')
+    }else{
+      
+      exercise.find({},function(err,rows){
+        if(err){
+          console.log('error')
+        }else{
+          res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
+        }
+      });
+    }
+  });
 
-      sql.query(connectionString, query, (err, results) => {
-            if (err){
-              res.send(err);
-            }else{
-              var query = "select DTYPE from EXERCICES;"
-              sql.query(connectionString, query, (err, rows) => {
-                //console.log(rows);
-              res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
-              });
-
-            };
-        });
 });
 
     

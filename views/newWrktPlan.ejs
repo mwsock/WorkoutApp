@@ -11,7 +11,7 @@
                         <select name="WrktName" id="WrktID">
                           <option hidden disabled selected value> Wybierz Trening</option>
                             <% result.forEach(function(select){ %>
-                            <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+                            <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
                             <% }) %> 
                         </select>
             </div>
@@ -29,7 +29,7 @@
                      <select name="Cwiczenie" id="exerciseID">
                             <option hidden disabled selected value> Wybierz Ćwiczenie</option>
                             <% result2.forEach(function(select){ %>
-                            <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+                            <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["dtype"] %></option>
                             <% }) %> 
                     </select>
                 </td> 
