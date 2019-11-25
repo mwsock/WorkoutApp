@@ -36,6 +36,12 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   });
   const wrktPlan = mongoose.model('plan', planSchema);
 
+  const templateSchema = new mongoose.Schema({
+    WrktNameId: {type:String},
+    WrktDay: [{}], 
+    exerciseId: [{}]
+  });
+  const wrktTemplate = mongoose.model('template', templateSchema);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -63,16 +69,13 @@ app.get('/', function(req, res) {
 
 app.get('/crrnt_wrkt',function(req,res){
 
-    
-    
-        var query = "select * from WRKT_PLAN;";
-        //console.log(query2);
-
-        sql.query(connectionString, query, (err, rows) => {
-            //console.log(rows2);
-            res.render('current_wrkt', {result: rows});    
+    wrktPlan.find({},function(err,rows){
+          if(err){
+            console.log(error)
+          }else{
+            res.render('current_wrkt', {result: rows}); 
+          }
         });
-
        
     });
 
@@ -131,12 +134,20 @@ app.get("/addWrkt/:planId/:variantId", function(req,res){
 app.get('/addWrkt/:id', function(req,res){
 
   var id = (req.params["id"])
-  var query = "select VARIANT from WRKT_SCHEMA where ID_PLAN = "+ id +" group by VARIANT ;";
+  //var query = "select VARIANT from WRKT_SCHEMA where ID_PLAN = "+ id +" group by VARIANT ;";
+console.log(id);
+    wrktTemplate.findOne({"_id" : id},function(err,rows){
+      if(err){
+        console.log(error)
+      }else{
+        res.send(rows);
+      }
+    });
 
-    sql.query(connectionString, query, (err, rows) => {
+    /*sql.query(connectionString, query, (err, rows) => {
         //console.log(rows);
         res.send(rows);
-    });
+    });*/
 });
 
 
@@ -144,14 +155,14 @@ app.get('/newWrktPlan', function(req,res){
         
   wrktPlan.find({},function(err,rows){
     if(err){
-      console.log('error');
+       console.log('error');
     }else{
-      console.log(rows);
+     // console.log(rows);
       exercise.find({},function(err,rows2){
         if(err){
           console.log('error')
         }else{
-          console.log(rows2);
+         // console.log(rows2);
           res.render('newWrktPlan', {result: rows,result2: rows2});
         }
       });
@@ -194,20 +205,23 @@ app.post('/insrtWrkt',function(req,res){
 
 app.post('/insrtWrktPlan',function(req,res){
 
-var i;
-  for(i=0;i<req.body['DzienTreningowy'].length;i++){
-    var insrt = 'Insert into WRKT_SCHEMA (ID_PLAN,VARIANT,EXERCISE) values (' +req.body['WrktName']+','+req.body['DzienTreningowy'][i]+','+req.body['Cwiczenie'][i]+');'
-
-      console.log(insrt);
-
-        sql.query(connectionString, insrt, (err, results) => {
-          if (err){
-              res.send(err);
-                  };
-        
-        });
-
-  }; 
+     let name = req.body['WrktName']
+     let day = req.body['DzienTreningowy']
+     let exec = req.body['Cwiczenie']
+      
+      const newTemplate = {
+        WrktNameId: name,
+        WrktDay: day,
+        exerciseId: exec
+      };
+    //console.log(newTemplate);
+    wrktTemplate.create(newTemplate, function(err, newlyCreated){
+        if(err){
+          console.log(err)
+        }else{
+          console.log('OK!')
+        }
+      });
 
   res.redirect('/newWrktPlan');
 
@@ -233,15 +247,16 @@ app.get('/exercices',function(req,res){
 app.post('/insrt',function(req,res){
   //console.log(req.body.search);
   const exerc = req.body.search;
+  let newExercise = {dtype: exerc};
 
   exercise.create(newExercise, function(err, newlyCreated){
     if(err){
-      console.log('error')
+      console.log(err)
     }else{
       
       exercise.find({},function(err,rows){
         if(err){
-          console.log('error')
+          console.log(err)
         }else{
           res.render('exercices', {result: rows, info:'Ćwiczenie zostało dodane!'});
         }
@@ -255,15 +270,16 @@ app.post('/insrt',function(req,res){
 app.get('/dlt',function(req,res){
   //console.log(req.query.search);
   const exerc = req.query.search;
+  let newExercise = {dtype: exerc};
 
   exercise.findOneAndRemove(newExercise, function(err, crrntlyRemoved){
     if(err){
-      console.log('error')
+      console.log(err)
     }else{
       
       exercise.find({},function(err,rows){
         if(err){
-          console.log('error')
+          console.log(err)
         }else{
           res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
         }

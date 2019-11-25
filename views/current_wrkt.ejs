@@ -13,7 +13,7 @@
       <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
         <option hidden disabled selected value>Trening</option>
           <% result.forEach(function(select){ %>
-          <option class="WrktIDopt" value='<%= select["ID"] %>'><%= select["DTYPE"] %></option>
+          <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
           <% }) %> 
       </select>
       <select name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">

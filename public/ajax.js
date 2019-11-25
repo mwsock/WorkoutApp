@@ -28,7 +28,7 @@ function ajaxVariant(type,element){
 function ajaxSeries(type,element){
 
     document.getElementById(element).innerHTML = "" //reset table
-    var planId = document.getElementById("WrktID").value;
+    var planId = document.getElementById("_id").value;
     var variantId = document.getElementById("variantID").value;
     var url = "/addWrkt/"+ planId + '/' + variantId;
    // console.log(url);
