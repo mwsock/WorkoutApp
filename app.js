@@ -38,7 +38,7 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
 
   const templateSchema = new mongoose.Schema({
     WrktNameId: {type:String},
-    WrktDay: [{}], 
+    WrktDay: {type:Number}, 
     exerciseId: [{}]
   });
   const wrktTemplate = mongoose.model('template', templateSchema);
@@ -117,29 +117,59 @@ app.get('/addWrkt', function(req,res){
 });
 
 app.get("/addWrkt/:planId/:variantId", function(req,res){
-//console.log(req.params);
+console.log(req.params);
   var planId = req.params["planId"];
   var variantId = req.params["variantId"];
   var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
                inner join EXERCICES ex on ws.EXERCISE = ex.ID\
                where ws.ID_PLAN=" + planId + " and ws.VARIANT= " + variantId +";";
+
+  wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId}, "-_id exerciseId", function(err,rows){
+      if(err){
+        console.log(error)
+      }else{
+        console.log(rows);
+
+      
+          let id = rows['exerciseId'];
+          console.log(Object.values(id));
+        
+        
+        
+        
+         
+          exercise.findOne({"_id": id},"-_id dtype", function(err,rows2){
+            if(err){
+              console.log(error)
+            }else{
+              console.log(rows2);
+              res.send({rows,rows2});
+             
+          }}); 
+
+
+        //res.send(rows);
+      }
+    });
+
+
                //console.log(query);
-    sql.query(connectionString, query, (err, rows) => {
+   /* sql.query(connectionString, query, (err, rows) => {
       //console.log(rows);
       res.send(rows);
-    });
+    }); */
 });
 
 
 app.get('/addWrkt/:id', function(req,res){
 
   var id = (req.params["id"])
-  //var query = "select VARIANT from WRKT_SCHEMA where ID_PLAN = "+ id +" group by VARIANT ;";
-console.log(id);
-    wrktTemplate.findOne({"_id" : id},function(err,rows){
+ 
+    wrktTemplate.find({"WrktNameId" : id}, "-_id WrktDay", function(err,rows){
       if(err){
         console.log(error)
       }else{
+        console.log(rows);
         res.send(rows);
       }
     });
