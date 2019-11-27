@@ -14,17 +14,18 @@
                             <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
                             <% }) %> 
                         </select>
+                        <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required>
             </div>
 
           <table class="lastWrkt">
             <thead>
-              <th class="text-center">Dzień Treningowy</th>
+              <!--<th class="text-center">Dzień Treningowy</th>-->
               <th class="text-center">Nazwa Ćwiczenia</th>
             </thead>
             
             <tbody id='tb'>
 
-                <td class="text-center"> <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required></td>
+                <!--<td class="text-center"> <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required></td>-->
                 <td class="text-center">
                      <select name="Cwiczenie" id="exerciseID">
                             <option hidden disabled selected value> Wybierz Ćwiczenie</option>

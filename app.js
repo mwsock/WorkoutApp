@@ -120,9 +120,6 @@ app.get("/addWrkt/:planId/:variantId", function(req,res){
 console.log(req.params);
   var planId = req.params["planId"];
   var variantId = req.params["variantId"];
-  var query = "select ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
-               inner join EXERCICES ex on ws.EXERCISE = ex.ID\
-               where ws.ID_PLAN=" + planId + " and ws.VARIANT= " + variantId +";";
 
   wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId}, "-_id exerciseId", function(err,rows){
       if(err){
@@ -132,32 +129,18 @@ console.log(req.params);
 
       
           let id = rows['exerciseId'];
-          console.log(Object.values(id));
-        
-        
-        
-        
-         
-          exercise.findOne({"_id": id},"-_id dtype", function(err,rows2){
+          //console.log(Object.values(id));
+     
+          exercise.find({"_id": id},"-_id dtype", function(err,rows2){
             if(err){
               console.log(error)
             }else{
-              console.log(rows2);
-              res.send({rows,rows2});
+              //console.log(rows2);
+            res.send({rows2});
              
-          }}); 
-
-
-        //res.send(rows);
-      }
+            }}); 
+          }
     });
-
-
-               //console.log(query);
-   /* sql.query(connectionString, query, (err, rows) => {
-      //console.log(rows);
-      res.send(rows);
-    }); */
 });
 
 

@@ -10,10 +10,10 @@ function ajaxVariant(type,element){
             
             var ajaxObject = JSON.parse(xhr.responseText);
             //var ajaxObject = xhr.responseText;
-            console.log(ajaxObject);
+            //console.log(ajaxObject);
             ajaxObject.forEach(function(arrayObj){
                 Object.values(arrayObj).forEach(function(WrktDay){   
-                console.log( arrayObj['WrktDay']);
+                //console.log( arrayObj['WrktDay']);
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + " <option class='WrktIDopt'> " + WrktDay + "</option>";
                 
                 });
@@ -42,22 +42,27 @@ function ajaxSeries(type,element){
            // alert('AJAX WORKS: ' + xhr.responseText);
             
             let ajaxObject = JSON.parse(xhr.responseText);
-            console.log(ajaxObject);
-            ajaxObject.forEach(function(arrayObj){
-                Object.values(arrayObj).forEach(function(rslt){
-
+            //console.log(ajaxObject);
+            
+            Object.values(ajaxObject).forEach(function(rslt){
+               // console.log(rslt);
+                rslt.forEach(function(arrayObj){
+                   // console.log(arrayObj['dtype']);
                 function optNmbr(){
-                    let i = 0;
+                    var i = 0;
                     for(i; i<11; i++){
-                    let oN = oN +  "<option>"+ i +"</option>"
-                    
+                    var oN = oN +  "<option>"+ i +"</option>"
+                    //<select name='IloscSerii' placeholder='Numer' class='WrktSeriesOpt' required>   <!--+  optNmbr() +-->  </select></td> 
                     };
                     return oN;
                 };
                 
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr> <td class='text-left'>"+ rslt + "</td> <td class='text-left'> \
-                                                             <select name="+ rslt["SchemaId"] + " placeholder='Numer' class='WrktSeriesOpt' required>" +  optNmbr() + " </select></td> </tr>"  
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr> <td class='text-left'>"+ arrayObj['dtype'] + "</td> <td class='text-left'> \
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' > \ </tr>"  
                                                             
+                                                            /*
+                                                            <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
+                                                            <td class='text-left'> <input type='number' name='Ciezar' placeholder='Ciężar' min='1' max='1000' step='0.25' required></td>*/
                                                             
                 
                 });

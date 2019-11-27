@@ -1,21 +1,26 @@
 
-
 function checkWrkt(event){
     ///alert('works');
     let x = 0;
     const inpt = document.getElementsByClassName('WrktSeriesOpt');
+    const hidTbl = document.getElementById('wrktDetails');
 
     Array.from(inpt).forEach(function(ss){
-        if(ss.value != '0'){
+        if(ss.value != '0' && ss.value != ""){
+           // console.log(ss.value);
             x += parseInt(ss.value);
         };
         
     });
-    
-   if(x<2){
-    alert("Musisz wskazać conajmniej dwie serie by móc zapisać trening.");
+    console.log(x);
+   if( x == 0){
+    alert("Musisz wprowadzić conajmniej 1 serię by móc zapisać trening.");
     event.preventDefault();
+   }else{
+    hidTbl.removeAttribute('hidden')
+    window.location.href = '#wrktDetails';
    };
+
 
 };
 function sample(){

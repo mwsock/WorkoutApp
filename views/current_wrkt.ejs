@@ -4,7 +4,8 @@
 
 
 
-<form action="/addWrkt" method="GET">
+<!--<form action="/addWrkt" method="GET">-->
+  <form action="" method=""></form>
   <div class="selectWrkt">
   <p>Dodaj nowy trening:</p>  
   
@@ -29,17 +30,21 @@
   <table class="lastWrkt">
   
     <thead>
-      <th  class="text-left">Ćwiczenie</th>
-      <th  class="text-left">Ilość serii</th>
+      <th class="text-left">Ćwiczenie</th>
+      <th class="text-left">Ilość serii</th>
+      <!--<th class="text-left">Ilość Powtórzeń</th>
+      <th class="text-left">Ciężar</th>-->
   </thead>
   <tbody id='tRows' class="table-hover">
 
   </tbody>
   </table>
   </div>
-
+  
   <input type="submit" style="display:inherit;" class='wrktBttn' id='wrktSeriesBttn' value="Dalej"  onclick="checkWrkt(event)">
 </form>
+
+<% include partials/wrktDetails %>
   
 <% include partials/footer %>
          
