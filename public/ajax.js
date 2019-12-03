@@ -56,9 +56,18 @@ function ajaxSeries(type,element){
                     };
                     return oN;
                 };
-                
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr> <td class='text-left'>"+ arrayObj['dtype'] + "</td> <td class='text-left'> \
-                                                            <input class='WrktSeriesOpt' type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' > \ </tr>"  
+
+                var details = "";
+                let x = 0;
+                for(x; x<3; x++){
+                    var details = details + "<tr class='wrktDetails' hidden> \
+                    <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
+                    <td class='text-left'> <input type='number' name='Ciezar' placeholder='Ciężar' min='1' max='1000' step='0.25' required></td> \
+                    </tr>" 
+                };
+                  
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class=''><td class='text-left'>"+ arrayObj['dtype'] + "</td> <td class='text-left'> \
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='tst'></tst>" //+ details;  
                                                             
                                                             /*
                                                             <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \

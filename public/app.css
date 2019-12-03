@@ -205,3 +205,8 @@ td.text-right {
 a.item:hover{
 border-bottom:  solid black!important;
 }
+
+/*removes list styling in wrkt save table*/
+td>li{
+  list-style: none;
+}
