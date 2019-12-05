@@ -210,3 +210,7 @@ border-bottom:  solid black!important;
 td>li{
   list-style: none;
 }
+
+.execName:hover{
+  cursor: pointer;
+}

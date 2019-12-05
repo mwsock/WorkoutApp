@@ -12,9 +12,9 @@ function checkWrkt(event){
         };
         
     });
-    console.log(x);
+   // console.log(x);
    if( x == 0){
-    alert("Musisz wprowadzić co najmniej 1 serię by móc zapisać trening.");
+    alert("Musisz wprowadzić co najmniej 1 serię by przejść dalej.");
     event.preventDefault();
    }else{
     for(i;i<hidTbl.length;i++){ 
@@ -65,17 +65,19 @@ function selectUnblock(){
 
 function populateRows() //adds new rows to wrktDetails table
 {
-
-  
-        let z = document.getElementsByClassName('tst')
-        let nSeries = document.getElementsByName('IloscSerii')
-        let i = 0;
-        console.log(z);
+    const z = document.getElementsByClassName('tst');
+    const nSeries = document.getElementsByClassName('WrktSeriesOpt');
+    let i = 0;
+        //console.log(z);
        for(i;i<z.length;i++){
-        //var node1 = document.createElement("tr");  
         
         let nS = parseInt(nSeries[i].value);
-        console.log(nS); //za pomocą tej zmiennej musisz populować inputy
+      //  console.log(nS); //helps to populate inputs
+        
+        if(isNaN(nS)){
+            //console.log('stop');
+            break;
+        };
 
         const repsNode = document.createElement("td");
         const weightNode = document.createElement("td");
@@ -97,7 +99,8 @@ function populateRows() //adds new rows to wrktDetails table
             if(nS==1){
                 z[i].appendChild(repsNode);
                 z[i].appendChild(weightNode);
-            }else if (nS>1){
+                blockDetail(i);
+            }else{
                 let x = 1
                 for(x; x<nS;x++){
                     z[i].appendChild(repsNode);
@@ -105,11 +108,15 @@ function populateRows() //adds new rows to wrktDetails table
 
                     repsNode.appendChild(liReps.cloneNode(true));
                     weightNode.appendChild(liWeight.cloneNode(true));
-                   
+                    blockDetail(i);
                 }; 
             };
             nSeries[i].setAttribute('disabled',''); //blocks series insert
+            nSeries[i].className = 'seriesFilled';
+            z[i].className='filledUp';
+            console.log(nS+"_nS");
         };
+    console.log(i+"_i");
     
 };
 
@@ -121,7 +128,8 @@ function styleDetails(){
         inpReps[i].setAttribute('required','');
         inpReps[i].placeholder  = 'Ilość Powtórzeń';
         inpReps[i].type = 'Number';
-        inpWeight[i].step ='1';
+        inpReps[i].step ='1';
+        inpReps[i].min='1'
     };    
 
     
@@ -130,11 +138,26 @@ function styleDetails(){
         inpWeight[i].placeholder = 'Ciężar'
         inpWeight[i].type = 'Number';
         inpWeight[i].step ='0.25';
+        inpWeight[i].min='1'
     };//min='1' max='1000' step='0.25'
 };
+
+
+//removes click event if series number is filled up
+function blockDetail(i){
+    
+        let detailTd = document.getElementsByClassName('execName');
+        //console.log(detailTd);
+        //for(let i = 0;i<detailTd.length;i++){
+           // let name = detailTd[i].innerHTML;
+            detailTd[i].removeAttribute('onclick');
+       // };
+};
+
 
 function expandDetails(event){
     checkWrkt(event);
     populateRows();
     styleDetails();
+   
 };

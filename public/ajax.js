@@ -64,10 +64,10 @@ function ajaxSeries(type,element){
                     <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
                     <td class='text-left'> <input type='number' name='Ciezar' placeholder='Ciężar' min='1' max='1000' step='0.25' required></td> \
                     </tr>" 
-                };
-                  
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class=''><td class='text-left'>"+ arrayObj['dtype'] + "</td> <td class='text-left'> \
-                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='tst'></tst>" //+ details;  
+                };  
+                                                                                                                                                             
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='toFill'><td class='text-left'><div class='execName' onclick ='expandDetails()'>"+ arrayObj['dtype'] + "</div></td> <td class='text-left'> \
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='tst'></tr>" //+ details;  
                                                             
                                                             /*
                                                             <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
