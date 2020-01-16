@@ -214,3 +214,7 @@ td>li{
 .execName:hover{
   cursor: pointer;
 }
+
+#wrktSeriesBttn{
+  display:inherit;
+}

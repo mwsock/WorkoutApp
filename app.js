@@ -5,6 +5,22 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require ('mongoose');
 
+const csp = require('helmet-csp');
+app.use(csp({
+directives: {
+  defaultSrc: ["'self'", 'http://localhost:3000'],
+  scriptSrc: ["'self'", "'unsafe-inline'"],
+  styleSrc: ["'self'"],
+  imgSrc: ["'self'"],
+  connectSrc: ["'self'"],
+  objectSrc: ["'none'"],
+  mediaSrc: ["'self'"],
+  frameSrc: ["'none'"],
+},
+setAllHeaders: false, // set to true if you want to set all headers
+safari5: false // set to true if you want to force buggy CSP in Safari 5
+}));
+
 
 //połączenie do mongodb
 mongoose.connect('mongodb://localhost/WRKT_LOG',{
@@ -44,17 +60,15 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   const wrktTemplate = mongoose.model('template', templateSchema);
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 
 app.set('view engine','ejs');
 
 
 app.get('/', function(req, res) {
-
-  var query = "select format(Data,'dd.MM.yyyy') as Data, RodzajTreningu, DzienTreningowy, NazwaCwiczenia, count(NumerSerii) as IloscSerii, count(IloscPowtorzen) as IloscPowtorzen, \
-  sum(Ciezar*IloscPowtorzen) as Objetosc from WRKT_LOG where Data = (select MAX(Data) from WRKT_LOG) group by format(Data,'dd.MM.yyyy'), RodzajTreningu, DzienTreningowy, NazwaCwiczenia \
-  order by Objetosc desc;"  //console.log(query);
-
 
       
       wrkt.find({}, function(err, wLog){
@@ -79,45 +93,18 @@ app.get('/crrnt_wrkt',function(req,res){
        
     });
 
-  /*app.get('/:NazwaCwiczenia',function(req,res){
 
-    let NazwaCwiczenia = req.params['NazwaCwiczenia'];
+app.post('/addWrkt', function(req,res){
 
-    query = "select NazwaCwiczenia, NumerSerii, IloscPowtorzen, Ciezar from WRKT_LOG\
-             where Data = (select MAX(Data) from WRKT_LOG) and NazwaCwiczenia = '"+ NazwaCwiczenia +"' order by NumerSerii asc;"
+//console.log(req.body.log.Cwiczenia[0]);
 
-    sql.query(connectionString, query, (err, rows) => {
-      
-      res.send(rows);   
-      console.log(rows);
-    });
+ console.log(req.body.log.Cwiczenia[1]);
+ 
 
-
-  });  */
-
-
-
-app.get('/addWrkt', function(req,res){
-
- // console.log(req.query);
-   var WrktSchemaPlanId = req.query["WrktName"];
-   var variantPlan = req.query["variant"];
-   var query = "select p.DTYPE, ws.ID as SchemaId, ws.VARIANT as DzienTreningowy, ex.DTYPE as NazwaCwiczenia from WRKT_SCHEMA ws\
-                inner join EXERCICES ex on ws.EXERCISE = ex.ID\
-                inner join WRKT_PLAN p on p.ID = ws.ID_PLAN\
-                where ws.ID_PLAN=" + WrktSchemaPlanId + " and ws.VARIANT= " + variantPlan +";";
-    const values = req.query;
-    const keys = Object.keys(values);
-
-    sql.query(connectionString, query, (err, rows) => {
-    //console.log(rows);
-       res.render('new_wrkt', {result: rows, keys: keys, values: values});
-    }); 
-    
 });
 
 app.get("/addWrkt/:planId/:variantId", function(req,res){
-console.log(req.params);
+//console.log(req.params);
   var planId = req.params["planId"];
   var variantId = req.params["variantId"];
 
@@ -125,7 +112,7 @@ console.log(req.params);
       if(err){
         console.log(error)
       }else{
-        console.log(rows);
+       // console.log(rows);
 
       
           let id = rows['exerciseId'];
@@ -152,15 +139,11 @@ app.get('/addWrkt/:id', function(req,res){
       if(err){
         console.log(error)
       }else{
-        console.log(rows);
+        //console.log(rows);
         res.send(rows);
       }
     });
 
-    /*sql.query(connectionString, query, (err, rows) => {
-        //console.log(rows);
-        res.send(rows);
-    });*/
 });
 
 

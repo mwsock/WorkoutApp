@@ -66,8 +66,9 @@ function ajaxSeries(type,element){
                     </tr>" 
                 };  
                                                                                                                                                              
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='toFill'><td class='text-left'><div class='execName' onclick ='expandDetails()'>"+ arrayObj['dtype'] + "</div></td> <td class='text-left'> \
-                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='tst'></tr>" //+ details;  
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.' onclick ='expandDetails()'>"+ arrayObj['dtype'] + "</div>\
+                                                            <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td class='text-left'> \
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='toFill'></tr>" //+ details;  
                                                             
                                                             /*
                                                             <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
@@ -105,4 +106,82 @@ function ajaxDropDown(){
         }
     };
     xhr.send();
+};
+
+
+function sendWrkt(){
+
+
+    getValues();  
+
+    var url = "/addWrkt";
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(wrkt_log));
+}; 
+
+function getValues(){
+
+    var wrkt = document.getElementById('WrktID').value;
+
+    var variant = document.getElementById('variantID').value;
+
+    var z = document.getElementsByClassName('execRow');
+
+    var exercices = [];
+    
+
+    for(i=0;i<z.length;i++){
+
+        if(z[i].children[1].children[0].hasAttribute('disabled')){
+            //console.log('NEXT!');
+        }else{
+            var execName = z[i].children[0].children[0].textContent;
+            //console.log('ExerciseName: '+execName);
+
+            var seriesNum = z[i].children[1].children[0].value;
+            //console.log('SeriesNumber: '+seriesNum);
+
+            var execTD = z[i].nextSibling.children[0];
+            var weigthTD = z[i].nextSibling.children[1];
+
+            var info = [];
+
+                for(ii=0;ii<seriesNum;ii++){
+                    var repNum = execTD.children[ii].children[0].value;
+                    var weigthNum = weigthTD.children[ii].children[0].value;
+
+                    
+                    var infoEXT = {
+                        "NumerSerii": ii+1,
+                        "IloscPowtorzen": repNum,
+                        "Ciezar": weigthNum
+                        };
+                    info.push(infoEXT);
+
+                    console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
+                };
+                //console.log(info);
+                var exercise =  {
+                    "Nazwa": execName,
+                    "Info": info
+                    };
+
+                exercices.push(exercise);
+                //console.log(exercices);
+        };
+
+
+    };
+            var wrkt_log =  {"log": 
+                                {"Data": Date() ,
+                                "RodzajTreningu": wrkt,
+                                "DzienTreningowy": variant,
+                                "Cwiczenia": exercices
+                                }
+                            };
+
+            console.log(wrkt_log);
 };

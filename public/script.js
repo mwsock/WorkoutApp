@@ -65,18 +65,19 @@ function selectUnblock(){
 
 function populateRows() //adds new rows to wrktDetails table
 {
-    const z = document.getElementsByClassName('tst');
+    const z = document.getElementsByClassName('toFill');
     const nSeries = document.getElementsByClassName('WrktSeriesOpt');
     let i = 0;
-        //console.log(z);
+        //console.log(z.length);
        for(i;i<z.length;i++){
-        
+       // console.log(z.length+'_z');
         let nS = parseInt(nSeries[i].value);
-      //  console.log(nS); //helps to populate inputs
+        //console.log(nSeries.length); //helps to populate inputs
         
         if(isNaN(nS)){
-            //console.log('stop');
-            break;
+           // console.log('stop');
+           nSeries[i].setAttribute('disabled','');
+            continue;
         };
 
         const repsNode = document.createElement("td");
@@ -111,18 +112,20 @@ function populateRows() //adds new rows to wrktDetails table
                     blockDetail(i);
                 }; 
             };
-            nSeries[i].setAttribute('disabled',''); //blocks series insert
-            nSeries[i].className = 'seriesFilled';
+            //nSeries[i].setAttribute('disabled',''); //blocks series insert
+            nSeries[i].className = 'WrktSeriesOptFilled';
             z[i].className='filledUp';
-            console.log(nS+"_nS");
+            //console.log(nS+"_nS");
+            i=i-1; //due to className change for z there was a problem with shrinking z.length and 
+                   //growing i number what has caused problem with input multipling
         };
-    console.log(i+"_i");
+    //console.log(i+"_i");
     
 };
 
 function styleDetails(){
     const inpReps = document.getElementsByClassName('detailsReps');
-    const inpWeight = document.getElementsByClassName('detailsWeight')
+    const inpWeight = document.getElementsByClassName('detailsWeight');
 
     for(let i=0;i<inpReps.length;i++){
         inpReps[i].setAttribute('required','');
@@ -130,15 +133,17 @@ function styleDetails(){
         inpReps[i].type = 'Number';
         inpReps[i].step ='1';
         inpReps[i].min='1'
+        inpReps[i].name = 'Reps'
     };    
 
     
     for(let i=0;i<inpWeight.length;i++){
         inpWeight[i].setAttribute('required','');
-        inpWeight[i].placeholder = 'Ciężar'
+        inpWeight[i].placeholder = 'Ciężar';
         inpWeight[i].type = 'Number';
         inpWeight[i].step ='0.25';
-        inpWeight[i].min='1'
+        inpWeight[i].min='1';
+        inpWeight[i].name = 'Weight';
     };//min='1' max='1000' step='0.25'
 };
 
@@ -146,12 +151,13 @@ function styleDetails(){
 //removes click event if series number is filled up
 function blockDetail(i){
     
-        let detailTd = document.getElementsByClassName('execName');
-        //console.log(detailTd);
-        //for(let i = 0;i<detailTd.length;i++){
-           // let name = detailTd[i].innerHTML;
+        const detailTd = document.getElementsByClassName('execName');
             detailTd[i].removeAttribute('onclick');
-       // };
+};
+
+
+function hideDetail(i){
+    const detail = document.getElementsByClassName(WrktSeriesOptFilled);
 };
 
 
@@ -159,5 +165,18 @@ function expandDetails(event){
     checkWrkt(event);
     populateRows();
     styleDetails();
-   
 };
+
+
+
+/*function hidDetail(event){
+    let e = window.event;
+    let name = e.target.clientX;
+    console.log(name);
+    let next =  document.getElementsByClassName(name);
+    console.log(next);
+
+    var xPosition = e.clientX;
+    var yPosition = e.clientY;
+  console.log(xPosition);  
+}; */

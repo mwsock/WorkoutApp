@@ -5,7 +5,7 @@
 <div class="wrktTbl">
         <h1 class="tblHdr">Twój ostatni trening: </h1>
         
-        <h2 class="tblHdr"><%= result[0]["Data"] %> | <%=result[0]["RodzajTreningu"]%> Dzień Treningowy: <%=result[0]["DzienTreningowy"] %> </h2>
+        <h2 class="tblHdr"><%= result[0]["Data"].toISOString().substring(0, 10)%> | <%=result[0]["RodzajTreningu"]%> Dzień Treningowy: <%=result[0]["DzienTreningowy"] %> </h2>
 
       <table class="lastWrkt">
        
