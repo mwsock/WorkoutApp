@@ -98,7 +98,7 @@ app.post('/addWrkt', function(req,res){
 
 //console.log(req.body.log.Cwiczenia[0]);
 
- console.log(req.body.log.Cwiczenia[1]);
+ console.log(req.body);
  
 
 });

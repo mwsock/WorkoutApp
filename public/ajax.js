@@ -112,14 +112,15 @@ function ajaxDropDown(){
 function sendWrkt(){
 
 
-    getValues();  
+    var log = getValues();
+    console.log(log);
 
     var url = "/addWrkt";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify(wrkt_log));
+    xhr.send(JSON.stringify(log));
 }; 
 
 function getValues(){
@@ -183,5 +184,6 @@ function getValues(){
                                 }
                             };
 
-            console.log(wrkt_log);
+            //console.log(wrkt_log);
+            return wrkt_log;
 };
