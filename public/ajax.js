@@ -162,7 +162,7 @@ function getValues(){
                         };
                     info.push(infoEXT);
 
-                    console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
+                    //console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
                 };
                 //console.log(info);
                 var exercise =  {
@@ -176,9 +176,9 @@ function getValues(){
 
 
     };
-            var wrkt_log =  {"log": 
-                                {"Data": Date() ,
-                                "RodzajTreningu": wrkt,
+            var wrkt_log =  {"Data": Date() ,
+                             "log": 
+                                {"RodzajTreningu": wrkt,
                                 "DzienTreningowy": variant,
                                 "Cwiczenia": exercices
                                 }

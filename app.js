@@ -29,7 +29,7 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useFindAndModify: false 
 });
 
-  const WRKTschema = new mongoose.Schema({
+  /*const WRKTschema = new mongoose.Schema({
     Data: {type:Date}, 
     RodzajTreningu: {type:String}, 
     DzienTreningowy:{type:Number}, 
@@ -37,8 +37,11 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
     IloscSerii:{type:Number}, 
     IloscPowtorzen:{type:Number}, 
     Objetosc: {type:Number}
-  });
-  const wrkt = mongoose.model('WRKT', WRKTschema);
+  });*/
+
+  const WRKTschema = new mongoose.Schema({},{strict:false });
+
+  const wrkt = mongoose.model('wrkt', WRKTschema);
 
   const exerciseSchema = new mongoose.Schema({
     dtype: {type:String}
@@ -69,15 +72,16 @@ app.set('view engine','ejs');
 
 
 app.get('/', function(req, res) {
-
-      
+  
       wrkt.find({}, function(err, wLog){
           if(err){
-            console.log('error')
+            console.log('error');
           }else{
-            res.render('index' , {result: wLog});
+            console.log(wLog);
+            //res.render('index' , {result: wLog});
+            res.send(wLog)
           }
-      });
+      }); 
 
 });
 
@@ -96,9 +100,16 @@ app.get('/crrnt_wrkt',function(req,res){
 
 app.post('/addWrkt', function(req,res){
 
-//console.log(req.body.log.Cwiczenia[0]);
-
  console.log(req.body);
+ const wrktLog = req.body;
+
+  wrkt.create(wrktLog, function(err, newlyCreated){
+    if(err){
+      console.log(err)
+    }else{
+      console.log('OK!')
+    }
+  });
  
 
 });
@@ -168,7 +179,7 @@ app.get('/newWrktPlan', function(req,res){
 });
 
 
-app.post('/insrtWrkt',function(req,res){
+/*app.post('/insrtWrkt',function(req,res){
 
   const {WrktId, NumerSerii, IloscPowtorzen, Ciezar} = req.body;
   const body = {WrktId, NumerSerii, IloscPowtorzen, Ciezar};
@@ -196,7 +207,7 @@ app.post('/insrtWrkt',function(req,res){
     
    
   res.redirect('/crrnt_wrkt');
-});
+}); */
 
 
 app.post('/insrtWrktPlan',function(req,res){
