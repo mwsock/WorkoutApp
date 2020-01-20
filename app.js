@@ -29,15 +29,6 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useFindAndModify: false 
 });
 
-  /*const WRKTschema = new mongoose.Schema({
-    Data: {type:Date}, 
-    RodzajTreningu: {type:String}, 
-    DzienTreningowy:{type:Number}, 
-    NazwaCwiczenia:{type:String}, 
-    IloscSerii:{type:Number}, 
-    IloscPowtorzen:{type:Number}, 
-    Objetosc: {type:Number}
-  });*/
 
   const WRKTschema = new mongoose.Schema({},{strict:false });
 
@@ -72,16 +63,44 @@ app.set('view engine','ejs');
 
 
 app.get('/', function(req, res) {
-  
-      wrkt.find({}, function(err, wLog){
+                      //latest entry filter
+      wrkt.find({},{},{sort:{_id:-1}}, function(err, wLog){
           if(err){
             console.log('error');
           }else{
-            console.log(wLog);
-            //res.render('index' , {result: wLog});
-            res.send(wLog)
-          }
-      }); 
+           var wrktObj = JSON.parse(JSON.stringify(wLog[0]));
+           console.log(wrktObj.wlog);
+            console.log(wrktObj.wlog['Cwiczenia'][0].Info);
+            let cwiczenia = wrktObj.wlog['Cwiczenia'];
+            let date = new Date(wrktObj.CDate);
+            const options = {year: 'numeric', month: 'long', day: 'numeric'};
+            //console.log(date.toLocaleDateString('pl-PL', options));
+            let wrktDate = date.toLocaleDateString('pl-PL', options);
+
+            var id = wrktObj.wlog['RodzajTreningu'];
+
+            wrktPlan.find({},function(err,rows){
+                  if(err){
+                    console.log(error)
+                  }else{
+                    rows.forEach(elem => {
+                        if(id===elem._id){
+                          var planName = elem.wrktPlan;
+                            //console.log(planName);
+                          res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
+                        };
+                    });
+                  };
+
+                 
+                });
+          };
+      });
+
+           
+            //res.send(wrktObj);
+          
+      
 
 });
 

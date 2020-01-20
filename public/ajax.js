@@ -176,8 +176,8 @@ function getValues(){
 
 
     };
-            var wrkt_log =  {"Data": Date() ,
-                             "log": 
+            var wrkt_log =  {"CDate": Date() ,
+                             "wlog": 
                                 {"RodzajTreningu": wrkt,
                                 "DzienTreningowy": variant,
                                 "Cwiczenia": exercices

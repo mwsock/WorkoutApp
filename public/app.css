@@ -218,3 +218,7 @@ td>li{
 #wrktSeriesBttn{
   display:inherit;
 }
+
+.repList{
+  display: inline-block;
+}

@@ -5,7 +5,7 @@
 <div class="wrktTbl">
         <h1 class="tblHdr">Twój ostatni trening: </h1>
         
-        <h2 class="tblHdr"><%= result[0]["Data"].toISOString().substring(0, 10)%> | <%=result[0]["RodzajTreningu"]%> Dzień Treningowy: <%=result[0]["DzienTreningowy"] %> </h2>
+        <h2 class="tblHdr"><%=wrktDate%> | Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
 
       <table class="lastWrkt">
        
@@ -15,16 +15,21 @@
           <th  class="text-left">Ilość Powtórzeń</th>
           <th  class="text-left">Objętość</th>
       </thead>
-      <tbody class="table-hover">
-          <% result.forEach(function(column){ %>
+
+        <tbody class="table-hover">
+          <% cwiczenia.forEach(function(cwiczenie){ %>
         <tr class="">  
-          <td  class="text-left wrktInfo"><%= column["NazwaCwiczenia"] %></td>
-          <td  class="text-left wrktInfo"><%= column["IloscSerii"] %></td>
-          <td  class="text-left wrktInfo"><%= column["IloscPowtorzen"] %></td>
-          <td  class="text-left wrktInfo"><%= column["Objetosc"] %> kg</td>
+          <td  class="text-left wrktInfo"><%= cwiczenie["Nazwa"] %></td>
+          <td  class="text-left wrktInfo"><%= cwiczenie["Info"].length %></td>
+          <td  class="text-left wrktInfo">
+              <% cwiczenie["Info"].forEach(function(rep){ %>
+              <li class='repList'> <%= rep['IloscPowtorzen'] %></li> 
+              <%  })  %>
+          </td>
         </tr>
         <% }) %> 
       </tbody>
+
       </table>
     </div>
     <!--<form action="/addWrkt" method="GET">--->
