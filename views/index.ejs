@@ -13,7 +13,7 @@
           <th  class="text-left">Nazwa Ćwiczenia</th>
           <th  class="text-left">Ilość Serii</th>
           <th  class="text-left">Ilość Powtórzeń</th>
-          <th  class="text-left">Objętość</th>
+          <th  class="text-left">Ciężar</th>
       </thead>
 
         <tbody class="table-hover">
@@ -26,6 +26,11 @@
               <li class='repList'> <%= rep['IloscPowtorzen'] %></li> 
               <%  })  %>
           </td>
+          <td  class="text-left wrktInfo">
+            <% cwiczenie["Info"].forEach(function(rep){ %>
+            <li class='repList'> <%= rep['Ciezar'] %></li> 
+            <%  })  %>
+        </td>
         </tr>
         <% }) %> 
       </tbody>

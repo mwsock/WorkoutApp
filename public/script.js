@@ -63,22 +63,30 @@ function selectUnblock(){
 };
 
 
-function populateRows() //adds new rows to wrktDetails table
+function populateRows(event) //adds new rows to wrktDetails table
 {
+    let e = window.event;
+    var et = e.target;
+    console.log(et.getAttribute('name'));
+    const eN = document.getElementsByClassName('execName');
+    const index = Array.from(eN).findIndex(item => item.getAttribute('name') === et.getAttribute('name'));
+    console.log(index);
+    
     const z = document.getElementsByClassName('toFill');
     const nSeries = document.getElementsByClassName('WrktSeriesOpt');
-    let i = 0;
+   // let i = 0;
+   let i = index;
         //console.log(z.length);
-       for(i;i<z.length;i++){
+     //  for(i;i<z.length;i++){
        // console.log(z.length+'_z');
         let nS = parseInt(nSeries[i].value);
         //console.log(nSeries.length); //helps to populate inputs
         
-        if(isNaN(nS)){
+   /*     if(isNaN(nS)){
            // console.log('stop');
            nSeries[i].setAttribute('disabled','');
             continue;
-        };
+        }; */
 
         const repsNode = document.createElement("td");
         const weightNode = document.createElement("td");
@@ -118,7 +126,7 @@ function populateRows() //adds new rows to wrktDetails table
             //console.log(nS+"_nS");
             i=i-1; //due to className change for z there was a problem with shrinking z.length and 
                    //growing i number what has caused problem with input multipling
-        };
+    //    };
     //console.log(i+"_i");
     
 };
@@ -163,7 +171,7 @@ function hideDetail(i){
 
 function expandDetails(event){
     checkWrkt(event);
-    populateRows();
+    populateRows(event);
     styleDetails();
 };
 

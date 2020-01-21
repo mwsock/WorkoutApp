@@ -68,7 +68,7 @@ function ajaxSeries(type,element){
                                                                                                                                                              
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.' onclick ='expandDetails()'>"+ arrayObj['dtype'] + "</div>\
                                                             <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td class='text-left'> \
-                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='Ilość Serii' min='1' max='100' ></tr><tr class='toFill'></tr>" //+ details;  
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' ></tr><tr class='toFill'></tr>" //+ details;  
                                                             
                                                             /*
                                                             <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
@@ -121,6 +121,18 @@ function sendWrkt(){
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify(log));
+
+    let hdr = document.getElementById('saveWrktHdr');
+    hdr.textContent = 'Trening zapisany!';
+
+    let dtlRps = document.getElementsByClassName('detailsReps');
+    let dtlWgth = document.getElementsByClassName('detailsWeight');
+
+    for(var i=0;i<dtlRps.length;i++){
+        dtlRps[i].setAttribute('disabled','');
+        dtlWgth[i].setAttribute('disabled','');
+    };
+
 }; 
 
 function getValues(){
