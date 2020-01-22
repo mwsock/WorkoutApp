@@ -14,7 +14,7 @@ function checkWrkt(event){
     });
    // console.log(x);
    if( x == 0){
-    alert("Musisz wprowadzić co najmniej 1 serię by przejść dalej.");
+    alert("Podaj ilość serii, a następnie uzupełnij liczbę powtórzeń i ciężar.");
     event.preventDefault();
    }else{
     for(i;i<hidTbl.length;i++){ 
@@ -67,20 +67,24 @@ function populateRows(event) //adds new rows to wrktDetails table
 {
     let e = window.event;
     var et = e.target;
-    console.log(et.getAttribute('name'));
+    //console.log(et.getAttribute('name'));
     const eN = document.getElementsByClassName('execName');
     const index = Array.from(eN).findIndex(item => item.getAttribute('name') === et.getAttribute('name'));
-    console.log(index);
+    //console.log(index);
     
     const z = document.getElementsByClassName('toFill');
-    const nSeries = document.getElementsByClassName('WrktSeriesOpt');
+    //const nSeries = document.getElementsByClassName('WrktSeriesOpt');
    // let i = 0;
    let i = index;
         //console.log(z.length);
      //  for(i;i<z.length;i++){
        // console.log(z.length+'_z');
-        let nS = parseInt(nSeries[i].value);
-        //console.log(nSeries.length); //helps to populate inputs
+        //let nS = parseInt(nSeries[i].value);
+        let nSeries = eN[index].parentNode.parentNode.childNodes[1].nextElementSibling.childNodes[1];
+       
+        let nS = parseInt(nSeries.value);
+        //console.log(nS);
+        //console.log(nSeries.length+'ss'); //helps to populate inputs
         
    /*     if(isNaN(nS)){
            // console.log('stop');
@@ -104,16 +108,18 @@ function populateRows(event) //adds new rows to wrktDetails table
         liReps.appendChild(inpReps); 
         weightNode.appendChild(liWeight); 
         liWeight.appendChild(inpWeight); 
-            
+
+        let zFilledUp = eN[index].parentNode.parentNode.nextElementSibling;  
+         
             if(nS==1){
-                z[i].appendChild(repsNode);
-                z[i].appendChild(weightNode);
+                zFilledUp.appendChild(repsNode);
+                zFilledUp.appendChild(weightNode);
                 blockDetail(i);
             }else{
                 let x = 1
                 for(x; x<nS;x++){
-                    z[i].appendChild(repsNode);
-                    z[i].appendChild(weightNode);
+                    zFilledUp.appendChild(repsNode);
+                    zFilledUp.appendChild(weightNode);
 
                     repsNode.appendChild(liReps.cloneNode(true));
                     weightNode.appendChild(liWeight.cloneNode(true));
@@ -121,13 +127,22 @@ function populateRows(event) //adds new rows to wrktDetails table
                 }; 
             };
             //nSeries[i].setAttribute('disabled',''); //blocks series insert
-            nSeries[i].className = 'WrktSeriesOptFilled';
-            z[i].className='filledUp';
+            //nSeries[i].className = 'WrktSeriesOptFilled';
+            nSeries.className = 'WrktSeriesOptFilled';
+
+            
+            eN[index].title="Naciśnij by zwinąć."
+            //console.log(zFilledUp);
+            zFilledUp.className='filledUp';
+            //z[i].className='filledUp';
             //console.log(nS+"_nS");
             i=i-1; //due to className change for z there was a problem with shrinking z.length and 
                    //growing i number what has caused problem with input multipling
     //    };
     //console.log(i+"_i");
+
+    //console.log(eN[index]);
+    eN[index].setAttribute('onClick','visibility()');
     
 };
 
@@ -175,6 +190,22 @@ function expandDetails(event){
     styleDetails();
 };
 
+
+function visibility(event){
+    let e = window.event;
+    let et = e.target;
+    let zFilledUp = et.parentNode.parentNode.nextElementSibling;
+
+    if(zFilledUp.classList.contains('hidden')){
+        zFilledUp.classList.remove('hidden');
+        et.title="Naciśnij by zwinąć."
+    }else{
+        zFilledUp.classList.add('hidden');
+        et.title="Naciśnij by rozwinąć."
+
+    };
+
+};
 
 
 /*function hidDetail(event){

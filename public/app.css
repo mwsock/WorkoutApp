@@ -1,4 +1,5 @@
 
+
 body {
     color: black;
     background-color: ghostwhite;
@@ -10,6 +11,7 @@ body {
     height: 2%;
     width: 2%;
 }
+
 
 .hrefBttn, .selectWrkt {
     text-decoration: none;
@@ -221,4 +223,9 @@ td>li{
 
 .repList{
   display: inline-block;
+}
+
+
+.hidden{
+  display:none;
 }
