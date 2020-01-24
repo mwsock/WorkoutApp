@@ -1,8 +1,27 @@
 <% include partials/header %>
 
+<div class='leftBar'>
+
+  <h1>Plany Treningowe: </h1>
+
+  <% result.forEach(function(plan){ %>
+    <li> <%= plan["wrktPlan"] %> </li>
+    <% }) %> 
+
+  <form action='/insrtPlan' method='POST'>
+    <input type='text' name='plan' class="WrktIDopt" placeholder="Dodaj nowy plan...">
+    <input type="submit" class='wrktBttn' value="Zatwierdź">
+  </form>
+  <form action='/deletePlan' method='GET'>
+    <input type='text' name='plan' class="WrktIDopt" placeholder="Usuń plan...">
+    <input type="submit" class='wrktBttn' value="Zatwierdź">
+  </form>
+</div>
+
 
 
 <div class="wrktTbl">
+
         <form action='/insrtWrktPlan' method='POST' >
 
             <div class="selectWrkt">

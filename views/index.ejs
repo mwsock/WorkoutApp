@@ -5,7 +5,14 @@
 <div class="wrktTbl">
         <h1 class="tblHdr">Twój ostatni trening: </h1>
         
-        <h2 class="tblHdr"><%=wrktDate%> | Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
+
+        <% if(typeof result === 'undefined' || result === null){ %>
+
+          <h2>Brak zapisanych treningów!</h2>
+
+        <%}else{%>
+
+          <h2 class="tblHdr"><%=wrktDate%> | Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
 
       <table class="lastWrkt">
        
@@ -37,7 +44,7 @@
 
       </table>
     </div>
-    <!--<form action="/addWrkt" method="GET">--->
+    <%};%>
 
    
 <% include partials/footer %>

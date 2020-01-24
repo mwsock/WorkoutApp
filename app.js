@@ -63,11 +63,21 @@ app.set('view engine','ejs');
 
 
 app.get('/', function(req, res) {
+
+  var wrktObj = '';
+  let cwiczenia = '';
+  let wrktDate = '';
+  var planName = '';
+
                       //latest entry filter
       wrkt.find({},{},{sort:{_id:-1}}, function(err, wLog){
           if(err){
             console.log('error');
           }else{
+           if(typeof wLog[0] === 'undefined' || wLog === null) {
+            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
+           }else{
+            console.log(wLog);
            var wrktObj = JSON.parse(JSON.stringify(wLog[0]));
            console.log(wrktObj.wlog);
             console.log(wrktObj.wlog['Cwiczenia'][0].Info);
@@ -94,6 +104,7 @@ app.get('/', function(req, res) {
 
                  
                 });
+           };  
           };
       });
 
@@ -310,6 +321,73 @@ app.get('/dlt',function(req,res){
           res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
         }
       });
+    }
+  });
+
+});
+
+
+
+
+app.post('/insrtPlan',function(req,res){
+  //console.log(req.body.search);
+  let plan = req.body.plan;
+  console.log(plan);
+  let newPlan = {_id: mongoose.Types.ObjectId(),wrktPlan: plan,cDATE: Date()};
+                
+
+  wrktPlan.create(newPlan, function(err, newlyCreated){
+    if(err){
+      console.log(err)
+    }else{
+      
+        wrktPlan.find({},function(err,rows){
+          if(err){
+            console.log('error');
+          }else{
+          // console.log(rows);
+            exercise.find({},function(err,rows2){
+              if(err){
+                console.log('error')
+              }else{
+              // console.log(rows2);
+                res.render('newWrktPlan', {result: rows,result2: rows2});
+              }
+            });
+          }
+        });
+    }
+  });
+
+});
+
+
+app.get('/deletePlan',function(req,res){
+  //console.log(req.query.search);
+  const plan = req.query.plan;
+  console.log(plan);
+  let removedPlan = {wrktPlan: plan};
+
+  wrktPlan.findOneAndRemove(removedPlan, function(err, crrntlyRemoved){
+    if(err){
+      console.log(err)
+    }else{
+      
+        wrktPlan.find({},function(err,rows){
+          if(err){
+            console.log('error');
+          }else{
+          // console.log(rows);
+            exercise.find({},function(err,rows2){
+              if(err){
+                console.log('error')
+              }else{
+              // console.log(rows2);
+                res.render('newWrktPlan', {result: rows,result2: rows2});
+              }
+            });
+          }
+        });
     }
   });
 

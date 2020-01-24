@@ -140,7 +140,7 @@ function getValues(){
     var wrkt = document.getElementById('WrktID').value;
 
     var variant = document.getElementById('variantID').value;
-
+    var wrktDate = document.getElementById('wrktDate').value
     var z = document.getElementsByClassName('execRow');
 
     var exercices = [];
@@ -188,7 +188,7 @@ function getValues(){
 
 
     };
-            var wrkt_log =  {"CDate": Date() ,
+            var wrkt_log =  {"CDate": wrktDate,
                              "wlog": 
                                 {"RodzajTreningu": wrkt,
                                 "DzienTreningowy": variant,
