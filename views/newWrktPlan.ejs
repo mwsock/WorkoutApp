@@ -1,8 +1,10 @@
 <% include partials/header %>
 
+<div class='container'>
+
 <div class='leftBar'>
 
-  <h1>Plany Treningowe: </h1>
+  <h2>Plany Treningowe: </h2>
 
   <% result.forEach(function(plan){ %>
     <li> <%= plan["wrktPlan"] %> </li>
@@ -25,7 +27,7 @@
         <form action='/insrtWrktPlan' method='POST' >
 
             <div class="selectWrkt">
-                    <p>Wybierz trening do zdefiniowania:
+                    <h2>Wybierz trening do zdefiniowania:</h2>
                         
                         <select name="WrktName" id="WrktID">
                           <option hidden disabled selected value> Wybierz Trening</option>
@@ -63,7 +65,7 @@
       
 </div>
 
-
+</div>
 
 
 <% include partials/footer %>

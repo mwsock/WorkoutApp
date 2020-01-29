@@ -140,7 +140,8 @@ function getValues(){
     var wrkt = document.getElementById('WrktID').value;
 
     var variant = document.getElementById('variantID').value;
-    var wrktDate = document.getElementById('wrktDate').value
+    
+    var wrktDate = document.getElementById('WrktID').value
     var z = document.getElementsByClassName('execRow');
 
     var exercices = [];

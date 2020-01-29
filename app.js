@@ -144,6 +144,95 @@ app.post('/addWrkt', function(req,res){
 
 });
 
+
+
+app.get('/edit_wrkt',function(req,res){
+  var wrktObj = [];
+  let wrktDay = '';
+  let wrktDate = '';
+  var planName = [];
+
+                      //latest entry filter
+      wrkt.find({}, function(err, wLog){
+          if(err){
+            console.log('error');
+          }else{
+           if(typeof wLog[0] === 'undefined' || wLog === null) {
+            res.render('edit_wrkt' , {wrktDay: wrktDay, planName: planName, wrktDate:wrktDate});
+           }else{
+            console.log(wLog.length);
+            wLog.forEach(log=>{
+              wrktObj.push(JSON.parse(JSON.stringify(log)));
+              let logObj = JSON.parse(JSON.stringify(log));
+              console.log(logObj.wlog['RodzajTreningu']);
+
+              let id = logObj.wlog['RodzajTreningu'];
+
+
+
+            });
+
+            
+      
+async function msg(){
+          const query = wrktPlan.find();
+          query instanceof mongoose.Query; // true
+          const docs = await query; // Get the documents
+         
+          //console.log(docs)
+          docs.forEach(m=>{
+            console.log(m._id);
+          })
+};
+
+
+      msg();
+      
+
+                //  let tst =  wrktPlan.find({},function(err,rows){
+                //       if(err){
+                //         console.log(error)
+                //       }else{
+                //         rows.forEach(elem => {
+                //             if(id===elem._id){
+                //              planName.push(elem.wrktPlan);
+                               
+                //             };
+                            
+                //         });
+                        
+                //       };
+                      
+                      
+                //     });
+                //     console.log(tst);
+
+
+
+                  // res.send(userSteve);
+
+
+
+            //var wrktObj = JSON.parse(JSON.stringify(wLog[1]));
+            //let wrktDay = wrktObj[0].wlog['DzienTreningowy'];
+            //let date = new Date(wrktObj[0].CDate);
+            //const options = {year: 'numeric', month: 'long', day: 'numeric'};
+            //console.log(date.toLocaleDateString('pl-PL', options));
+            //let wrktDate = date.toLocaleDateString('pl-PL', options);
+
+            //var id = wrktObj.wlog['RodzajTreningu'];
+
+           
+
+
+           };  
+          };
+
+          
+      });
+});
+
+
 app.get("/addWrkt/:planId/:variantId", function(req,res){
 //console.log(req.params);
   var planId = req.params["planId"];
@@ -209,35 +298,6 @@ app.get('/newWrktPlan', function(req,res){
 });
 
 
-/*app.post('/insrtWrkt',function(req,res){
-
-  const {WrktId, NumerSerii, IloscPowtorzen, Ciezar} = req.body;
-  const body = {WrktId, NumerSerii, IloscPowtorzen, Ciezar};
- 
-  //console.log(bd[0]);
-  var i;
-
-  for(i=0;i<body['WrktId'].length;i++){
-    
-   //console.log(body['Ciezar'][i]);
-
-    var insrt = 'Insert into SETS_REPS (ID_SCHEMA,SETNUMBER,REPNUMBER,WEIGHT) values (' + body['WrktId'][i] +','+ body['NumerSerii'][i] +','+ body['IloscPowtorzen'][i] +','+ body['Ciezar'][i] +');'
-    
-    //console.log(insrt);
-
-        sql.query(connectionString, insrt, (err, results) => {
-          if (err){
-              res.send(err);
-                  };
-        
-        }); 
-     
-      };
-  
-    
-   
-  res.redirect('/crrnt_wrkt');
-}); */
 
 
 app.post('/insrtWrktPlan',function(req,res){

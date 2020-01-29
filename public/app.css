@@ -20,11 +20,11 @@ body {
 }
 
 
-div.wrktTbl, .selectWrkt {
+.wrktTbl, .selectWrkt {
   display: block;
   margin: auto;
   padding:5px;
-  width: 100%;
+  width: auto;
   text-align: center;
 }
 
@@ -256,4 +256,16 @@ td>li{
 
 .hidden{
   display:none;
+}
+
+.leftBar{
+  display: block;
+  margin: auto;
+  padding:5px;
+  width: auto;
+  text-align: center;
+}
+
+.container{
+  display: flex;
 }
