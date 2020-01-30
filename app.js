@@ -64,10 +64,10 @@ app.set('view engine','ejs');
 
 app.get('/', function(req, res) {
 
-  var wrktObj = '';
+  let wrktObj = '';
   let cwiczenia = '';
   let wrktDate = '';
-  var planName = '';
+  let planName = '';
 
                       //latest entry filter
       wrkt.find({},{},{sort:{_id:-1}}, function(err, wLog){
@@ -77,42 +77,20 @@ app.get('/', function(req, res) {
            if(typeof wLog[0] === 'undefined' || wLog === null) {
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
            }else{
-            console.log(wLog);
-           var wrktObj = JSON.parse(JSON.stringify(wLog[0]));
-           console.log(wrktObj.wlog);
-            console.log(wrktObj.wlog['Cwiczenia'][0].Info);
+            //console.log(wLog);
+            let wrktObj = JSON.parse(JSON.stringify(wLog[0]));
+
+            let planName = wrktObj.wlog['RodzajTreningu'];
             let cwiczenia = wrktObj.wlog['Cwiczenia'];
+
             let date = new Date(wrktObj.CDate);
             const options = {year: 'numeric', month: 'long', day: 'numeric'};
-            //console.log(date.toLocaleDateString('pl-PL', options));
             let wrktDate = date.toLocaleDateString('pl-PL', options);
 
-            var id = wrktObj.wlog['RodzajTreningu'];
-
-            wrktPlan.find({},function(err,rows){
-                  if(err){
-                    console.log(error)
-                  }else{
-                    rows.forEach(elem => {
-                        if(id===elem._id){
-                          var planName = elem.wrktPlan;
-                            //console.log(planName);
-                          res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
-                        };
-                    });
-                  };
-
-                 
-                });
+            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
            };  
           };
       });
-
-           
-            //res.send(wrktObj);
-          
-      
-
 });
 
 app.get('/crrnt_wrkt',function(req,res){
@@ -147,12 +125,12 @@ app.post('/addWrkt', function(req,res){
 
 
 app.get('/edit_wrkt',function(req,res){
-  var wrktObj = [];
+  
   let wrktDay = '';
   let wrktDate = '';
-  var planName = [];
+  var planName = '';
 
-                      //latest entry filter
+                      
       wrkt.find({}, function(err, wLog){
           if(err){
             console.log('error');
@@ -161,75 +139,13 @@ app.get('/edit_wrkt',function(req,res){
             res.render('edit_wrkt' , {wrktDay: wrktDay, planName: planName, wrktDate:wrktDate});
            }else{
             console.log(wLog.length);
-            wLog.forEach(log=>{
-              wrktObj.push(JSON.parse(JSON.stringify(log)));
-              let logObj = JSON.parse(JSON.stringify(log));
-              console.log(logObj.wlog['RodzajTreningu']);
 
-              let id = logObj.wlog['RodzajTreningu'];
-
-
-
-            });
-
-            
-      
-async function msg(){
-          const query = wrktPlan.find();
-          query instanceof mongoose.Query; // true
-          const docs = await query; // Get the documents
-         
-          //console.log(docs)
-          docs.forEach(m=>{
-            console.log(m._id);
-          })
-};
-
-
-      msg();
-      
-
-                //  let tst =  wrktPlan.find({},function(err,rows){
-                //       if(err){
-                //         console.log(error)
-                //       }else{
-                //         rows.forEach(elem => {
-                //             if(id===elem._id){
-                //              planName.push(elem.wrktPlan);
-                               
-                //             };
-                            
-                //         });
-                        
-                //       };
-                      
-                      
-                //     });
-                //     console.log(tst);
-
-
-
-                  // res.send(userSteve);
-
-
-
-            //var wrktObj = JSON.parse(JSON.stringify(wLog[1]));
-            //let wrktDay = wrktObj[0].wlog['DzienTreningowy'];
-            //let date = new Date(wrktObj[0].CDate);
-            //const options = {year: 'numeric', month: 'long', day: 'numeric'};
-            //console.log(date.toLocaleDateString('pl-PL', options));
-            //let wrktDate = date.toLocaleDateString('pl-PL', options);
-
-            //var id = wrktObj.wlog['RodzajTreningu'];
-
-           
-
-
+            let recordPlan = JSON.parse(JSON.stringify(wLog));
+            res.render('edit_wrkt',{recordPlan: recordPlan});
            };  
-          };
-
-          
+          }; 
       });
+      
 });
 
 

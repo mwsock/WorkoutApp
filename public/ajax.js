@@ -137,11 +137,14 @@ function sendWrkt(){
 
 function getValues(){
 
-    var wrkt = document.getElementById('WrktID').value;
+    var e = document.getElementById('WrktID');
+    var wrkt = e.options[e.selectedIndex].text;
 
     var variant = document.getElementById('variantID').value;
     
-    var wrktDate = document.getElementById('WrktID').value
+    var wrktDate = document.getElementById('wrktDate').value
+    
+    
     var z = document.getElementsByClassName('execRow');
 
     var exercices = [];
@@ -199,4 +202,9 @@ function getValues(){
 
             //console.log(wrkt_log);
             return wrkt_log;
+};
+
+
+function ajaxTST(){
+    alert('yea');
 };

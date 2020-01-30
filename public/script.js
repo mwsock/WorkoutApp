@@ -207,15 +207,24 @@ function visibility(event){
 
 };
 
+const records = document.getElementsByClassName('recordPlan');
+Array.from(records).forEach(record =>{
+    record.addEventListener("click", editWrkt, false); 
+});
 
-/*function hidDetail(event){
+
+function editWrkt(event){
+
+    const records = document.getElementsByClassName('recordPlan');
+
     let e = window.event;
-    let name = e.target.clientX;
-    console.log(name);
-    let next =  document.getElementsByClassName(name);
-    console.log(next);
+    let et = e.target;
+    //console.log(et.getAttribute('name'));
+    
+    const index = Array.from(records).findIndex(item => item.getAttribute('value') === et.getAttribute('value'));
+    console.log(index);
 
-    var xPosition = e.clientX;
-    var yPosition = e.clientY;
-  console.log(xPosition);  
-}; */
+    ajaxTST();
+
+
+}
