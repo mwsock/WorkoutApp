@@ -1,12 +1,12 @@
 <% include partials/header %>
-
+<div class='container'>
     <h3>Wybierz trening, który chcesz edytować:</h3>
     <ul>
         <% recordPlan.forEach(function(plan){ %>
         <li class='recordPlan' value= '<%= plan._id %>'  > <%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %> </li>
         <% }) %> 
     </ul>    
-  
+</div>  
 <% include partials/footer %>
          
   

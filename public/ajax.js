@@ -205,6 +205,3 @@ function getValues(){
 };
 
 
-function ajaxTST(){
-    alert('yea');
-};

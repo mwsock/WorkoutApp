@@ -241,8 +241,16 @@ td>li{
   list-style: none;
 }
 
-.execName:hover{
+.recordPlan{
+  list-style-type: none;
+}
+
+.execName:hover, .recordPlan:hover{
   cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 2pt solid black;
+  margin-bottom: -1px;
 }
 
 #wrktSeriesBttn{
@@ -268,4 +276,5 @@ td>li{
 
 .container{
   display: flex;
+  flex-direction: column;
 }

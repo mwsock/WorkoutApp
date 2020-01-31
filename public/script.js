@@ -224,7 +224,15 @@ function editWrkt(event){
     const index = Array.from(records).findIndex(item => item.getAttribute('value') === et.getAttribute('value'));
     console.log(index);
 
-    ajaxTST();
+    let id = et.getAttribute('value');
+
+    getWrkt(id);
 
 
-}
+};
+
+
+
+function getWrkt(id){
+    window.location.href = '/edit_selected_wrkt/'+id;
+};

@@ -145,7 +145,22 @@ app.get('/edit_wrkt',function(req,res){
            };  
           }; 
       });
-      
+
+});
+
+
+app.get("/edit_selected_wrkt/:id", function(req,res){
+
+  let id = req.params['id'];
+  console.log(id);
+
+  wrkt.findById(id,function(err, wLog){
+
+    //res.render('edit_selected_wrkt');
+    res.send(wLog);
+  });
+
+  
 });
 
 
@@ -175,6 +190,7 @@ app.get("/addWrkt/:planId/:variantId", function(req,res){
           }
     });
 });
+
 
 
 app.get('/addWrkt/:id', function(req,res){

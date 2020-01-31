@@ -1,0 +1,50 @@
+<% include partials/header %>
+
+
+
+
+
+  <!--<form action="/addWrkt" method="POST">-->
+  <form action="" method=""></form>
+  <div class="selectWrkt">
+  <p>Edytuj trening:</p>  
+  
+      
+
+      <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
+        <option hidden disabled selected value>Trening</option>
+       
+          <option class="WrktIDopt" value=''></option>
+
+      </select>
+      <select name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
+          <option hidden disabled selected value>Dzień Treningowy</option>
+      </select>
+      <input type='date' id='wrktDate' name='wrktDate'>
+  </div>
+
+
+  <div class="wrktTbl">
+    <h1 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h1>
+
+  <table class="lastWrkt">
+  
+    <thead>
+      <th class="text-left">Ćwiczenie</th>
+      <th class="text-left">Ilość serii</th>
+      <!--<th class="text-left">Ilość Powtórzeń</th>
+      <th class="text-left">Ciężar</th>-->
+  </thead>
+  <tbody id='tRows' class="table-hover">
+
+  </tbody>
+  </table>
+  </div>
+  
+  <input type='submit'  class='wrktBttn' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
+</form>
+
+  
+<% include partials/footer %>
+         
+  
