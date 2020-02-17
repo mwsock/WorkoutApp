@@ -74,8 +74,10 @@ app.get('/', function(req, res) {
           if(err){
             console.log('error');
           }else{
-           if(typeof wLog[0] === 'undefined' || wLog === null) {
+            let tstLog = JSON.parse(JSON.stringify(wLog[0]));
+           if(typeof tstLog.CDate === 'undefined' || tstLog.CDate === null) {
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
+            //console.log(wLog);
            }else{
             //console.log(wLog);
             let wrktObj = JSON.parse(JSON.stringify(wLog[0]));
@@ -156,8 +158,10 @@ app.get("/edit_selected_wrkt/:id", function(req,res){
 
   wrkt.findById(id,function(err, wLog){
 
-    //res.render('edit_selected_wrkt');
-    res.send(wLog);
+    let log = JSON.parse(JSON.stringify(wLog));
+    console.log(log.wlog['Cwiczenia']);
+    res.render('edit_selected_wrkt', {wLog: log});
+    //res.send(wLog);
   });
 
   

@@ -1,26 +1,19 @@
 <% include partials/header %>
 
 
-
-
-
-  <!--<form action="/addWrkt" method="POST">-->
   <form action="" method=""></form>
+
   <div class="selectWrkt">
-  <p>Edytuj trening:</p>  
-  
-      
+    <p>Edytuj trening:</p>  
 
-      <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
-        <option hidden disabled selected value>Trening</option>
-       
-          <option class="WrktIDopt" value=''></option>
+        <select disabled name="WrktName" id="WrktID">
+            <option hidden disabled selected value><%= wLog.wlog['RodzajTreningu'] %></option>
+        </select>
+        <select name="variant" id="variantID" disabled>
+            <option hidden disabled selected value><%= wLog.wlog['DzienTreningowy'] %></option>
+        </select>
+        <input type='date' id='wrktDate' name='wrktDate' value="<%= wLog.CDate %>" disabled>
 
-      </select>
-      <select name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
-          <option hidden disabled selected value>Dzień Treningowy</option>
-      </select>
-      <input type='date' id='wrktDate' name='wrktDate'>
   </div>
 
 
@@ -32,11 +25,37 @@
     <thead>
       <th class="text-left">Ćwiczenie</th>
       <th class="text-left">Ilość serii</th>
-      <!--<th class="text-left">Ilość Powtórzeń</th>
-      <th class="text-left">Ciężar</th>-->
   </thead>
   <tbody id='tRows' class="table-hover">
-
+      <% wLog.wlog['Cwiczenia'].forEach(cwiczenie =>{  %>
+        <tr class='execRow'>
+            <td class='text-left'>
+                <div class='execName' name='<%= cwiczenie.Nazwa %>' title='Naciśnij by rozwinąć.' ><%= cwiczenie.Nazwa %></div>
+                <input readonly='readonly' hidden name='exec' value='<%= cwiczenie.Nazwa %>'>
+            </td> 
+            <td class='text-left'> 
+                <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
+        
+        <tr class='filledUp hidden' >
+            
+                <td>
+                    <% cwiczenie.Info.forEach(info =>{  %>
+                    <li>
+                        <input class="detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= info.IloscPowtorzen %>'>
+                    </li> 
+                    <% }); %>  
+                </td>
+                <td>
+                    <% cwiczenie.Info.forEach(info =>{  %>
+                    <li>
+                        <input class="detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= info.Ciezar %>'>
+                    </li> 
+                    <% }); %>  
+                </td>
+            
+        </tr>
+        
+      <% }); %>  
   </tbody>
   </table>
   </div>
