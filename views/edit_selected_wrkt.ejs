@@ -6,13 +6,13 @@
   <div class="selectWrkt">
     <p>Edytuj trening:</p>  
 
-        <select disabled name="WrktName" id="WrktID">
+        <select disabled name="WrktName" id="WrktID" wrktID="<%= wLog._id %>">
             <option hidden disabled selected value><%= wLog.wlog['RodzajTreningu'] %></option>
         </select>
         <select name="variant" id="variantID" disabled>
             <option hidden disabled selected value><%= wLog.wlog['DzienTreningowy'] %></option>
         </select>
-        <input type='date' id='wrktDate' name='wrktDate' value="<%= wLog.CDate %>" disabled>
+        <input type='date' id='wrktDate' name='wrktDate' value="<%= wLog.CDate %>" readonly>
 
   </div>
 
@@ -60,7 +60,7 @@
   </table>
   </div>
   
-  <input type='submit'  class='wrktBttn' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
+  <input type='submit'  class='wrktBttn' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='updateWrkt()'>
 </form>
 
   

@@ -160,7 +160,7 @@ function getValues(){
 
             var seriesNum = z[i].children[1].children[0].value;
             //console.log('SeriesNumber: '+seriesNum);
-
+   
             var execTD = z[i].nextSibling.children[0];
             var weigthTD = z[i].nextSibling.children[1];
 
@@ -205,3 +205,99 @@ function getValues(){
 };
 
 
+function updateWrkt(){
+
+
+    var log = getUpdatedValues();
+    console.log(log);
+    let id = document.getElementById('WrktID').getAttribute('wrktid');
+    console.log(id);
+    var url = "/edit_selected_wrkt/"+id+"/update";
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(log));
+
+    let hdr = document.getElementById('saveWrktHdr');
+    hdr.textContent = 'Trening zapisany!';
+
+    let dtlRps = document.getElementsByClassName('detailsReps');
+    let dtlWgth = document.getElementsByClassName('detailsWeight');
+
+    for(var i=0;i<dtlRps.length;i++){
+        dtlRps[i].setAttribute('disabled','');
+        dtlWgth[i].setAttribute('disabled','');
+    };
+    
+}; 
+
+function getUpdatedValues(){
+
+    var e = document.getElementById('WrktID');
+    var wrkt = e.options[e.selectedIndex].text;
+
+    var e = document.getElementById('variantID');
+    var variant = e.options[e.selectedIndex].text;
+
+    var wrktDate = document.getElementById('wrktDate').value;
+    
+    
+    var z = document.getElementsByClassName('execRow');
+
+    var exercices = [];
+    
+
+    for(i=0;i<z.length;i++){
+
+        if(z[i].children[1].children[0].hasAttribute('disabled')){
+            //console.log('NEXT!');
+        }else{
+            var execName = z[i].children[0].children[0].textContent;
+            //console.log('ExerciseName: '+execName);
+
+            var seriesNum = z[i].children[1].children[0].value;
+            //console.log('SeriesNumber: '+seriesNum);
+            //console.log(z[i].nextSibling.nextSibling.children[0])
+            var execTD = z[i].nextSibling.nextSibling.children[0];
+            var weigthTD = z[i].nextSibling.nextSibling.children[1];
+
+            var info = [];
+
+                for(ii=0;ii<seriesNum;ii++){
+                    var repNum = execTD.children[ii].children[0].value;
+                    var weigthNum = weigthTD.children[ii].children[0].value;
+
+                    
+                    var infoEXT = {
+                        "NumerSerii": ii+1,
+                        "IloscPowtorzen": repNum,
+                        "Ciezar": weigthNum
+                        };
+                    info.push(infoEXT);
+
+                    //console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
+                };
+                //console.log(info);
+                var exercise =  {
+                    "Nazwa": execName,
+                    "Info": info
+                    };
+
+                exercices.push(exercise);
+                //console.log(exercices);
+        };
+
+
+    };
+            var wrkt_log =  {"CDate": wrktDate,
+                             "wlog": 
+                                {"RodzajTreningu": wrkt,
+                                "DzienTreningowy": variant,
+                                "Cwiczenia": exercices
+                                }
+                            };
+
+            //console.log(wrkt_log);
+            return wrkt_log;
+};

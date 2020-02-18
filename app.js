@@ -140,7 +140,7 @@ app.get('/edit_wrkt',function(req,res){
            if(typeof wLog[0] === 'undefined' || wLog === null) {
             res.render('edit_wrkt' , {wrktDay: wrktDay, planName: planName, wrktDate:wrktDate});
            }else{
-            console.log(wLog.length);
+            //console.log(wLog.length);
 
             let recordPlan = JSON.parse(JSON.stringify(wLog));
             res.render('edit_wrkt',{recordPlan: recordPlan});
@@ -154,16 +154,27 @@ app.get('/edit_wrkt',function(req,res){
 app.get("/edit_selected_wrkt/:id", function(req,res){
 
   let id = req.params['id'];
-  console.log(id);
+  //console.log(id);
 
   wrkt.findById(id,function(err, wLog){
 
     let log = JSON.parse(JSON.stringify(wLog));
-    console.log(log.wlog['Cwiczenia']);
+    //console.log(log.wlog['Cwiczenia']);
     res.render('edit_selected_wrkt', {wLog: log});
     //res.send(wLog);
   });
 
+  
+});
+
+
+app.put("/edit_selected_wrkt/:id/update", function(req,res){
+
+  let id = req.params['id'];
+  console.log("GOT IT:" + id);
+  console.log(req.body);
+
+res.send('Update');
   
 });
 
