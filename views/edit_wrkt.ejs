@@ -1,12 +1,22 @@
 <% include partials/header %>
-<div class='container'>
-    <h3>Wybierz trening, który chcesz edytować:</h3>
-    <ul>
-        <% recordPlan.forEach(function(plan){ %>
-        <li class='recordPlan' value= '<%= plan._id %>'  > <%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %> </li>
-        <% }) %> 
-    </ul>    
-</div>  
+
+<% if(typeof recordPlan === 'undefined' || recordPlan === null){ %>
+    <div class='container'>
+        <h2>Wybierz trening, który chcesz edytować:</h2>
+        <h3>Brak zapisanych treningów!</h3>
+    </div>
+
+<%}else{%>
+
+    <div class='container'>
+        <h3>Wybierz trening, który chcesz edytować:</h3>
+        <ul>
+            <% recordPlan.forEach(function(plan){ %>
+            <li class='recordPlan' value= '<%= plan._id %>'  > <%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %> </li>
+            <% }) %> 
+        </ul>    
+    </div>  
+<%};%>
 <% include partials/footer %>
          
   

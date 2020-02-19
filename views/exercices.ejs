@@ -1,26 +1,25 @@
 <% include partials/header %>
 
-<h1>Lista ćwiczeń: </h1>
+<div class='container'>
+  <div class='formContainer'>
+    <h1>Lista ćwiczeń: </h1>
 
-<% result.forEach(function(exercise){ %>
-  <li> <%= exercise["dtype"] %> </li>
-  <% }) %> 
-     
+    <% result.forEach(function(exercise){ %>
+      <li> <%= exercise["dtype"] %> </li>
+    <% }) %> 
+      
+    <h2><%= info %></h2>
 
+    <form action='/insrt' method='POST'>
+      <input type='text' name='search' class="WrktIDopt" placeholder="Dodaj nowe ćwiczenie...">
+      <input type="submit" class='wrktBttn' value="Zatwierdź">
+    </form>
 
-
-<div class='formContainer'>
-<h2><%= info %></h2>
-
-<form action='/insrt' method='POST'>
-  <input type='text' name='search' class="WrktIDopt" placeholder="Dodaj nowe ćwiczenie...">
-  <input type="submit" class='wrktBttn' value="Zatwierdź">
-</form>
-
-<form action='/dlt' method='GET'>
-  <input type='text' name='search' class="WrktIDopt" placeholder="Usuń ćwiczenie...">
-  <input type="submit" class='wrktBttn' value="Zatwierdź">
-</form>
+    <form action='/dlt' method='GET'>
+      <input type='text' name='search' class="WrktIDopt" placeholder="Usuń ćwiczenie...">
+      <input type="submit" class='wrktBttn' value="Zatwierdź">
+    </form>
+  </div>
 </div>
 
 <% include partials/footer %>

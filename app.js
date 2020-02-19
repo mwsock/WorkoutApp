@@ -3,23 +3,24 @@ const app = express();
 const router = express.Router();
 const path = require('path');
 const bodyParser = require('body-parser');
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
-const csp = require('helmet-csp');
-app.use(csp({
-directives: {
-  defaultSrc: ["'self'", 'http://localhost:3000'],
-  scriptSrc: ["'self'", "'unsafe-inline'"],
-  styleSrc: ["'self'"],
-  imgSrc: ["'self'"],
-  connectSrc: ["'self'"],
-  objectSrc: ["'none'"],
-  mediaSrc: ["'self'"],
-  frameSrc: ["'none'"],
-},
-setAllHeaders: false, // set to true if you want to set all headers
-safari5: false // set to true if you want to force buggy CSP in Safari 5
-}));
+// const csp = require('helmet-csp');
+// app.use(csp({
+// directives: {
+//   defaultSrc: ["'self'", 'http://localhost:3000'],
+//   scriptSrc: ["'self'", "'unsafe-inline'"],
+//   styleSrc: ["'self'"],
+//   imgSrc: ["'self'"],
+//   connectSrc: ["'self'"],
+//   objectSrc: ["'none'"],
+//   mediaSrc: ["'self'"],
+//   frameSrc: ["'none'"],
+// },
+// setAllHeaders: false, // set to true if you want to set all headers
+// safari5: false // set to true if you want to force buggy CSP in Safari 5
+// }));
 
 
 //połączenie do mongodb
@@ -58,6 +59,7 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
+app.use(methodOverride('_method'));
 
 app.set('view engine','ejs');
 
@@ -74,8 +76,8 @@ app.get('/', function(req, res) {
           if(err){
             console.log('error');
           }else{
-            let tstLog = JSON.parse(JSON.stringify(wLog[0]));
-           if(typeof tstLog.CDate === 'undefined' || tstLog.CDate === null) {
+            let tstLog = wLog[0];
+           if(typeof tstLog === 'undefined' || tstLog === null) {
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
             //console.log(wLog);
            }else{
@@ -171,10 +173,18 @@ app.get("/edit_selected_wrkt/:id", function(req,res){
 app.put("/edit_selected_wrkt/:id/update", function(req,res){
 
   let id = req.params['id'];
-  console.log("GOT IT:" + id);
-  console.log(req.body);
+  // console.log("GOT IT:" + id);
+  // console.log(req.body.wlog);
 
-res.send('Update');
+  let log = req.body.wlog;
+
+  wrkt.findByIdAndUpdate(id, { wlog: log },function(err,result){
+    if (err) {
+      res.send(err);
+    } else {
+     console.log('Updated!');
+    }
+  });
   
 });
 

@@ -212,9 +212,9 @@ function updateWrkt(){
     console.log(log);
     let id = document.getElementById('WrktID').getAttribute('wrktid');
     console.log(id);
-    var url = "/edit_selected_wrkt/"+id+"/update";
+    var url = "/edit_selected_wrkt/"+id+"/update?_method=PUT";
     var xhr = new XMLHttpRequest();
-    xhr.open('PUT', url);
+    xhr.open('POST', url);
     xhr.setRequestHeader("cache-control", "no-cache");
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify(log));
@@ -229,7 +229,7 @@ function updateWrkt(){
         dtlRps[i].setAttribute('disabled','');
         dtlWgth[i].setAttribute('disabled','');
     };
-    
+
 }; 
 
 function getUpdatedValues(){
