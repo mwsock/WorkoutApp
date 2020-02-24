@@ -2,9 +2,14 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const path = require('path');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const passportLocalMongoose = require('passport-local-mongoose');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const User = require('./public/user');
 const methodOverride = require('method-override');
+const expressSession = require('express-session');
 
 // const csp = require('helmet-csp');
 // app.use(csp({
@@ -60,11 +65,21 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 app.use(methodOverride('_method'));
+app.use(expressSession({
+  secret: "WorkoutApp",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.set('view engine','ejs');
 
-
-app.get('/', function(req, res) {
+app.get('/', isLoggedIn , function(req, res) {
 
   let wrktObj = '';
   let cwiczenia = '';
@@ -97,7 +112,7 @@ app.get('/', function(req, res) {
       });
 });
 
-app.get('/crrnt_wrkt',function(req,res){
+app.get('/crrnt_wrkt', isLoggedIn,function(req,res){
 
     wrktPlan.find({},function(err,rows){
           if(err){
@@ -110,7 +125,7 @@ app.get('/crrnt_wrkt',function(req,res){
     });
 
 
-app.post('/addWrkt', function(req,res){
+app.post('/addWrkt', isLoggedIn, function(req,res){
 
  console.log(req.body);
  const wrktLog = req.body;
@@ -128,7 +143,7 @@ app.post('/addWrkt', function(req,res){
 
 
 
-app.get('/edit_wrkt',function(req,res){
+app.get('/edit_wrkt', isLoggedIn, function(req,res){
   
   let wrktDay = '';
   let wrktDate = '';
@@ -153,7 +168,7 @@ app.get('/edit_wrkt',function(req,res){
 });
 
 
-app.get("/edit_selected_wrkt/:id", function(req,res){
+app.get("/edit_selected_wrkt/:id", isLoggedIn, function(req,res){
 
   let id = req.params['id'];
   //console.log(id);
@@ -170,7 +185,7 @@ app.get("/edit_selected_wrkt/:id", function(req,res){
 });
 
 
-app.put("/edit_selected_wrkt/:id/update", function(req,res){
+app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 
   let id = req.params['id'];
   // console.log("GOT IT:" + id);
@@ -189,7 +204,7 @@ app.put("/edit_selected_wrkt/:id/update", function(req,res){
 });
 
 
-app.get("/addWrkt/:planId/:variantId", function(req,res){
+app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
 //console.log(req.params);
   var planId = req.params["planId"];
   var variantId = req.params["variantId"];
@@ -218,7 +233,7 @@ app.get("/addWrkt/:planId/:variantId", function(req,res){
 
 
 
-app.get('/addWrkt/:id', function(req,res){
+app.get('/addWrkt/:id', isLoggedIn, function(req,res){
 
   var id = (req.params["id"])
  
@@ -234,7 +249,7 @@ app.get('/addWrkt/:id', function(req,res){
 });
 
 
-app.get('/newWrktPlan', function(req,res){
+app.get('/newWrktPlan', isLoggedIn, function(req,res){
         
   wrktPlan.find({},function(err,rows){
     if(err){
@@ -257,7 +272,7 @@ app.get('/newWrktPlan', function(req,res){
 
 
 
-app.post('/insrtWrktPlan',function(req,res){
+app.post('/insrtWrktPlan', isLoggedIn, function(req,res){
 
      let name = req.body['WrktName']
      let day = req.body['DzienTreningowy']
@@ -284,7 +299,7 @@ app.post('/insrtWrktPlan',function(req,res){
 
 
 
-app.get('/exercices',function(req,res){
+app.get('/exercices', isLoggedIn, function(req,res){
 
     exercise.find({},function(err,rows){
       if(err){
@@ -298,7 +313,7 @@ app.get('/exercices',function(req,res){
 });
 
 
-app.post('/insrt',function(req,res){
+app.post('/insrt', isLoggedIn, function(req,res){
   //console.log(req.body.search);
   const exerc = req.body.search;
   let newExercise = {dtype: exerc};
@@ -321,7 +336,7 @@ app.post('/insrt',function(req,res){
 });
 
 
-app.get('/dlt',function(req,res){
+app.get('/dlt',  isLoggedIn, function(req,res){
   //console.log(req.query.search);
   const exerc = req.query.search;
   let newExercise = {dtype: exerc};
@@ -346,7 +361,7 @@ app.get('/dlt',function(req,res){
 
 
 
-app.post('/insrtPlan',function(req,res){
+app.post('/insrtPlan',  isLoggedIn, function(req,res){
   //console.log(req.body.search);
   let plan = req.body.plan;
   console.log(plan);
@@ -379,7 +394,7 @@ app.post('/insrtPlan',function(req,res){
 });
 
 
-app.get('/deletePlan',function(req,res){
+app.get('/deletePlan',  isLoggedIn, function(req,res){
   //console.log(req.query.search);
   const plan = req.query.plan;
   console.log(plan);
@@ -410,8 +425,52 @@ app.get('/deletePlan',function(req,res){
 
 });
 
+app.get('/register',function(req,res){
+  res.render('register');
+});
+
+app.post('/register',function(req,res){
+  req.body.username;
+  req.body.password;
+  User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+    if(err){
+      console.log(err);
+      return res.render('register');
+    };
+    passport.authenticate('local')(req,res,function(){
+      res.render('secret');
+    });
+  });
+});
+
+
+app.get('/login',function(req,res){
+  res.render('login');
+});
+
+app.get('/logout',function(req,res){
+  req.logOut();
+  res.redirect('/login');
+});
+
+app.post('/login',passport.authenticate('local',{
+    successRedirect: '/', //middleware part checking if user + password matches - passport does the whole stuff
+    failureRedirect: '/login'
+  }),function(req,res){
     
+
+
+});
     
+//login middleware
+function isLoggedIn(req,res,next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+
+    res.redirect('/login');
+
+}
     
     
 //add the router

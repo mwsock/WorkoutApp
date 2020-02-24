@@ -275,14 +275,11 @@ td>li{
 }
 
 .container{
-  display: flex;
+  display: block;
   flex-direction: row;
   margin: auto;
   padding:5px;
-  text-align: center;
-
 }
 
 .container li{
-  text-align: left;
 }
