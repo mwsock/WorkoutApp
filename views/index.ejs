@@ -3,7 +3,7 @@
 
 
 <div class="wrktTbl">
-        <h1 class="tblHdr">Twój ostatni trening: </h1>
+        <h1 class="tblHdr">Cześć <%= user %>! Twój ostatni trening: </h1>
         
 
         <% if(typeof result._id === 'undefined' || result._id === null){ %>
@@ -12,13 +12,14 @@
 
         <%}else{%>
 
-          <h2 class="tblHdr"><%=wrktDate%> | Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
+          <h3 class="tblHdr">Data: <%=wrktDate%></h3>
+          <h2> Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
 
       <table class="lastWrkt">
        
         <thead>
           <th  class="text-left">Nazwa Ćwiczenia</th>
-          <th  class="text-left">Ilość Serii</th>
+          <!-- <th  class="text-left">Ilość Serii</th> -->
           <th  class="text-left">Ilość Powtórzeń</th>
           <th  class="text-left">Ciężar</th>
       </thead>
@@ -27,15 +28,15 @@
           <% cwiczenia.forEach(function(cwiczenie){ %>
         <tr class="">  
           <td  class="text-left wrktInfo"><%= cwiczenie["Nazwa"] %></td>
-          <td  class="text-left wrktInfo"><%= cwiczenie["Info"].length %></td>
+          <!-- <td  class="text-left wrktInfo"><%= cwiczenie["Info"].length %></td> -->
           <td  class="text-left wrktInfo">
-              <% cwiczenie["Info"].forEach(function(rep){ %>
-              <li class='repList'> <%= rep['IloscPowtorzen'] %></li> 
-              <%  })  %>
+            <% cwiczenie["Info"].forEach(function(rep){ %>
+            <li class='repList'> <%= rep['IloscPowtorzen'] %></li> 
+            <%  })  %>
           </td>
           <td  class="text-left wrktInfo">
             <% cwiczenie["Info"].forEach(function(rep){ %>
-            <li class='repList'> <%= rep['Ciezar'] %></li> 
+            <li class='repList'> <%= rep['Ciezar'] %> kg</li> 
             <%  })  %>
         </td>
         </tr>

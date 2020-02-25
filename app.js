@@ -85,6 +85,8 @@ app.get('/', isLoggedIn , function(req, res) {
   let cwiczenia = '';
   let wrktDate = '';
   let planName = '';
+  let user = req.user.username;
+
 
                       //latest entry filter
       wrkt.find({},{},{sort:{_id:-1}}, function(err, wLog){
@@ -106,7 +108,7 @@ app.get('/', isLoggedIn , function(req, res) {
             const options = {year: 'numeric', month: 'long', day: 'numeric'};
             let wrktDate = date.toLocaleDateString('pl-PL', options);
 
-            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
+            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
            };  
           };
       });
@@ -455,6 +457,7 @@ app.get('/logout',function(req,res){
 
 app.post('/login',passport.authenticate('local',{
     successRedirect: '/', //middleware part checking if user + password matches - passport does the whole stuff
+    successMessage: 'Cześć!',
     failureRedirect: '/login'
   }),function(req,res){
     

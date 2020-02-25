@@ -26,9 +26,7 @@ function checkWrkt(event){
 
 
 };
-function sample(){
-    alert('ok');
-};
+
 
 //calls ajax script to show praticular info 'bout exercise's series and reps
 let clickableTd = document.getElementsByClassName('wrktInfo');
@@ -68,8 +66,11 @@ function populateRows(event) //adds new rows to wrktDetails table
     let e = window.event;
     var et = e.target;
     //console.log(et.getAttribute('name'));
-    const eN = document.getElementsByClassName('execName');
-    const index = Array.from(eN).findIndex(item => item.getAttribute('name') === et.getAttribute('name'));
+    const eN = document.getElementsByClassName('WrktSeriesOpt');
+    const index = Array.from(eN).findIndex(item => 
+        item.parentNode.parentNode.childNodes[0].childNodes[0].getAttribute('name') 
+        === 
+        et.parentNode.parentNode.childNodes[0].childNodes[0].getAttribute('name'));
     //console.log(index);
     
     const z = document.getElementsByClassName('toFill');
@@ -109,7 +110,13 @@ function populateRows(event) //adds new rows to wrktDetails table
         weightNode.appendChild(liWeight); 
         liWeight.appendChild(inpWeight); 
 
-        let zFilledUp = eN[index].parentNode.parentNode.nextElementSibling;  
+        let zFilledUp = eN[index].parentNode.parentNode.nextElementSibling; 
+
+        let filledToRemove = zFilledUp.childNodes;
+        //console.log(filledToRemove);
+        Array.from(filledToRemove).forEach(remItem=>{
+            zFilledUp.removeChild(remItem);
+        });
          
             if(nS==1){
                 zFilledUp.appendChild(repsNode);
@@ -128,7 +135,7 @@ function populateRows(event) //adds new rows to wrktDetails table
             };
             //nSeries[i].setAttribute('disabled',''); //blocks series insert
             //nSeries[i].className = 'WrktSeriesOptFilled';
-            nSeries.className = 'WrktSeriesOptFilled';
+            //nSeries.className = 'WrktSeriesOptFilled';
 
             
             eN[index].title="Naciśnij by zwinąć."
@@ -142,7 +149,13 @@ function populateRows(event) //adds new rows to wrktDetails table
     //console.log(i+"_i");
 
     //console.log(eN[index]);
-    eN[index].setAttribute('onClick','visibility()');
+
+    const DetailsVisibility = document.getElementsByClassName('execName');
+    Array.from(DetailsVisibility).forEach(detail =>{
+        detail.addEventListener("click", visibility, false);
+    });
+
+    styleDetails();
     
 };
 
@@ -185,12 +198,11 @@ function hideDetail(i){
 
 
 function expandDetails(event){
-    checkWrkt(event);
     populateRows(event);
-    styleDetails();
 };
 
-
+const saveDetailsButton = document.getElementById('wrktSeriesBttn');
+saveDetailsButton.addEventListener('click',checkWrkt,false);
 
 function visibility(event){
     let e = window.event;

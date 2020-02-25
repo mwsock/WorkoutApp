@@ -66,9 +66,9 @@ function ajaxSeries(type,element){
                     </tr>" 
                 };  
                                                                                                                                                              
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.' onclick ='expandDetails()'>"+ arrayObj['dtype'] + "</div>\
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.'>"+ arrayObj['dtype'] + "</div>\
                                                             <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td class='text-left'> \
-                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' ></tr><tr class='toFill'></tr>" //+ details;  
+                                                            <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100'  onchange ='expandDetails()' ></tr><tr class='toFill'></tr>" //+ details;  
                                                             
                                                             /*
                                                             <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
