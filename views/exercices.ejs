@@ -3,11 +3,11 @@
 <div class='container'>
   <div class='formContainer'>
     <h1>Lista ćwiczeń: </h1>
-
+    <div class="ui bulleted link list">
     <% result.forEach(function(exercise){ %>
-      <li> <%= exercise["dtype"] %> </li>
+      <li class='item'> <%= exercise["dtype"] %> </li>
     <% }) %> 
-      
+  </div>  
     <h2><%= info %></h2>
 
     <form action='/insrt' method='POST'>

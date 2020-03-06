@@ -1,0 +1,79 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background: rgb(255,255,255);
+    background-size: cover;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(37,138,196,0.9850491221879377) 78%);
+    background-attachment:fixed;
+    
+}
+
+.logo{
+    width: 30px;
+    padding: 5px;
+}
+
+header{
+    padding: 5px;
+}
+
+.box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
+
+.background{
+    background-color: white;
+    width: max-content;
+    height: max-content;
+    margin:0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.container{
+    text-align: center;
+}
+
+.column{
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+}
+
+.column>input,.column>input::after {
+    display: block;
+    border: none;
+    margin: 3px;
+    background-color: whitesmoke;
+    transition: background-color .3s;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.button, button::after{
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 5px;
+    border: 0px;
+    background-color: rgba(204, 204, 204, 0.918);
+    transition: background-color .3s;
+    width: 198px;
+    height: 38px;
+}
+
+.button:hover, input:hover{
+    background-color:rgba(180, 180, 180, 0.918);
+    transition: background-color .3s;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(28, 115, 255);
+}
+
+ 

@@ -1,10 +1,36 @@
-<h1>Zaloguj się</h1>
-<div>
-    <form action='/login' method="POST">
-        <input type='text' placeholder="Użytkownik" name='username'>
-        <input type='password' placeholder="Hasło" name = 'password'>
-        <button>Zaloguj</button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WRKT</title>
+    <link rel="shortcut icon" type="image/png" href="/public/images//icon.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='/login.css'>
+</head>
+<body>
+<div class='box'>
+    <div class="background">
+        <div class='container'>
+                <header><h1 class=''>WRKT</h1><img class='logo' src='/images/icon.png'></header>  
+                    <form action='/login' method="POST">
+                        <div class='column'>
+                            <input type='text' placeholder="Użytkownik" name='username'>
+                        </div>    
+                        <div class='column'>    
+                            <input type='password' placeholder="Hasło" name = 'password'>
+                        </div>
+                        <div class='column'>
+                            <button class="button">Zaloguj</button>
+                        </div>    
+                    </form>
+        </div>
+        <div class='container'>
+            <div class='column'><span>Nie masz konta?</span></div>
+            <div class='column'><span><a href="/register">Zarejestruj się!</a></span></div>
+        </div>
+    </div>
 </div>
-
-<p>Nie masz konta? Zarejestruj się: <a href="/register">Klik!</a></p>
+</body>
+</html>

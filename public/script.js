@@ -202,7 +202,10 @@ function expandDetails(event){
 };
 
 const saveDetailsButton = document.getElementById('wrktSeriesBttn');
-saveDetailsButton.addEventListener('click',checkWrkt,false);
+if(saveDetailsButton != null || saveDetailsButton != undefined){
+    saveDetailsButton.addEventListener('click',checkWrkt,false);
+};
+
 
 function visibility(event){
     let e = window.event;

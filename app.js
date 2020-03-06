@@ -55,7 +55,8 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   const templateSchema = new mongoose.Schema({
     WrktNameId: {type:String},
     WrktDay: {type:Number}, 
-    exerciseId: [{}]
+    exerciseId: [{}],
+    User :{type:String}
   });
   const wrktTemplate = mongoose.model('template', templateSchema);
 
@@ -86,16 +87,17 @@ app.get('/', isLoggedIn , function(req, res) {
   let wrktDate = '';
   let planName = '';
   let user = req.user.username;
-
+  console.log(user);
 
                       //latest entry filter
-      wrkt.find({},{},{sort:{_id:-1}}, function(err, wLog){
+      wrkt.find({'User' : user},{},{sort:{_id:-1}}, function(err, wLog){
           if(err){
             console.log('error');
           }else{
             let tstLog = wLog[0];
            if(typeof tstLog === 'undefined' || tstLog === null) {
-            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia});
+            let user = '';
+            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
             //console.log(wLog);
            }else{
             //console.log(wLog);
@@ -103,11 +105,12 @@ app.get('/', isLoggedIn , function(req, res) {
 
             let planName = wrktObj.wlog['RodzajTreningu'];
             let cwiczenia = wrktObj.wlog['Cwiczenia'];
+            let user = req.user.username;
 
             let date = new Date(wrktObj.CDate);
             const options = {year: 'numeric', month: 'long', day: 'numeric'};
             let wrktDate = date.toLocaleDateString('pl-PL', options);
-
+            console.log(user);
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
            };  
           };
@@ -129,8 +132,10 @@ app.get('/crrnt_wrkt', isLoggedIn,function(req,res){
 
 app.post('/addWrkt', isLoggedIn, function(req,res){
 
- console.log(req.body);
+ console.log(req);
  const wrktLog = req.body;
+ const user = req.user.username;
+ wrktLog.User=user;
 
   wrkt.create(wrktLog, function(err, newlyCreated){
     if(err){
@@ -149,10 +154,11 @@ app.get('/edit_wrkt', isLoggedIn, function(req,res){
   
   let wrktDay = '';
   let wrktDate = '';
-  var planName = '';
+  let planName = '';
+  let user = req.user.username;
 
                       
-      wrkt.find({}, function(err, wLog){
+      wrkt.find({'User' : user}, function(err, wLog){
           if(err){
             console.log('error');
           }else{
@@ -208,9 +214,9 @@ app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 
 app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
 //console.log(req.params);
-  var planId = req.params["planId"];
-  var variantId = req.params["variantId"];
-
+  let planId = req.params["planId"];
+  let variantId = req.params["variantId"];
+  
   wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId}, "-_id exerciseId", function(err,rows){
       if(err){
         console.log(error)
@@ -237,9 +243,10 @@ app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
 
 app.get('/addWrkt/:id', isLoggedIn, function(req,res){
 
-  var id = (req.params["id"])
- 
-    wrktTemplate.find({"WrktNameId" : id}, "-_id WrktDay", function(err,rows){
+  let id = (req.params["id"])
+  let user = req.user.username;
+
+    wrktTemplate.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(err,rows){
       if(err){
         console.log(error)
       }else{
@@ -279,11 +286,13 @@ app.post('/insrtWrktPlan', isLoggedIn, function(req,res){
      let name = req.body['WrktName']
      let day = req.body['DzienTreningowy']
      let exec = req.body['Cwiczenie']
+     let user = req.user.username;
       
       const newTemplate = {
         WrktNameId: name,
         WrktDay: day,
-        exerciseId: exec
+        exerciseId: exec,
+        User: user
       };
     //console.log(newTemplate);
     wrktTemplate.create(newTemplate, function(err, newlyCreated){

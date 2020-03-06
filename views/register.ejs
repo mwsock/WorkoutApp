@@ -1,7 +1,34 @@
-<h1>Załóż Konto</h1>
-
-<form action='/register' method='POST'>
-    <input type='text' name='username' placeholder="Użytkownik">
-    <input type='password' name='password' placeholder="Hasło">
-    <button>Zarejestruj</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WRKT</title>
+    <link rel="shortcut icon" type="image/png" href="/public/images//icon.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='/login.css'>
+</head>
+<body>
+<div class='box'>
+    <div class="background">
+        <div class='container'>
+                <header><h1 class=''><h1>Załóż Konto</h1></header>  
+                    <form action='/register' method="POST">
+                        <div class='column'>
+                            <p>Podaj nazwę użytkownika:</p>
+                            <input type='text' placeholder="Użytkownik" name='username' required>
+                        </div>    
+                        <div class='column'>    
+                            <p>Podaj hasło:</p>
+                            <input type='password' placeholder="Hasło" name = 'password' required>
+                        </div>
+                        <div class='column'>
+                            <button class="button">Zarejestruj</button>
+                        </div>    
+                    </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
