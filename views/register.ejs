@@ -7,24 +7,28 @@
     <title>WRKT</title>
     <link rel="shortcut icon" type="image/png" href="/public/images//icon.png"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href='/login.css'>
+    <link rel='stylesheet' href='/register.css'>
 </head>
 <body>
 <div class='box'>
     <div class="background">
         <div class='container'>
                 <header><h1 class=''><h1>Załóż Konto</h1></header>  
+                    <% if(typeof message != null || message != 'undefinded'){ %>
+                        <div class='message'><span> <%= message %> </span></div>
+                    <% }; %>
                     <form action='/register' method="POST">
-                        <div class='column'>
-                            <p>Podaj nazwę użytkownika:</p>
-                            <input type='text' placeholder="Użytkownik" name='username' required>
-                        </div>    
-                        <div class='column'>    
-                            <p>Podaj hasło:</p>
-                            <input type='password' placeholder="Hasło" name = 'password' required>
-                        </div>
-                        <div class='column'>
-                            <button class="button">Zarejestruj</button>
+                        <div class='columns'>
+                            <div class='column'>
+                                <input type='text' placeholder="Użytkownik" name='username' required> 
+                            </div>    
+                            <div class='column'>    
+                                <input type='password' placeholder="Hasło" name = 'password' required>
+                            </div>
+                            <div class='column'>
+                                <button class="button">Zarejestruj</button>
+                            </div>    
+                            <div class='back'><a href='/login'><img class='img' src="/images/arrow.png"></a></div>
                         </div>    
                     </form>
         </div>

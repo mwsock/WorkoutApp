@@ -11,22 +11,6 @@ const User = require('./public/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-// const csp = require('helmet-csp');
-// app.use(csp({
-// directives: {
-//   defaultSrc: ["'self'", 'http://localhost:3000'],
-//   scriptSrc: ["'self'", "'unsafe-inline'"],
-//   styleSrc: ["'self'"],
-//   imgSrc: ["'self'"],
-//   connectSrc: ["'self'"],
-//   objectSrc: ["'none'"],
-//   mediaSrc: ["'self'"],
-//   frameSrc: ["'none'"],
-// },
-// setAllHeaders: false, // set to true if you want to set all headers
-// safari5: false // set to true if you want to force buggy CSP in Safari 5
-// }));
-
 
 //połączenie do mongodb
 mongoose.connect('mongodb://localhost/WRKT_LOG',{
@@ -437,7 +421,7 @@ app.get('/deletePlan',  isLoggedIn, function(req,res){
 });
 
 app.get('/register',function(req,res){
-  res.render('register');
+  res.render('register', {message: ''});
 });
 
 app.post('/register',function(req,res){
@@ -446,7 +430,8 @@ app.post('/register',function(req,res){
   User.register(new User({username: req.body.username}), req.body.password, function(err, user){
     if(err){
       console.log(err);
-      return res.render('register');
+      let message = 'Użytkownik o podanej nazwie jest już zarejestrowany.';
+      return res.render('register', {message: message});
     };
     passport.authenticate('local')(req,res,function(){
       res.redirect('/login');
@@ -457,6 +442,7 @@ app.post('/register',function(req,res){
 
 app.get('/login',function(req,res){
   res.render('login');
+  console.log(res);
 });
 
 app.get('/logout',function(req,res){
@@ -469,8 +455,6 @@ app.post('/login',passport.authenticate('local',{
     successMessage: 'Cześć!',
     failureRedirect: '/login'
   }),function(req,res){
-    
-
 
 });
     
