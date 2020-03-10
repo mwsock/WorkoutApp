@@ -301,3 +301,56 @@ function getUpdatedValues(){
             //console.log(wrkt_log);
             return wrkt_log;
 };
+
+
+function deleteWrkt(event){
+
+    let e = window.event;
+    var et = e.target;
+    //console.log(et.getAttribute('name'));
+    const eN = document.getElementsByClassName('deleteWkrt');
+    let id = et.previousElementSibling.getAttribute('value');
+    //console.log(id);
+    
+    
+    var url = "/deleteWrkt/"+id;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('succes')
+        } else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        };
+    };
+    xhr.send();
+
+    window.location.href = '/edit_wrkt';
+
+};
+
+function deletePlan(event){
+
+    let e = window.event;
+    var et = e.target;
+    //console.log(et.getAttribute('name'));
+    const eN = document.getElementsByClassName('deletePlan');
+    let id = et.previousElementSibling.getAttribute('id');
+    //console.log(id);
+    
+    
+    var url = "/deletePlan/"+id;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('succes')
+        } else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        };
+    };
+    xhr.send();
+
+    window.location.href = '/newWrktPlan';
+
+};

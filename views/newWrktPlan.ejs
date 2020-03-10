@@ -6,19 +6,15 @@
 
   <h2>Plany Treningowe: </h2>
 
-  <% result.forEach(function(plan){ %>
-    <li> <%= plan["wrktPlan"] %> </li>
+    <% result.forEach(function(plan){ %>
+      <li id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %> </li> <button class='deletePlan'>x</button> 
     <% }) %> 
 
-  <form action='/insrtPlan' method='POST'>
-    <input type='text' name='plan' class="WrktIDopt" placeholder="Dodaj nowy plan...">
-    <input type="submit" class='wrktBttn' value="Zatwierdź">
-  </form>
-  <form action='/deletePlan' method='GET'>
-    <input type='text' name='plan' class="WrktIDopt" placeholder="Usuń plan...">
-    <input type="submit" class='wrktBttn' value="Zatwierdź">
-  </form>
-</div>
+
+    <form action='/insrtPlan' method='POST'>
+      <input type='text' name='plan' class="WrktIDopt" placeholder="Dodaj nowy plan...">
+      <input type="submit" class='wrktBttn' value="Zatwierdź">
+    </form>
 
 
 

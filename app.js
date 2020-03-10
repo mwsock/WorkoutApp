@@ -25,14 +25,16 @@ mongoose.connect('mongodb://localhost/WRKT_LOG',{
   const wrkt = mongoose.model('wrkt', WRKTschema);
 
   const exerciseSchema = new mongoose.Schema({
-    dtype: {type:String}
+    dtype: {type:String},
+    User :{type:String}
   });
   const exercise = mongoose.model('exercice', exerciseSchema);
 
   const planSchema = new mongoose.Schema({
     _id: {type:String},
     wrktPlan: {type:String},
-    cDATE: {type: Date}
+    cDATE: {type: Date},
+    User :{type:String}
   });
   const wrktPlan = mongoose.model('plan', planSchema);
 
@@ -103,7 +105,9 @@ app.get('/', isLoggedIn , function(req, res) {
 
 app.get('/crrnt_wrkt', isLoggedIn,function(req,res){
 
-    wrktPlan.find({},function(err,rows){
+  let user = req.user.username;
+
+    wrktPlan.find({'User' : user},function(err,rows){
           if(err){
             console.log(error)
           }else{
@@ -119,6 +123,7 @@ app.post('/addWrkt', isLoggedIn, function(req,res){
  console.log(req);
  const wrktLog = req.body;
  const user = req.user.username;
+
  wrktLog.User=user;
 
   wrkt.create(wrktLog, function(err, newlyCreated){
@@ -186,7 +191,7 @@ app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
   let log = req.body.wlog;
 
   wrkt.findByIdAndUpdate(id, { wlog: log },function(err,result){
-    if (err) {
+    if (err) { 
       res.send(err);
     } else {
      console.log('Updated!');
@@ -196,12 +201,28 @@ app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 });
 
 
+app.get('/deleteWrkt/:id',  isLoggedIn, function(req,res){
+  //console.log(req.params.id);
+  let id = req.params.id;
+
+
+  wrkt.findByIdAndDelete(id, function(err, crrntlyRemoved){
+    if(err){
+      console.log(err)
+    }else{
+      console.log('succes');
+    };
+  });
+});
+
+
 app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
 //console.log(req.params);
   let planId = req.params["planId"];
   let variantId = req.params["variantId"];
+  let user = req.user.username;
   
-  wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId}, "-_id exerciseId", function(err,rows){
+  wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId, 'User':user}, "-_id exerciseId", function(err,rows){
       if(err){
         console.log(error)
       }else{
@@ -211,7 +232,7 @@ app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
           let id = rows['exerciseId'];
           //console.log(Object.values(id));
      
-          exercise.find({"_id": id},"-_id dtype", function(err,rows2){
+          exercise.find({"_id": id, 'User':user},"-_id dtype", function(err,rows2){
             if(err){
               console.log(error)
             }else{
@@ -243,13 +264,14 @@ app.get('/addWrkt/:id', isLoggedIn, function(req,res){
 
 
 app.get('/newWrktPlan', isLoggedIn, function(req,res){
-        
-  wrktPlan.find({},function(err,rows){
+  let user = req.user.username;
+
+  wrktPlan.find({'User':user},function(err,rows){
     if(err){
        console.log('error');
     }else{
      // console.log(rows);
-      exercise.find({},function(err,rows2){
+      exercise.find({'User':user},function(err,rows2){
         if(err){
           console.log('error')
         }else{
@@ -296,7 +318,9 @@ app.post('/insrtWrktPlan', isLoggedIn, function(req,res){
 
 app.get('/exercices', isLoggedIn, function(req,res){
 
-    exercise.find({},function(err,rows){
+  let user = req.user.username;
+
+    exercise.find({'User':user},function(err,rows){
       if(err){
         console.log('error')
       }else{
@@ -311,14 +335,15 @@ app.get('/exercices', isLoggedIn, function(req,res){
 app.post('/insrt', isLoggedIn, function(req,res){
   //console.log(req.body.search);
   const exerc = req.body.search;
-  let newExercise = {dtype: exerc};
+  let user = req.user.username;
+  let newExercise = {dtype: exerc, User:user};
 
   exercise.create(newExercise, function(err, newlyCreated){
     if(err){
       console.log(err)
     }else{
       
-      exercise.find({},function(err,rows){
+      exercise.find({'User':user},function(err,rows){
         if(err){
           console.log(err)
         }else{
@@ -334,14 +359,15 @@ app.post('/insrt', isLoggedIn, function(req,res){
 app.get('/dlt',  isLoggedIn, function(req,res){
   //console.log(req.query.search);
   const exerc = req.query.search;
-  let newExercise = {dtype: exerc};
+  let user = req.user.username;
+  let newExercise = {dtype: exerc, User:user};
 
   exercise.findOneAndRemove(newExercise, function(err, crrntlyRemoved){
     if(err){
       console.log(err)
     }else{
       
-      exercise.find({},function(err,rows){
+      exercise.find({'User':user},function(err,rows){
         if(err){
           console.log(err)
         }else{
@@ -360,7 +386,8 @@ app.post('/insrtPlan',  isLoggedIn, function(req,res){
   //console.log(req.body.search);
   let plan = req.body.plan;
   console.log(plan);
-  let newPlan = {_id: mongoose.Types.ObjectId(),wrktPlan: plan,cDATE: Date()};
+  let user = req.user.username;
+  let newPlan = {_id: mongoose.Types.ObjectId(),wrktPlan: plan,cDATE: Date(),User:user};
                 
 
   wrktPlan.create(newPlan, function(err, newlyCreated){
@@ -368,12 +395,12 @@ app.post('/insrtPlan',  isLoggedIn, function(req,res){
       console.log(err)
     }else{
       
-        wrktPlan.find({},function(err,rows){
+        wrktPlan.find({'User':user},function(err,rows){
           if(err){
             console.log('error');
           }else{
           // console.log(rows);
-            exercise.find({},function(err,rows2){
+            exercise.find({'User':user},function(err,rows2){
               if(err){
                 console.log('error')
               }else{
@@ -389,36 +416,20 @@ app.post('/insrtPlan',  isLoggedIn, function(req,res){
 });
 
 
-app.get('/deletePlan',  isLoggedIn, function(req,res){
-  //console.log(req.query.search);
-  const plan = req.query.plan;
-  console.log(plan);
-  let removedPlan = {wrktPlan: plan};
+app.get('/deletePlan/:id',  isLoggedIn, function(req,res){
+  //console.log(req.params.id);
+  let id = req.params.id;
 
-  wrktPlan.findOneAndRemove(removedPlan, function(err, crrntlyRemoved){
+
+  wrktPlan.findByIdAndDelete(id, function(err, crrntlyRemoved){
     if(err){
       console.log(err)
     }else{
-      
-        wrktPlan.find({},function(err,rows){
-          if(err){
-            console.log('error');
-          }else{
-          // console.log(rows);
-            exercise.find({},function(err,rows2){
-              if(err){
-                console.log('error')
-              }else{
-              // console.log(rows2);
-                res.render('newWrktPlan', {result: rows,result2: rows2});
-              }
-            });
-          }
-        });
-    }
+      console.log('succes');
+    };
   });
-
 });
+
 
 app.get('/register',function(req,res){
   res.render('register', {message: ''});
@@ -442,7 +453,7 @@ app.post('/register',function(req,res){
 
 app.get('/login',function(req,res){
   res.render('login');
-  console.log(res);
+  //console.log(res);
 });
 
 app.get('/logout',function(req,res){

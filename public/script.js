@@ -363,3 +363,21 @@ function editRows(event) //adds new rows to wrktDetails table
     
     styleDetails();
 };
+
+window.onload = function(){
+
+    //calls ajax script to delete selected wrkt
+    let WrktToDelete = document.getElementsByClassName('deleteWrkt');
+    for(let i = 0;i<WrktToDelete.length;i++){
+        WrktToDelete[i].addEventListener('click',deleteWrkt); 
+    };
+
+
+        //calls ajax script to delete selected wrkt
+        let PlanToDelete = document.getElementsByClassName('deletePlan');
+        for(let i = 0;i<PlanToDelete.length;i++){
+            PlanToDelete[i].addEventListener('click',deletePlan); 
+        };
+    
+
+};
