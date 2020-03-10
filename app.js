@@ -201,7 +201,7 @@ app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 });
 
 
-app.get('/deleteWrkt/:id',  isLoggedIn, function(req,res){
+app.get('/delete/Wrkt/:id',  isLoggedIn, function(req,res){
   //console.log(req.params.id);
   let id = req.params.id;
 
@@ -342,41 +342,25 @@ app.post('/insrt', isLoggedIn, function(req,res){
     if(err){
       console.log(err)
     }else{
-      
-      exercise.find({'User':user},function(err,rows){
-        if(err){
-          console.log(err)
-        }else{
-          res.render('exercices', {result: rows, info:'Ćwiczenie zostało dodane!'});
-        }
-      });
-    }
+      res.redirect('/exercices');
+    };
   });
 
 });
 
 
-app.get('/dlt',  isLoggedIn, function(req,res){
-  //console.log(req.query.search);
-  const exerc = req.query.search;
-  let user = req.user.username;
-  let newExercise = {dtype: exerc, User:user};
+app.get('/delete/Exercise/:id',  isLoggedIn, function(req,res){
+  //console.log(req.params.id);
+  let id = req.params.id;
 
-  exercise.findOneAndRemove(newExercise, function(err, crrntlyRemoved){
+
+  exercise.findByIdAndDelete(id, function(err, crrntlyRemoved){
     if(err){
       console.log(err)
     }else{
-      
-      exercise.find({'User':user},function(err,rows){
-        if(err){
-          console.log(err)
-        }else{
-          res.render('exercices', {result: rows, info:'Ćwiczenie zostało usunięte!'});
-        }
-      });
-    }
+      console.log('succes');
+    };
   });
-
 });
 
 
@@ -416,7 +400,7 @@ app.post('/insrtPlan',  isLoggedIn, function(req,res){
 });
 
 
-app.get('/deletePlan/:id',  isLoggedIn, function(req,res){
+app.get('/delete/Plan/:id',  isLoggedIn, function(req,res){
   //console.log(req.params.id);
   let id = req.params.id;
 
