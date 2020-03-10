@@ -87,27 +87,6 @@ function ajaxSeries(type,element){
 };
 
 
-function ajaxDropDown(){
-    let name = 'Dipsy'
-    var url = "/"+name;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            
-            let ajaxObject = JSON.parse(xhr.responseText);
-
-            ajaxObject.forEach(function(rslt){
-            alert('AJAX WORKS: ' + rslt['NazwaCwiczenia'] + ' ' + rslt['NumerSerii'] + ' ' + rslt['IloscPowtorzen'] + ' ' + rslt['Ciezar']);
-            });
-
-        }else{
-            alert('Request failed.  Returned status of ' + xhr.status);
-        }
-    };
-    xhr.send();
-};
-
 
 function sendWrkt(){
 
@@ -303,43 +282,18 @@ function getUpdatedValues(){
 };
 
 
-function deleteWrkt(event){
+
+function deleteElem(event,name,page){
 
     let e = window.event;
     var et = e.target;
     //console.log(et.getAttribute('name'));
-    const eN = document.getElementsByClassName('deleteWkrt');
-    let id = et.previousElementSibling.getAttribute('value');
-    //console.log(id);
-    
-    
-    var url = "/deleteWrkt/"+id;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-          console.log('succes')
-        } else {
-            alert('Request failed.  Returned status of ' + xhr.status);
-        };
-    };
-    xhr.send();
-
-    window.location.href = '/edit_wrkt';
-
-};
-
-function deletePlan(event){
-
-    let e = window.event;
-    var et = e.target;
-    //console.log(et.getAttribute('name'));
-    const eN = document.getElementsByClassName('deletePlan');
+    const eN = document.getElementsByClassName('delete');
     let id = et.previousElementSibling.getAttribute('id');
-    //console.log(id);
+    console.log(name);
     
     
-    var url = "/deletePlan/"+id;
+    var url = "/delete/"+name+"/"+id;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function() {
@@ -351,6 +305,6 @@ function deletePlan(event){
     };
     xhr.send();
 
-    window.location.href = '/newWrktPlan';
+    window.location.href = '/'+page;
 
 };

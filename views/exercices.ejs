@@ -5,7 +5,7 @@
     <h1>Lista ćwiczeń: </h1>
     <div class="ui bulleted link list">
     <% result.forEach(function(exercise){ %>
-      <li class='item'> <%= exercise["dtype"] %> </li>
+      <li class='item' id='<%= exercise["_id"] %>'> <%= exercise["dtype"] %> </li> <button class='delete' name='Exercise' page='exercices'>x</button> 
     <% }) %> 
   </div>  
     <h2><%= info %></h2>
@@ -15,10 +15,6 @@
       <input type="submit" class='wrktBttn' value="Zatwierdź">
     </form>
 
-    <form action='/dlt' method='GET'>
-      <input type='text' name='search' class="WrktIDopt" placeholder="Usuń ćwiczenie...">
-      <input type="submit" class='wrktBttn' value="Zatwierdź">
-    </form>
   </div>
 </div>
 

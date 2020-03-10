@@ -7,7 +7,7 @@
   <h2>Plany Treningowe: </h2>
 
     <% result.forEach(function(plan){ %>
-      <li id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %> </li> <button class='deletePlan'>x</button> 
+      <li id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %> </li> <button class='delete' name='Plan' page='newWrktPlan'>x</button> 
     <% }) %> 
 
 

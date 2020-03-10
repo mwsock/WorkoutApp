@@ -28,14 +28,6 @@ function checkWrkt(event){
 };
 
 
-//calls ajax script to show praticular info 'bout exercise's series and reps
-let clickableTd = document.getElementsByClassName('wrktInfo');
-let i = 0;
-for(i;i<clickableTd.length;i++){
-    let name = clickableTd[i].innerHTML;
-    clickableTd[i].addEventListener('click',ajaxDropDown); 
-};
-
 
 
 function addField() //adds new row to WrktPlan table
@@ -366,18 +358,12 @@ function editRows(event) //adds new rows to wrktDetails table
 
 window.onload = function(){
 
-    //calls ajax script to delete selected wrkt
-    let WrktToDelete = document.getElementsByClassName('deleteWrkt');
-    for(let i = 0;i<WrktToDelete.length;i++){
-        WrktToDelete[i].addEventListener('click',deleteWrkt); 
-    };
-
-
-        //calls ajax script to delete selected wrkt
-        let PlanToDelete = document.getElementsByClassName('deletePlan');
-        for(let i = 0;i<PlanToDelete.length;i++){
-            PlanToDelete[i].addEventListener('click',deletePlan); 
+    //calls ajax script to delete selected element
+    let elemToDelete = document.getElementsByClassName('delete');
+        for(let i = 0;i<elemToDelete.length;i++){
+            let name = elemToDelete[i].getAttribute('name');
+            let page = elemToDelete[i].getAttribute('page');
+            elemToDelete[i].addEventListener('click',function(){deleteElem(event,name,page)}); 
         };
-    
 
 };
