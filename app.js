@@ -168,10 +168,10 @@ app.get('/edit_wrkt', isLoggedIn, function(req,res){
 app.get("/edit_selected_wrkt/:id", isLoggedIn, function(req,res){
 
   let id = req.params['id'];
-  //console.log(id);
+  console.log(id);
 
   wrkt.findById(id,function(err, wLog){
-
+    console.log(wLog);
     let log = JSON.parse(JSON.stringify(wLog));
     //console.log(log.wlog['Cwiczenia']);
     res.render('edit_selected_wrkt', {wLog: log});

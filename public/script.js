@@ -227,12 +227,8 @@ function editWrkt(event){
 
     let e = window.event;
     let et = e.target;
-    //console.log(et.getAttribute('name'));
-    
-    const index = Array.from(records).findIndex(item => item.getAttribute('value') === et.getAttribute('value'));
-    console.log(index);
 
-    let id = et.getAttribute('value');
+    let id = et.getAttribute('id');
 
     getWrkt(id);
 

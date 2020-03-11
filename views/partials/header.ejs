@@ -6,14 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WRKT</title>
     <link rel="shortcut icon" type="image/png" href="images/icon.png"/>
-    <link rel='stylesheet' href='/app.css'>
-    <link rel='stylesheet' href='/semantic_ui.css'>
+    <link rel='stylesheet' href='/header.css'>
+    <!-- <link rel='stylesheet' href='/app.css'> -->
+    <!-- <link rel='stylesheet' href='/semantic_ui.css'> -->
     <script src="/ajax.js" async ></script>
     <script src="/script.js" async ></script>
 </head>
 <body>
 
-    <div class="ui secondary pointing menu">
+    <div class="navbar">
+      <div class='left_menu'>
         <a class="item start" href="/" alt="" onclick="selectMenuBttn()" >Strona Główna</a>
 
         <a class="item" href="/exercices" alt=""  onclick="selectMenuBttn()" >Ćwiczenia</a>
@@ -23,40 +25,13 @@
         <a class="item" href="/crrnt_wrkt" alt="" onclick="selectMenuBttn()">Zapisz Trening</a>
 
         <a class="item" href="/edit_wrkt" alt="" onclick="selectMenuBttn()">Edytuj Trening</a>
-
-        <div class="right menu">
+      </div>
+      <div class="right_menu">
           <!-- <a class="ui item " href="/login" alt="">Zaloguj</a> -->
           <a class="ui item " href="/logout" alt="">Wyloguj</a>
-        </div>
-    </div>
-
-      <div class="ui segment">
-        <p></p>
       </div>
-
-
-
-
-
-
-<!-- 
-
-        <ul class="ui top attached tabular menu">
-            <p><a href="/" alt="" class="item start" onclick="selectMenuBttn()" >Strona Główna</a></p>
-           
-            <p><a href="/exercices" alt="" class="item" onclick="selectMenuBttn()" >Ćwiczenia</a></p>
-
-            <p><a href="/newWrktPlan" alt="" class="item" onclick="selectMenuBttn()">Zdefiniuj Plan</a></p>
-
-            <p><a href="/crrnt_wrkt" alt="" class="item" onclick="selectMenuBttn()">Zapisz Trening</a></p>
-
-            <p><a href="/edit_wrkt" alt="" class="item" onclick="selectMenuBttn()">Edytuj Trening</a></p>
-
-            <p><a href="/login" alt="" class="item" >Zaloguj</a></p>
-
-            <p><a href="/logout" alt="" class="item" >Wyloguj</a></p>
-
-        </ul> -->
+    </div>
+    <div class='main'>
 
 
     

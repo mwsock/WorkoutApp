@@ -27,6 +27,7 @@ header{
     background-color: white;
     border-radius: 10px;
     padding: 10px;  
+    box-shadow: black 0px 0px 10px 0px;
 }
 
 .container{
