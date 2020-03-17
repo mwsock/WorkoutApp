@@ -37,14 +37,14 @@ body{
   }
   
   .navbar a:hover {
-    background-color: rgba(204, 204, 204, 0.918);
+    background-color: whitesmoke;
     color: black;
     transition: background-color .3s;
   }
   
   .navbar a.active {
-    background-color: #4CAF50;
-    color: white;
+    background-color: whitesmoke;
+    color: black;
 }
 
 .left_menu{
@@ -56,3 +56,132 @@ body{
     display: flex;
     flex-wrap: wrap;
 }
+
+
+  /* header */
+  
+  .navbar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .navbar li a {
+    display: block;
+    text-decoration: none;
+  }
+  
+  /* .navbar li a:hover,
+  .navbar .menu-btn:hover  {
+    background-color:  rgba(204, 204, 204, 0.918);
+  } */
+  
+  .navbar .logo {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 10px 20px;
+    text-decoration: none;
+  }
+  
+  /* menu */
+  
+  .navbar .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+  }
+  
+  /* menu icon */
+  
+  .navbar .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    padding: 28px 20px;
+    position: relative;
+    user-select: none;
+    background-color: whitesmoke;
+  }
+  
+  .navbar .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+  }
+  
+  .navbar .menu-icon .navicon:before,
+  .navbar .menu-icon .navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+  }
+
+
+  
+  .navbar .menu-icon .navicon:before {
+    top: 5px;
+  }
+  
+  .navbar .menu-icon .navicon:after {
+    top: -5px;
+  }
+  
+  /* menu btn */
+  
+  .navbar .menu-btn {
+    display: none;
+  }
+  
+  .navbar .menu-btn:checked ~ .menu {
+    max-height: 240px;
+  }
+  
+  .navbar .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+  }
+  
+  .navbar .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+  }
+  
+  .navbar .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+  }
+  
+
+  .navbar .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+  .navbar .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+  }
+  
+  /* 48em = 768px */
+  
+  @media (min-width: 48em) {
+    .navbar li {
+      float: left;
+    }
+    .navbar li a {
+        /* padding: 14px 16px; */
+        height: fit-content;
+    }
+    .navbar .menu {
+      /* clear: none;
+      float: right; */
+      max-height: none;
+    }
+    
+    .navbar .menu-icon{
+      display: none;
+    }
+
+  }
+  

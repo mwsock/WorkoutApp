@@ -362,4 +362,12 @@ window.onload = function(){
             elemToDelete[i].addEventListener('click',function(){deleteElem(event,name,page)}); 
         };
 
+
+    let anchors = document.getElementsByTagName('a');   
+        for(let i = 0;i<anchors.length;i++){
+            let name = anchors[i].getAttribute('href');
+            if(name===location.pathname){
+                anchors[i].classList.add('active');
+            };
+        };
 };

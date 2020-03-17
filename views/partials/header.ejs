@@ -16,19 +16,24 @@
 
     <div class="navbar">
       <div class='left_menu'>
-        <a class="item start" href="/" alt="" onclick="selectMenuBttn()" >Strona Główna</a>
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+     
+        <ul class="menu">
+          <li><a class="item start" href="/" alt="" onclick="selectMenuBttn()" >Strona Główna</a></li>
 
-        <a class="item" href="/exercices" alt=""  onclick="selectMenuBttn()" >Ćwiczenia</a>
+          <li><a class="item" href="/exercices" alt=""  onclick="selectMenuBttn()" >Ćwiczenia</a></li>
 
-        <a class="item" href="/newWrktPlan" alt="" onclick="selectMenuBttn()">Zdefiniuj Plan</a>
+          <li><a class="item" href="/newWrktPlan" alt="" onclick="selectMenuBttn()">Zdefiniuj Plan</a></li>
 
-        <a class="item" href="/crrnt_wrkt" alt="" onclick="selectMenuBttn()">Zapisz Trening</a>
+          <li><a class="item" href="/crrnt_wrkt" alt="" onclick="selectMenuBttn()">Zapisz Trening</a></li>
 
-        <a class="item" href="/edit_wrkt" alt="" onclick="selectMenuBttn()">Edytuj Trening</a>
+          <li><a class="item" href="/edit_wrkt" alt="" onclick="selectMenuBttn()">Edytuj Trening</a></li>
+      </ul>
       </div>
       <div class="right_menu">
           <!-- <a class="ui item " href="/login" alt="">Zaloguj</a> -->
-          <a class="ui item " href="/logout" alt="">Wyloguj</a>
+          <a class="logout" href="/logout" alt="">Wyloguj</a>
       </div>
     </div>
     <div class='main'>
