@@ -1,28 +1,49 @@
 .container {
     display: flex;
     flex-direction: column;
+    align-items: center ;
 }
+
+.listContainer{
+    display: inline;
+}
+
 ul{
     list-style: none;
 }
 
 .item{
     margin: 0;
-	padding: 1% 0% 1% 5%;
+	padding: 1em 0em 0em 2em;
 	list-style: none;
 	background-repeat: no-repeat;
 	background-position: left center;
-	background-size: 3%;
+	background-size: 1em;
     background-image: url("images/icon.png");
+    height: 30px;
 }
+
+
+.recordPlan:not(.delete):hover{
+    cursor: pointer;
+    -webkit-text-stroke: 0.025em black;
+}
+
+.selectedRecord{
+    padding: 1em;
+}
+
 
 .delete{
     color: red;
     border:0;
     margin-left: 15px;
     background-color: white;
+    transition: -webkit-text-stroke .3s;
+    -webkit-text-stroke: 0;
 }
 
 .delete:hover{
-    background-color:whitesmoke;
+    transition: -webkit-text-stroke .3s;
+    -webkit-text-stroke: 0.125em red;
 }

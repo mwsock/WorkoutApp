@@ -9,12 +9,14 @@
 <%}else{%>
 
     <div class='container'>
-        <h3>Wybierz trening, który chcesz edytować:</h3>
-        <ul>
-            <% recordPlan.forEach(function(plan){ %>
-            <li class='recordPlan' id='<%= plan._id %>'  > <%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %></li> <button class='delete' name='Wrkt' page='edit_wrkt'>x</button> 
-            <% }) %> 
-        </ul>    
+        <h3 class='tblHdr'>Wybierz trening, który chcesz edytować:</h3>
+        <div class='listContainer'>
+            <ul>
+                <% recordPlan.forEach(function(plan){ %>
+                <li class='recordPlan item'><span class='selectedRecord' id='<%= plan._id %>'><%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %></span><button class='delete' name='Wrkt' page='edit_wrkt'>X</button> </li> 
+                <% }) %> 
+            </ul>  
+        </div>  
     </div>  
 <%};%>
 <% include partials/footer %>

@@ -1,67 +1,68 @@
 <% include partials/header %>
 
 <div class='container'>
+  <div class='listContainer'>
+    <h2 class='tblHdr'>Plany Treningowe: </h2>
+      <ul>
+      <% result.forEach(function(plan){ %>
+        <li class='item' id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %><button class='delete' name='Plan' page='newWrktPlan'>X</button></li>  
+      <% }) %> 
+      </ul>
+  </div>
+  <div class='formContainer'>
+      <form action='/insrtPlan' method='POST'>
+        <div class='rowBttns'>
+          <input type='text' name='plan' class="WrktIDopt" placeholder="Dodaj nowy plan...">
+          <input type="submit" class='button' value="Zatwierdź">
+        </div>
+      </form>
+  </div>
+</div>
 
-<div class='leftBar'>
+<div>
 
-  <h2>Plany Treningowe: </h2>
+        <form class="wrktForm" action='/insrtWrktPlan' method='POST' >
 
-    <% result.forEach(function(plan){ %>
-      <li id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %> </li> <button class='delete' name='Plan' page='newWrktPlan'>x</button> 
-    <% }) %> 
-
-
-    <form action='/insrtPlan' method='POST'>
-      <input type='text' name='plan' class="WrktIDopt" placeholder="Dodaj nowy plan...">
-      <input type="submit" class='wrktBttn' value="Zatwierdź">
-    </form>
-
-
-
-<div class="wrktTbl">
-
-        <form action='/insrtWrktPlan' method='POST' >
-
-            <div class="selectWrkt">
-                    <h2>Wybierz trening do zdefiniowania:</h2>
-                        
-                        <select name="WrktName" id="WrktID">
-                          <option hidden disabled selected value> Wybierz Trening</option>
-                            <% result.forEach(function(select){ %>
-                            <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
-                            <% }) %> 
-                        </select>
-                        <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required>
-            </div>
+          <h2 class='tblHdr'>Wybierz trening do zdefiniowania:</h2>
+          <div class="selectWrkt">
+             <select class="selectBttn" name="WrktName" id="WrktID">
+              <option hidden disabled selected value> Wybierz Trening</option>
+              <% result.forEach(function(select){ %>
+              <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
+              <% }) %> 
+            </select>
+            <input class="inputDay" type="number" name="DzienTreningowy" placeholder="Dzień" min="1" max="5" required>
+          </div>
 
           <table class="lastWrkt">
             <thead>
-              <!--<th class="text-center">Dzień Treningowy</th>-->
               <th class="text-center">Nazwa Ćwiczenia</th>
             </thead>
             
             <tbody id='tb'>
-
-                <!--<td class="text-center"> <input type="number" name="DzienTreningowy" placeholder="Dzień Treningowy" min="1" max="5" required></td>-->
-                <td class="text-center">
-                     <select name="Cwiczenie" id="exerciseID">
+                <td data-label="Nazwa Ćwiczenia" class="text-center">
+                  <input type='button' class='button' onclick='addField()' value='+'>
+                     <select class="selectBttn" name="Cwiczenie" id="exerciseID">
                             <option hidden disabled selected value> Wybierz Ćwiczenie</option>
                             <% result2.forEach(function(select){ %>
                             <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["dtype"] %></option>
                             <% }) %> 
                     </select>
+                  <input type='button' class='button' onclick='removeField()' value='-'>
                 </td> 
             
           </table>
-          <input type='button' class='wrktBttn' onclick='addField()' value='Dodaj nowe ćwiczenie'>
-          <input type='button' class='wrktBttn' onclick='removeField()' value='Usuń ćwiczenie'>
-          <input class='wrktBttn' id='wrktAddbttn' type="submit" value="Zapisz Trening">
-         
+      
+        <div class='rowBttns'>
+          <input class='button' id='wrktAddbttn' type="submit" value="Zapisz Trening">
+        </div>  
+          
+      
       </form>
       
 </div>
 
-</div>
+
 
 
 <% include partials/footer %>

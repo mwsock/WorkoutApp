@@ -51,6 +51,7 @@ body{
   .navbar a.active {
     background-color: whitesmoke;
     color: black;
+    font-weight: bold;
 }
 
 .left_menu{

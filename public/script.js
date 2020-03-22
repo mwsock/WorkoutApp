@@ -35,11 +35,20 @@ function addField() //adds new row to WrktPlan table
     var z = document.getElementById('tb').lastChild;
     var cln = z.cloneNode(true);
     document.getElementById('tb').appendChild(cln);
+
+    let plusBttn = (z.firstChild.firstChild.nextSibling);
+    let minusBttn = (z.firstChild.lastChild.previousSibling);
+
+    plusBttn.parentNode.removeChild(plusBttn);
+    minusBttn.parentNode.removeChild(minusBttn);
 };
 
 
 function removeField(){//removes tr from WrktPlan table
     var z = document.getElementById('tb');
+
+/*tutaj trzeba dorobić dodawanie przycisków do poprzedniego wiersza*/
+    
     var x = document.getElementsByTagName('td').length;
     
     if(x > 2){
@@ -48,7 +57,7 @@ function removeField(){//removes tr from WrktPlan table
 };
 
 function selectUnblock(){
-    document.getElementById('variantID').innerHTML= "<option hidden disabled selected value>Dzień Treningowy</option>";
+    document.getElementById('variantID').innerHTML= "<option hidden disabled selected value>Dzień</option>";
     document.getElementById('variantID').removeAttribute('disabled');
 };
 
@@ -162,6 +171,7 @@ function styleDetails(){
         inpReps[i].step ='1';
         inpReps[i].min='1'
         inpReps[i].name = 'Reps'
+        inpReps[i].classList.add('WrktIDopt');
     };    
 
     
@@ -172,6 +182,7 @@ function styleDetails(){
         inpWeight[i].step ='0.25';
         inpWeight[i].min='1';
         inpWeight[i].name = 'Weight';
+        inpWeight[i].classList.add('WrktIDopt');
     };//min='1' max='1000' step='0.25'
 };
 
@@ -215,7 +226,7 @@ function visibility(event){
 
 };
 
-const records = document.getElementsByClassName('recordPlan');
+const records = document.getElementsByClassName('selectedRecord');
 Array.from(records).forEach(record =>{
     record.addEventListener("click", editWrkt, false); 
 });
@@ -223,7 +234,7 @@ Array.from(records).forEach(record =>{
 
 function editWrkt(event){
 
-    const records = document.getElementsByClassName('recordPlan');
+    const records = document.getElementsByClassName('selectedRecord');
 
     let e = window.event;
     let et = e.target;

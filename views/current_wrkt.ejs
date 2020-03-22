@@ -2,46 +2,44 @@
 
 
 
+  <form class="wrktForm"  action="" method="">
 
+  <h1 class='tblHdr'>Dodaj nowy trening:</h1> 
 
-  <!--<form action="/addWrkt" method="POST">-->
-  <form action="" method=""></form>
-  <div class="selectWrkt">
-  <p>Dodaj nowy trening:</p>  
-  
-      
-
-      <select name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
+  <div class="selectWrktToSave"> 
+    <div>
+      <select class="selectBttn" name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
         <option hidden disabled selected value>Trening</option>
           <% result.forEach(function(select){ %>
           <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
           <% }) %> 
       </select>
-      <select name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
-          <option hidden disabled selected value>Dzień Treningowy</option>
+      <select class="selectBttn" name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
+          <option hidden disabled selected value>Dzień</option>
       </select>
-      <input type='date' id='wrktDate' name='wrktDate'>
+    </div>
+      <input type='date' id='wrktDate' name='wrktDate'></form>
   </div>
+
 
 
   <div class="wrktTbl">
-    <h1 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h1>
+    <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2>
 
   <table class="lastWrkt">
-  
     <thead>
-      <th class="text-left">Ćwiczenie</th>
-      <th class="text-left">Ilość serii</th>
-      <!--<th class="text-left">Ilość Powtórzeń</th>
-      <th class="text-left">Ciężar</th>-->
-  </thead>
-  <tbody id='tRows' class="table-hover">
+        <th class="text-left">Ćwiczenie</th>
+        <th class="text-left">Ilość serii</th>
+    </thead>
+    <tbody id='tRows' class="table-hover">
 
-  </tbody>
+    </tbody>
   </table>
   </div>
   
-  <input type='submit'  class='wrktBttn' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
+  <div class='rowBttns'>
+    <input type='submit' class='wrktBttn button' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
+  </div>
 </form>
 
   

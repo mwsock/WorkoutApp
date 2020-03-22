@@ -1,24 +1,25 @@
 <% include partials/header %>
 
 
-  <form action="" method=""></form>
+  <form class="wrktForm" action="" method="">
 
-  <div class="selectWrkt">
-    <p>Edytuj trening:</p>  
+  <h1>Edytuj trening:</h1>  
 
-        <select disabled name="WrktName" id="WrktID" wrktID="<%= wLog._id %>">
+  <div class="selectWrktToSave">
+    <div>
+        <select class="selectBttn"  disabled name="WrktName" id="WrktID" wrktID="<%= wLog._id %>">
             <option hidden disabled selected value><%= wLog.wlog['RodzajTreningu'] %></option>
         </select>
-        <select name="variant" id="variantID" disabled>
+        <select class="selectBttn"  name="variant" id="variantID" disabled>
             <option hidden disabled selected value><%= wLog.wlog['DzienTreningowy'] %></option>
         </select>
+    </div>    
         <input type='date' id='wrktDate' name='wrktDate' value="<%= wLog.CDate %>" readonly>
-
   </div>
 
 
   <div class="wrktTbl">
-    <h1 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h1>
+    <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2>
 
   <table class="lastWrkt">
   
@@ -34,21 +35,21 @@
                 <input readonly='readonly' hidden name='exec' value='<%= cwiczenie.Nazwa %>'>
             </td> 
             <td class='text-left'> 
-                <input class='WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
+                <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
         
         <tr class='filledUp hidden' >
             
                 <td>
                     <% cwiczenie.Info.forEach(info =>{  %>
                     <li>
-                        <input class="detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= info.IloscPowtorzen %>'>
+                        <input class="WrktIDopt detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= info.IloscPowtorzen %>'>
                     </li> 
                     <% }); %>  
                 </td>
                 <td>
                     <% cwiczenie.Info.forEach(info =>{  %>
                     <li>
-                        <input class="detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= info.Ciezar %>'>
+                        <input class="WrktIDopt detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= info.Ciezar %>'>
                     </li> 
                     <% }); %>  
                 </td>
@@ -59,8 +60,10 @@
   </tbody>
   </table>
   </div>
-  
-  <input type='submit'  class='wrktBttn' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='updateWrkt()'>
+
+  <div class='rowBttns'>
+    <input type='submit'  class='wrktBttn button' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='updateWrkt()'>
+</div>
 </form>
 
   
