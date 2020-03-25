@@ -82,7 +82,7 @@ app.get('/', isLoggedIn , function(req, res) {
           }else{
             let tstLog = wLog[0];
            if(typeof tstLog === 'undefined' || tstLog === null) {
-            let user = '';
+            let user = req.user.username;
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
             //console.log(wLog);
            }else{

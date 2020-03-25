@@ -3,6 +3,7 @@
 .selectWrkt{
     display: inline-block;
     align-items: center;
+    margin: 0 auto 1em;
 }
 
 .WrktIDopt,.WrktIDopt::after {
@@ -11,7 +12,7 @@
     background-color: whitesmoke;
     transition: background-color .3s;
     border-radius: 5px;
-    padding: 10px;
+    padding: 9px;
     text-align: center;
 }
 
@@ -95,4 +96,11 @@
   #wrktDate::-webkit-calendar-picker-indicator {
     opacity: 0;
   }
+
+  .toFill{
+      display: none;
+  }
   
+  .inputVisibility{
+      display: none;
+  }

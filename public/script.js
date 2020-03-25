@@ -3,7 +3,6 @@ function checkWrkt(event){
     ///alert('works');
     let x = 0;
     const inpt = document.getElementsByClassName('WrktSeriesOpt');
-    const hidTbl = document.getElementsByClassName('wrktDetails');
 
     Array.from(inpt).forEach(function(ss){
         if(ss.value != '0' && ss.value != ""){
@@ -14,16 +13,41 @@ function checkWrkt(event){
     });
    // console.log(x);
    if( x == 0){
-    alert("Podaj ilość serii, a następnie uzupełnij liczbę powtórzeń i ciężar.");
-    event.preventDefault();
+        alert("Podaj ilość serii, a następnie uzupełnij liczbę powtórzeń i ciężar.");
+        event.preventDefault();
+        return 1;
    }else{
-    for(i;i<hidTbl.length;i++){ 
-        hidTbl[i].removeAttribute('hidden')
-        //tutaj trzeba dodać zbieranie wartości z selectboxa, a następnie populację wedle tej wartości 
-    };
-    window.location.href = '#wrktDetails';
+
+    let wrktDate = document.getElementById('wrktDate').value;
+    if(wrktDate===null || wrktDate === ''){
+        return 1;
+    }else{
+
+    let detailsReps = document.getElementsByClassName('detailsReps');
+    let detailsWeight = document.getElementsByClassName('detailsWeight');
+        
+        let z = 0;
+        for(let i=0;i<detailsReps.length;i++){ 
+           
+            if(detailsReps[i].value!=''){
+                z++;
+            };
+        };
+        console.log(z)
+        if(z!=detailsReps.length){return 1};
+        
+        let y = 0; 
+        for(let i=0;i<detailsWeight.length;i++){ 
+            
+            if(detailsWeight[i].value!=''){
+                y++;
+            };
+        };
+        console.log(y)
+        if(y!=detailsWeight.length){return 1};
    };
 
+};
 
 };
 
@@ -39,21 +63,31 @@ function addField() //adds new row to WrktPlan table
     let plusBttn = (z.firstChild.firstChild.nextSibling);
     let minusBttn = (z.firstChild.lastChild.previousSibling);
 
-    plusBttn.parentNode.removeChild(plusBttn);
-    minusBttn.parentNode.removeChild(minusBttn);
+    plusBttn.classList.add('inputVisibility');
+    minusBttn.classList.add('inputVisibility');
+
+
+    document.getElementById('tb').lastChild.scrollIntoView();
 };
 
 
 function removeField(){//removes tr from WrktPlan table
     var z = document.getElementById('tb');
-
-/*tutaj trzeba dorobić dodawanie przycisków do poprzedniego wiersza*/
     
     var x = document.getElementsByTagName('td').length;
     
-    if(x > 2){
+    if(x >= 2){
         z.removeChild(z.lastChild);
     };
+
+    var z = document.getElementById('tb').lastChild;
+
+    let plusBttn = (z.firstChild.firstChild.nextSibling);
+    let minusBttn = (z.firstChild.lastChild.previousSibling);
+
+    plusBttn.classList.remove('inputVisibility');
+    minusBttn.classList.remove('inputVisibility');
+
 };
 
 function selectUnblock(){
@@ -95,7 +129,10 @@ function populateRows(event) //adds new rows to wrktDetails table
         }; */
 
         const repsNode = document.createElement("td");
+        repsNode.setAttribute('data-label',"Ilość Powtórzeń"); 
+
         const weightNode = document.createElement("td");
+        weightNode.setAttribute('data-label',"Ciężar"); 
 
         const liReps = document.createElement("li");
         const liWeight = document.createElement("li"); 
@@ -166,7 +203,7 @@ function styleDetails(){
 
     for(let i=0;i<inpReps.length;i++){
         inpReps[i].setAttribute('required','');
-        inpReps[i].placeholder  = 'Ilość Powtórzeń';
+        inpReps[i].placeholder  = '0';
         inpReps[i].type = 'Number';
         inpReps[i].step ='1';
         inpReps[i].min='1'
@@ -176,8 +213,10 @@ function styleDetails(){
 
     
     for(let i=0;i<inpWeight.length;i++){
-        inpWeight[i].setAttribute('required','');
-        inpWeight[i].placeholder = 'Ciężar';
+        inpWeight[i].setAttribute('data-label','Nazwa'); 
+        inpWeight[i].setAttribute('required',''); 
+        
+        inpWeight[i].placeholder = '0';
         inpWeight[i].type = 'Number';
         inpWeight[i].step ='0.25';
         inpWeight[i].min='1';
@@ -204,10 +243,10 @@ function expandDetails(event){
     populateRows(event);
 };
 
-const saveDetailsButton = document.getElementById('wrktSeriesBttn');
-if(saveDetailsButton != null || saveDetailsButton != undefined){
-    saveDetailsButton.addEventListener('click',checkWrkt,false);
-};
+// const saveDetailsButton = document.getElementById('wrktSeriesBttn');
+// if(saveDetailsButton != null || saveDetailsButton != undefined){
+//     saveDetailsButton.addEventListener('click',checkWrkt,false);
+// };
 
 
 function visibility(event){
@@ -234,12 +273,10 @@ Array.from(records).forEach(record =>{
 
 function editWrkt(event){
 
-    const records = document.getElementsByClassName('selectedRecord');
-
     let e = window.event;
     let et = e.target;
 
-    let id = et.getAttribute('id');
+    let id = et.parentNode.getAttribute('id');
 
     getWrkt(id);
 
@@ -381,4 +418,11 @@ window.onload = function(){
                 anchors[i].classList.add('active');
             };
         };
-};
+
+
+     let validInput = document.getElementsByClassName('WrktIDopt');
+     for(let i = 0;i<validInput.length;i++){
+        validInput[i].addEventListener('invalid',function(){alert('Zaznaczone pole wymaga wprowadzenia conajmniej 3 znaków.')});
+        };
+    };   
+

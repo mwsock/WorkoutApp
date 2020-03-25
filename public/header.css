@@ -2,7 +2,8 @@ body{
     font-family: 'Roboto', sans-serif;
     background: rgb(255,255,255);
     background-size: cover;
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(37,138,196,0.9850491221879377) 78%);
+    /* background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(37,138,196,0.9850491221879377) 78%); */
+    background-image: url('/images/1514056.jpg');
     background-attachment:fixed;
     
 }   
@@ -27,7 +28,7 @@ body{
     border-radius: 10px;
     padding: 10px;  
     box-shadow: black 0px 0px 5px 0px;
-    width: 60%;
+    width: fit-content;
     position: absolute;
     left: 50%;
     margin-right: -50%;

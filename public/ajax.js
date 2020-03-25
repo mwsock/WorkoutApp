@@ -90,28 +90,32 @@ function ajaxSeries(type,element){
 
 function sendWrkt(){
 
+    let check = checkWrkt(event);
 
-    var log = getValues();
-    console.log(log);
+    if(check!=1){
 
-    var url = "/addWrkt";
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    xhr.setRequestHeader("cache-control", "no-cache");
-    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify(log));
+        var log = getValues();
+        // console.log(log);
 
-    let hdr = document.getElementById('saveWrktHdr');
-    hdr.textContent = 'Trening zapisany!';
+        var url = "/addWrkt";
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader("cache-control", "no-cache");
+        xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(log));
 
-    let dtlRps = document.getElementsByClassName('detailsReps');
-    let dtlWgth = document.getElementsByClassName('detailsWeight');
+        let hdr = document.getElementById('saveWrktHdr');
+        hdr.textContent = 'Trening zapisany!';
 
-    for(var i=0;i<dtlRps.length;i++){
-        dtlRps[i].setAttribute('disabled','');
-        dtlWgth[i].setAttribute('disabled','');
+        let dtlRps = document.getElementsByClassName('detailsReps');
+        let dtlWgth = document.getElementsByClassName('detailsWeight');
+
+        for(var i=0;i<dtlRps.length;i++){
+            dtlRps[i].setAttribute('disabled','');
+            dtlWgth[i].setAttribute('disabled','');
+        };
+
     };
-
 }; 
 
 function getValues(){
@@ -121,7 +125,10 @@ function getValues(){
 
     var variant = document.getElementById('variantID').value;
     
-    var wrktDate = document.getElementById('wrktDate').value
+    var wrktDate = document.getElementById('wrktDate').value;
+    if(wrktDate===null || wrktDate === ''){
+        wrktDate = Date.now();
+    };
     
     
     var z = document.getElementsByClassName('execRow');
@@ -290,7 +297,7 @@ function deleteElem(event,name,page){
     //console.log(et.getAttribute('name'));
     const eN = document.getElementsByClassName('delete');
    
-    let id = et.previousElementSibling.getAttribute('id');
+    let id = et.parentNode.getAttribute('id');
     console.log(name);
     
     
