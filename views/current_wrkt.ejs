@@ -4,7 +4,7 @@
 
   <form class="wrktForm"  action="" method="">
 
-  <h1 class='tblHdr'>Dodaj nowy trening:</h1> 
+  <h2 class='tblHdr'>Dodaj nowy trening:</h2> 
 
   <div class="selectWrktToSave"> 
     <div>
@@ -23,9 +23,10 @@
 
 
 
-  <div class="wrktTbl">
-    <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2>
-
+  <div class="wrktTbl hiddenElem">
+    <!-- <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2> -->
+  <hr>
+  
   <table class="lastWrkt">
     <thead>
         <th class="text-left">Ćwiczenie</th>
@@ -37,7 +38,7 @@
   </table>
   </div>
   
-  <div class='rowBttns'>
+  <div class='rowBttns hiddenElem'>
     <input type='submit' class='wrktBttn button' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
   </div>
 </form>

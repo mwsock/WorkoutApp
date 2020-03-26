@@ -10,6 +10,8 @@
    margin: auto;
    width: fit-content;
  }
+
+
 table {
     /* border: 2px solid rgba(204, 204, 204, 0.918);  */
     /* border-collapse: collapse;  */
@@ -17,36 +19,46 @@ table {
     padding: 0;
     /* width: 100%; */
     table-layout: fixed;
-    border-radius: 10px;
+    /* border-radius: 10px; */
   }
   
 
   table {
     font-size: 1.5em;
     margin: .5em 0 .75em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
+    background-color: white
+    color: black;
+    /* border: 1px solid #ddd; */
     padding: .35em;
-    border-radius: 10px;
+    /* border-radius: 10px; */
   }
 
 
   table th,
   table td {
-  padding: .625em;
+  padding: 0.4em;
   text-align: center;
-  border-bottom: 1px solid #ddd;
-  border-radius: 10px;
-}
+  }
 
 table th {
-    font-size: 1em;
+    font-size: 0.75em;
     /* letter-spacing: .1em; */
     text-transform: uppercase;
+    background-color:white;
+    /* border-radius: 10px; */
   }
+
+
+table td {
+  font-size: 0.6em;
+}
 
   @media screen and (max-width: 600px) {
     
@@ -71,7 +83,7 @@ table th {
     }
     
     table tr {
-      border-bottom: 3px solid #ddd;
+      background-color: white;
       display: block;
     }
 
@@ -103,5 +115,44 @@ table th {
 
   table li{
       list-style-type: none;
-      border-bottom: 1px solid rgb(136, 136, 136);
+      /* border-bottom: 1px solid rgb(136, 136, 136); */
   }
+
+  tr:nth-child(odd) td {
+    background:whitesmoke;
+  }
+   
+  tr:nth-child(odd):hover td:not(.text-center) {
+    background:rgb(200, 200, 200);
+  }
+
+
+  th:last-child{
+    border-top-right-radius:10px;
+  }
+
+  th:first-child{
+    border-top-left-radius:10px;
+  }
+
+
+  tr:last-child>td:first-child {
+    border-bottom-left-radius:10px;
+  }
+   
+ tr:last-child>td:last-child {
+    border-bottom-right-radius:10px;
+  }
+
+
+  table td:not(.text-left):not(.text-center)::before {
+    content: attr(data-label);
+    text-align: center;
+    font-size: 0.9em;
+    padding: 5px;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  

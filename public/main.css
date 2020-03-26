@@ -1,4 +1,7 @@
 
+ .hiddenElem{
+    display: none;
+   }
 
 .selectWrkt{
     display: inline-block;

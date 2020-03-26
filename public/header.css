@@ -43,9 +43,10 @@ body{
     font-size: 17px;
   }
   
-  .navbar a:hover {
+  .navbar a:not(.logout):not(.active):hover {
     background-color: whitesmoke;
     color: black;
+    -webkit-text-stroke: 0.025em black;
     transition: background-color .3s;
   }
   
@@ -193,3 +194,12 @@ body{
 
   }
   
+  .logout{
+    transition: -webkit-text-stroke .3s;
+  }
+
+  .logout:hover{
+    color:black;
+    transition: -webkit-text-stroke .3s;
+    -webkit-text-stroke: 0.025em black;
+  }

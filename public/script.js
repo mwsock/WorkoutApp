@@ -341,7 +341,10 @@ function editRows(event) //adds new rows to wrktDetails table
         }; */
 
         const repsNode = document.createElement("td");
+        repsNode.setAttribute('data-label',"Ilość Powtórzeń"); 
+
         const weightNode = document.createElement("td");
+        weightNode.setAttribute('data-label',"Ciężar"); 
 
         const liReps = document.createElement("li");
         const liWeight = document.createElement("li"); 

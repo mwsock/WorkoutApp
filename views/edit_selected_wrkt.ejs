@@ -3,7 +3,7 @@
 
   <form class="wrktForm" action="" method="">
 
-  <h1>Edytuj trening:</h1>  
+  <h2>Edytuj trening:</h2>  
 
   <div class="selectWrktToSave">
     <div>
@@ -19,7 +19,8 @@
 
 
   <div class="wrktTbl">
-    <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2>
+    <!-- <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2> -->
+    <hr>
 
   <table class="lastWrkt">
   
@@ -30,11 +31,11 @@
   <tbody id='tRows' class="table-hover">
       <% wLog.wlog['Cwiczenia'].forEach(cwiczenie =>{  %>
         <tr class='execRow'>
-            <td class='text-left'>
+            <td data-label="Nazwa Ćwiczenia" class='text-left'>
                 <div class='execName' name='<%= cwiczenie.Nazwa %>' title='Naciśnij by rozwinąć.' ><%= cwiczenie.Nazwa %></div>
                 <input readonly='readonly' hidden name='exec' value='<%= cwiczenie.Nazwa %>'>
             </td> 
-            <td class='text-left'> 
+            <td data-label="Ilość Serii" class='text-left'> 
                 <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
         
         <tr class='filledUp hidden' >

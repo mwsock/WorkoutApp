@@ -66,8 +66,8 @@ function ajaxSeries(type,element){
                     </tr>" 
                 };  
                                                                                                                                                              
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.'>"+ arrayObj['dtype'] + "</div>\
-                                                            <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td class='text-left'> \
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td data-label='Nazwa Ćwiczenia' class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.'>"+ arrayObj['dtype'] + "</div>\
+                                                            <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td data-label='Ilość Serii' class='text-left'> \
                                                             <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100'  onchange ='expandDetails()' ></tr><tr class='toFill'></tr>" //+ details;  
                                                             
                                                             /*
@@ -83,6 +83,13 @@ function ajaxSeries(type,element){
         }
     };
     xhr.send();
+
+    let hiddenElem = document.getElementsByClassName('hiddenElem');
+   
+        hiddenElem[0].classList.remove('hiddenElem');
+    
+        hiddenElem[0].classList.remove('hiddenElem');
+ 
 
 };
 
