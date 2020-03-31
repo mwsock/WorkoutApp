@@ -73,4 +73,9 @@ a{
     color: rgb(28, 115, 255);
 }
 
+.column>a:visited{
+    color: rgb(28, 115, 255);
+}
+
+
  

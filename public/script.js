@@ -1,17 +1,16 @@
 
 function checkWrkt(event){
-    ///alert('works');
+
     let x = 0;
     const inpt = document.getElementsByClassName('WrktSeriesOpt');
 
     Array.from(inpt).forEach(function(ss){
         if(ss.value != '0' && ss.value != ""){
-           // console.log(ss.value);
             x += parseInt(ss.value);
         };
         
     });
-   // console.log(x);
+
    if( x == 0){
         alert("Podaj ilość serii, a następnie uzupełnij liczbę powtórzeń i ciężar.");
         event.preventDefault();
@@ -100,33 +99,21 @@ function populateRows(event) //adds new rows to wrktDetails table
 {
     let e = window.event;
     var et = e.target;
-    //console.log(et.getAttribute('name'));
+
     const eN = document.getElementsByClassName('WrktSeriesOpt');
     const index = Array.from(eN).findIndex(item => 
         item.parentNode.parentNode.childNodes[0].childNodes[0].getAttribute('name') 
         === 
         et.parentNode.parentNode.childNodes[0].childNodes[0].getAttribute('name'));
-    //console.log(index);
+
     
     const z = document.getElementsByClassName('toFill');
-    //const nSeries = document.getElementsByClassName('WrktSeriesOpt');
-   // let i = 0;
-   let i = index;
-        //console.log(z.length);
-     //  for(i;i<z.length;i++){
-       // console.log(z.length+'_z');
-        //let nS = parseInt(nSeries[i].value);
+
+    let i = index;
+
         let nSeries = eN[index].parentNode.parentNode.childNodes[1].nextElementSibling.childNodes[1];
        
         let nS = parseInt(nSeries.value);
-        //console.log(nS);
-        //console.log(nSeries.length+'ss'); //helps to populate inputs
-        
-   /*     if(isNaN(nS)){
-           // console.log('stop');
-           nSeries[i].setAttribute('disabled','');
-            continue;
-        }; */
 
         const repsNode = document.createElement("td");
         repsNode.setAttribute('data-label',"Ilość Powtórzeń"); 
@@ -149,9 +136,8 @@ function populateRows(event) //adds new rows to wrktDetails table
         liWeight.appendChild(inpWeight); 
 
         let zFilledUp = eN[index].parentNode.parentNode.nextElementSibling; 
-
         let filledToRemove = zFilledUp.childNodes;
-        //console.log(filledToRemove);
+
         Array.from(filledToRemove).forEach(remItem=>{
             zFilledUp.removeChild(remItem);
         });
@@ -171,22 +157,13 @@ function populateRows(event) //adds new rows to wrktDetails table
                     blockDetail(i);
                 }; 
             };
-            //nSeries[i].setAttribute('disabled',''); //blocks series insert
-            //nSeries[i].className = 'WrktSeriesOptFilled';
-            //nSeries.className = 'WrktSeriesOptFilled';
 
             
             eN[index].title="Naciśnij by zwinąć."
-            //console.log(zFilledUp);
             zFilledUp.className='filledUp';
-            //z[i].className='filledUp';
-            //console.log(nS+"_nS");
+
             i=i-1; //due to className change for z there was a problem with shrinking z.length and 
                    //growing i number what has caused problem with input multipling
-    //    };
-    //console.log(i+"_i");
-
-    //console.log(eN[index]);
 
     const DetailsVisibility = document.getElementsByClassName('execName');
     Array.from(DetailsVisibility).forEach(detail =>{
@@ -222,7 +199,7 @@ function styleDetails(){
         inpWeight[i].min='1';
         inpWeight[i].name = 'Weight';
         inpWeight[i].classList.add('WrktIDopt');
-    };//min='1' max='1000' step='0.25'
+    };
 };
 
 
@@ -242,11 +219,6 @@ function hideDetail(i){
 function expandDetails(event){
     populateRows(event);
 };
-
-// const saveDetailsButton = document.getElementById('wrktSeriesBttn');
-// if(saveDetailsButton != null || saveDetailsButton != undefined){
-//     saveDetailsButton.addEventListener('click',checkWrkt,false);
-// };
 
 
 function visibility(event){
@@ -300,45 +272,27 @@ Array.from(editableDetailsVisibility).forEach(detail =>{
     detail.addEventListener("click", visibility, false);
 });
 
-    
-// function expandDetailsEdit(event){
-//     checkWrkt(event);
-//     //editRows(event);
-//     styleDetails();
-// };
 
 function editRows(event) //adds new rows to wrktDetails table
 {
     let e = window.event;
     var et = e.target;
-    //console.log(et.getAttribute('name'));
+
     const eN = document.getElementsByClassName('WrktSeriesOpt');
     const index = Array.from(eN).findIndex(item => 
         item.parentNode.parentNode.childNodes[1].childNodes[1].getAttribute('name') 
         === 
         et.parentNode.parentNode.childNodes[1].childNodes[1].getAttribute('name'));
-    //Array.from(eN).forEach(item=>{ console.log(item.parentNode.parentNode.childNodes[1].childNodes[1].getAttribute('name'))});
+
     console.log(index);
     
     const z = document.getElementsByClassName('filledUp');
-    //const nSeries = document.getElementsByClassName('WrktSeriesOpt');
-   // let i = 0;
+
    let i = index;
-        //console.log(z.length);
-     //  for(i;i<z.length;i++){
-       // console.log(z.length+'_z');
-        //let nS = parseInt(nSeries[i].value);
+
         let nSeries = eN[index].parentNode.parentNode.childNodes[1].nextElementSibling.childNodes[1];
        
         let nS = parseInt(nSeries.value);
-        //console.log(nS);
-        //console.log(nSeries.length+'ss'); //helps to populate inputs
-        
-   /*     if(isNaN(nS)){
-           // console.log('stop');
-           nSeries[i].setAttribute('disabled','');
-            continue;
-        }; */
 
         const repsNode = document.createElement("td");
         repsNode.setAttribute('data-label',"Ilość Powtórzeń"); 
@@ -362,7 +316,7 @@ function editRows(event) //adds new rows to wrktDetails table
 
         let zFilledUp = eN[index].parentNode.parentNode.nextElementSibling;  
         let filledToRemove = zFilledUp.childNodes;
-        //console.log(filledToRemove);
+        
         Array.from(filledToRemove).forEach(remItem=>{
             zFilledUp.removeChild(remItem);
         });
@@ -382,23 +336,13 @@ function editRows(event) //adds new rows to wrktDetails table
                     blockDetail(i);
                 }; 
             };
-            //nSeries[i].setAttribute('disabled',''); //blocks series insert
-            //nSeries[i].className = 'WrktSeriesOptFilled';
-            //nSeries.className = 'WrktSeriesOptFilled';
 
-            
             eN[index].title="Naciśnij by zwinąć."
             console.log(zFilledUp);
             zFilledUp.className='filledUp';
-            //z[i].className='filledUp';
-            //console.log(nS+"_nS");
+
             i=i-1; //due to className change for z there was a problem with shrinking z.length and 
                    //growing i number what has caused problem with input multipling
-    //    };
-    //console.log(i+"_i");
-
-    //console.log(eN[index]);
-    //eN[index].setAttribute('onClick','visibility()');
     
     styleDetails();
 };

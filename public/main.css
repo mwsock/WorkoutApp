@@ -30,6 +30,7 @@
 }
 
 .selectBttn{
+    text-align-last:center;
     background-color: whitesmoke;
     transition: background-color .3s;
     border-radius: 5px;
@@ -60,7 +61,6 @@
 }
 
 .rowBttns{
-    /* display: inline-block; */
     text-align:center;
 }
 

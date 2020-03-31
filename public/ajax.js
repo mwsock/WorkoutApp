@@ -6,16 +6,12 @@ function ajaxVariant(type,element){
     xhr.open(type, url);
     xhr.onload = function() {
         if (xhr.status === 200) {
-            //alert('AJAX WORKS: ' + xhr.responseText);
             
             var ajaxObject = JSON.parse(xhr.responseText);
-            //var ajaxObject = xhr.responseText;
-            //console.log(ajaxObject);
+
             ajaxObject.forEach(function(arrayObj){
                 Object.values(arrayObj).forEach(function(WrktDay){   
-                //console.log( arrayObj['WrktDay']);
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + " <option class='WrktIDopt'> " + WrktDay + "</option>";
-                
                 });
             });
         }
@@ -34,25 +30,22 @@ function ajaxSeries(type,element){
     let planId = document.getElementById("WrktID").value;
     let variantId = document.getElementById("variantID").value;
     let url = "/addWrkt/"+ planId + '/' + variantId;
-   // console.log(url);
+
     const xhr = new XMLHttpRequest();
     xhr.open(type, url);
     xhr.onload = function() {
         if (xhr.status === 200) {
-           // alert('AJAX WORKS: ' + xhr.responseText);
             
             let ajaxObject = JSON.parse(xhr.responseText);
-            //console.log(ajaxObject);
             
             Object.values(ajaxObject).forEach(function(rslt){
-               // console.log(rslt);
+
                 rslt.forEach(function(arrayObj){
-                   // console.log(arrayObj['dtype']);
+                   
                 function optNmbr(){
                     var i = 0;
                     for(i; i<11; i++){
-                    var oN = oN +  "<option>"+ i +"</option>"
-                    //<select name='IloscSerii' placeholder='Numer' class='WrktSeriesOpt' required>   <!--+  optNmbr() +-->  </select></td> 
+                        var oN = oN +  "<option>"+ i +"</option>"
                     };
                     return oN;
                 };
@@ -69,11 +62,7 @@ function ajaxSeries(type,element){
                 document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td data-label='Nazwa Ćwiczenia' class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.'>"+ arrayObj['dtype'] + "</div>\
                                                             <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td data-label='Ilość Serii' class='text-left'> \
                                                             <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100'  onchange ='expandDetails()' ></tr><tr class='toFill'></tr>" //+ details;  
-                                                            
-                                                            /*
-                                                            <td class='text-left'> <input type='number' name='IloscPowtorzen' placeholder='Ilość Powtórzeń' min='1' max='100' required></td> \
-                                                            <td class='text-left'> <input type='number' name='Ciezar' placeholder='Ciężar' min='1' max='1000' step='0.25' required></td>*/
-                                                            
+                                                                                                  
                 
                 });
             });  
@@ -102,7 +91,6 @@ function sendWrkt(){
     if(check!=1){
 
         var log = getValues();
-        // console.log(log);
 
         var url = "/addWrkt";
         var xhr = new XMLHttpRequest();
@@ -111,18 +99,10 @@ function sendWrkt(){
         xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
         xhr.send(JSON.stringify(log));
 
-        let hdr = document.getElementById('saveWrktHdr');
-        hdr.textContent = 'Trening zapisany!';
-
-        let dtlRps = document.getElementsByClassName('detailsReps');
-        let dtlWgth = document.getElementsByClassName('detailsWeight');
-
-        for(var i=0;i<dtlRps.length;i++){
-            dtlRps[i].setAttribute('disabled','');
-            dtlWgth[i].setAttribute('disabled','');
-        };
+       alert('Trening zapisany!');
 
     };
+
 }; 
 
 function getValues(){
@@ -146,13 +126,10 @@ function getValues(){
     for(i=0;i<z.length;i++){
 
         if(z[i].children[1].children[0].hasAttribute('disabled')){
-            //console.log('NEXT!');
+           
         }else{
             var execName = z[i].children[0].children[0].textContent;
-            //console.log('ExerciseName: '+execName);
-
             var seriesNum = z[i].children[1].children[0].value;
-            //console.log('SeriesNumber: '+seriesNum);
    
             var execTD = z[i].nextSibling.children[0];
             var weigthTD = z[i].nextSibling.children[1];
@@ -171,16 +148,14 @@ function getValues(){
                         };
                     info.push(infoEXT);
 
-                    //console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
                 };
-                //console.log(info);
+
                 var exercise =  {
                     "Nazwa": execName,
                     "Info": info
                     };
 
                 exercices.push(exercise);
-                //console.log(exercices);
         };
 
 
@@ -193,7 +168,6 @@ function getValues(){
                                 }
                             };
 
-            //console.log(wrkt_log);
             return wrkt_log;
 };
 
@@ -244,14 +218,11 @@ function getUpdatedValues(){
     for(i=0;i<z.length;i++){
 
         if(z[i].children[1].children[0].hasAttribute('disabled')){
-            //console.log('NEXT!');
+          
         }else{
             var execName = z[i].children[0].children[0].textContent;
-            //console.log('ExerciseName: '+execName);
-
             var seriesNum = z[i].children[1].children[0].value;
-            //console.log('SeriesNumber: '+seriesNum);
-            //console.log(z[i].nextSibling.nextSibling.children[0])
+         
             var execTD = z[i].nextSibling.nextSibling.children[0];
             var weigthTD = z[i].nextSibling.nextSibling.children[1];
 
@@ -269,16 +240,14 @@ function getUpdatedValues(){
                         };
                     info.push(infoEXT);
 
-                    //console.log('RepNumber: '+repNum+' Weight: '+weigthNum);
                 };
-                //console.log(info);
+         
                 var exercise =  {
                     "Nazwa": execName,
                     "Info": info
                     };
 
                 exercices.push(exercise);
-                //console.log(exercices);
         };
 
 
@@ -291,7 +260,6 @@ function getUpdatedValues(){
                                 }
                             };
 
-            //console.log(wrkt_log);
             return wrkt_log;
 };
 
@@ -301,7 +269,7 @@ function deleteElem(event,name,page){
 
     let e = window.event;
     var et = e.target;
-    //console.log(et.getAttribute('name'));
+ 
     const eN = document.getElementsByClassName('delete');
    
     let id = et.parentNode.getAttribute('id');
