@@ -2,7 +2,6 @@ body{
     font-family: 'Roboto', sans-serif;
     background: rgb(255,255,255);
     background-size: cover;
-    /* background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(37,138,196,0.9850491221879377) 78%); */
     background-image: url('/images/1514056.jpg');
     background-attachment:fixed;
 }
@@ -88,11 +87,6 @@ a:hover{
     margin-left: -10px;
     transition: margin-left .3s;
 }
-
-/* .back{
-    display: flex;
-    flex-direction: row;
-} */
 
 .img{
     width: 30px;

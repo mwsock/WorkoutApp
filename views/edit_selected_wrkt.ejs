@@ -19,7 +19,7 @@
 
 
   <div class="wrktTbl">
-    <!-- <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2> -->
+   
     <hr>
 
   <table class="lastWrkt">
@@ -36,18 +36,23 @@
                 <input readonly='readonly' hidden name='exec' value='<%= cwiczenie.Nazwa %>'>
             </td> 
             <td data-label="Ilość Serii" class='text-left'> 
-                <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
+                <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='0' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
         
         <tr class='filledUp hidden' >
-            
-                <td data-label="Ilość Powtórzeń">
+        <% let dataRep = ""; %>
+              <% if( cwiczenie.Info.length > 0 ){dataRep = "Ilość Powtórzeń"}  %>
+                
                     <% cwiczenie.Info.forEach(info =>{  %>
+                        <td data-label='<%= dataRep %>'>
                     <li>
                         <input class="WrktIDopt detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= info.IloscPowtorzen %>'>
                     </li> 
-                    <% }); %>  
                 </td>
-                <td data-label="Ciężar">
+                    <% }); %>  
+                
+         <% let dataWeight = ""; %>
+              <% if( cwiczenie.Info.length > 0 ){dataWeight = "Ciężar"}  %>        
+                <td data-label='<%= dataWeight %>'>
                     <% cwiczenie.Info.forEach(info =>{  %>
                     <li>
                         <input class="WrktIDopt detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= info.Ciezar %>'>

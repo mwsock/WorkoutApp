@@ -186,8 +186,7 @@ function updateWrkt(){
     xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify(log));
 
-    let hdr = document.getElementById('saveWrktHdr');
-    hdr.textContent = 'Trening zapisany!';
+    alert('Trening zaktualizowany!');
 
     let dtlRps = document.getElementsByClassName('detailsReps');
     let dtlWgth = document.getElementsByClassName('detailsWeight');

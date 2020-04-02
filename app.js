@@ -12,7 +12,6 @@ const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
 
-//połączenie do mongodb
 mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -73,20 +72,19 @@ app.get('/', isLoggedIn , function(req, res) {
   let wrktDate = '';
   let planName = '';
   let user = req.user.username;
-  console.log(user);
 
-                      //latest entry filter
-      wrkt.find({'User' : user},{},{sort:{_id:-1}}, function(err, wLog){
-          if(err){
-            console.log('error');
+
+      wrkt.find({'User' : user},{},{sort:{CDate:-1}}, function(error, wLog){
+          if(error){
+            console.log(error);
           }else{
             let tstLog = wLog[0];
            if(typeof tstLog === 'undefined' || tstLog === null) {
             let user = req.user.username;
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
-            //console.log(wLog);
+         
            }else{
-            //console.log(wLog);
+           
             let wrktObj = JSON.parse(JSON.stringify(wLog[0]));
 
             let planName = wrktObj.wlog['RodzajTreningu'];
@@ -96,7 +94,7 @@ app.get('/', isLoggedIn , function(req, res) {
             let date = new Date(wrktObj.CDate);
             const options = {year: 'numeric', month: 'long', day: 'numeric'};
             let wrktDate = date.toLocaleDateString('pl-PL', options);
-            console.log(user);
+       
             res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
            };  
           };
@@ -107,8 +105,8 @@ app.get('/crrnt_wrkt', isLoggedIn,function(req,res){
 
   let user = req.user.username;
 
-    wrktPlan.find({'User' : user},function(err,rows){
-          if(err){
+    wrktPlan.find({'User' : user},function(error,rows){
+          if(error){
             console.log(error)
           }else{
             res.render('current_wrkt', {result: rows}); 
@@ -120,17 +118,16 @@ app.get('/crrnt_wrkt', isLoggedIn,function(req,res){
 
 app.post('/addWrkt', isLoggedIn, function(req,res){
 
- console.log(req);
  const wrktLog = req.body;
  const user = req.user.username;
 
  wrktLog.User=user;
 
-  wrkt.create(wrktLog, function(err, newlyCreated){
-    if(err){
-      console.log(err)
+  wrkt.create(wrktLog, function(error, newlyCreated){
+    if(error){
+      console.log(error)
     }else{
-      console.log('OK!')
+      console.log('WrktAdded!')
     }
   });
  
@@ -147,15 +144,13 @@ app.get('/edit_wrkt', isLoggedIn, function(req,res){
   let user = req.user.username;
 
                       
-      wrkt.find({'User' : user}, function(err, wLog){
-          if(err){
-            console.log('error');
+      wrkt.find({'User' : user},{},{sort:{CDate: -1}}, function(error, wLog){
+          if(error){
+            console.log(error);
           }else{
            if(typeof wLog[0] === 'undefined' || wLog === null) {
             res.render('edit_wrkt' , {wrktDay: wrktDay, planName: planName, wrktDate:wrktDate});
            }else{
-            //console.log(wLog.length);
-
             let recordPlan = JSON.parse(JSON.stringify(wLog));
             res.render('edit_wrkt',{recordPlan: recordPlan});
            };  
@@ -168,14 +163,10 @@ app.get('/edit_wrkt', isLoggedIn, function(req,res){
 app.get("/edit_selected_wrkt/:id", isLoggedIn, function(req,res){
 
   let id = req.params['id'];
-  console.log(id);
 
-  wrkt.findById(id,function(err, wLog){
-    console.log(wLog);
+  wrkt.findById(id,function(error, wLog){
     let log = JSON.parse(JSON.stringify(wLog));
-    //console.log(log.wlog['Cwiczenia']);
     res.render('edit_selected_wrkt', {wLog: log});
-    //res.send(wLog);
   });
 
   
@@ -185,16 +176,14 @@ app.get("/edit_selected_wrkt/:id", isLoggedIn, function(req,res){
 app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 
   let id = req.params['id'];
-  // console.log("GOT IT:" + id);
-  // console.log(req.body.wlog);
 
   let log = req.body.wlog;
 
-  wrkt.findByIdAndUpdate(id, { wlog: log },function(err,result){
-    if (err) { 
-      res.send(err);
+  wrkt.findByIdAndUpdate(id, { wlog: log },function(error,result){
+    if (error) { 
+      res.send(error);
     } else {
-     console.log('Updated!');
+     console.log('WrktUpdated!');
     }
   });
   
@@ -202,43 +191,37 @@ app.put("/edit_selected_wrkt/:id/update", isLoggedIn, function(req,res){
 
 
 app.get('/delete/Wrkt/:id',  isLoggedIn, function(req,res){
-  //console.log(req.params.id);
+
   let id = req.params.id;
 
-
-  wrkt.findByIdAndDelete(id, function(err, crrntlyRemoved){
-    if(err){
-      console.log(err)
+  wrkt.findByIdAndDelete(id, function(error, crrntlyRemoved){
+    if(error){
+      console.log(error)
     }else{
-      console.log('succes');
+      console.log('WrktDeleted!');
     };
   });
 });
 
 
 app.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
-//console.log(req.params);
+
   let planId = req.params["planId"];
   let variantId = req.params["variantId"];
   let user = req.user.username;
   
-  wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId, 'User':user}, "-_id exerciseId", function(err,rows){
-      if(err){
+  wrktTemplate.findOne({"WrktNameId" : planId, "WrktDay" : variantId, 'User':user}, "-_id exerciseId", function(error,rows){
+      if(error){
         console.log(error)
       }else{
-       // console.log(rows);
-
-      
+  
           let id = rows['exerciseId'];
-          //console.log(Object.values(id));
      
-          exercise.find({"_id": id, 'User':user},"-_id dtype", function(err,rows2){
-            if(err){
+          exercise.find({"_id": id, 'User':user},"-_id dtype", function(error,rows2){
+            if(error){
               console.log(error)
             }else{
-              //console.log(rows2);
-            res.send({rows2});
-             
+              res.send({rows2});
             }}); 
           }
     });
@@ -251,11 +234,10 @@ app.get('/addWrkt/:id', isLoggedIn, function(req,res){
   let id = (req.params["id"])
   let user = req.user.username;
 
-    wrktTemplate.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(err,rows){
-      if(err){
+    wrktTemplate.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(error,rows){
+      if(error){
         console.log(error)
       }else{
-        //console.log(rows);
         res.send(rows);
       }
     });
@@ -266,16 +248,14 @@ app.get('/addWrkt/:id', isLoggedIn, function(req,res){
 app.get('/newWrktPlan', isLoggedIn, function(req,res){
   let user = req.user.username;
 
-  wrktPlan.find({'User':user},function(err,rows){
-    if(err){
-       console.log('error');
+  wrktPlan.find({'User':user},function(error,rows){
+    if(error){
+       console.log(error);
     }else{
-     // console.log(rows);
-      exercise.find({'User':user},function(err,rows2){
-        if(err){
-          console.log('error')
+      exercise.find({'User':user},function(error,rows2){
+        if(error){
+          console.log(error)
         }else{
-         // console.log(rows2);
           res.render('newWrktPlan', {result: rows,result2: rows2});
         }
       });
@@ -300,12 +280,11 @@ app.post('/insrtWrktPlan', isLoggedIn, function(req,res){
         exerciseId: exec,
         User: user
       };
-    //console.log(newTemplate);
-    wrktTemplate.create(newTemplate, function(err, newlyCreated){
-        if(err){
-          console.log(err)
+    wrktTemplate.create(newTemplate, function(error, newlyCreated){
+        if(error){
+          console.log(error)
         }else{
-          console.log('OK!')
+          console.log('WrktTemplateCreated!')
         }
       });
 
@@ -320,9 +299,9 @@ app.get('/exercices', isLoggedIn, function(req,res){
 
   let user = req.user.username;
 
-    exercise.find({'User':user},function(err,rows){
-      if(err){
-        console.log('error')
+    exercise.find({'User':user},function(error,rows){
+      if(error){
+        console.log(error)
       }else{
         res.render('exercices', {result: rows, info:''});
       }
@@ -333,14 +312,14 @@ app.get('/exercices', isLoggedIn, function(req,res){
 
 
 app.post('/insrt', isLoggedIn, function(req,res){
-  //console.log(req.body.search);
+
   const exerc = req.body.search;
   let user = req.user.username;
   let newExercise = {dtype: exerc, User:user};
 
-  exercise.create(newExercise, function(err, newlyCreated){
-    if(err){
-      console.log(err)
+  exercise.create(newExercise, function(error, newlyCreated){
+    if(error){
+      console.log(error)
     }else{
       res.redirect('/exercices');
     };
@@ -350,15 +329,14 @@ app.post('/insrt', isLoggedIn, function(req,res){
 
 
 app.get('/delete/Exercise/:id',  isLoggedIn, function(req,res){
-  //console.log(req.params.id);
+  
   let id = req.params.id;
 
-
-  exercise.findByIdAndDelete(id, function(err, crrntlyRemoved){
-    if(err){
-      console.log(err)
+  exercise.findByIdAndDelete(id, function(error, crrntlyRemoved){
+    if(error){
+      console.log(error)
     }else{
-      console.log('succes');
+      console.log('ExerciseDeleted!');
     };
   });
 });
@@ -367,28 +345,25 @@ app.get('/delete/Exercise/:id',  isLoggedIn, function(req,res){
 
 
 app.post('/insrtPlan',  isLoggedIn, function(req,res){
-  //console.log(req.body.search);
+
   let plan = req.body.plan;
-  console.log(plan);
   let user = req.user.username;
   let newPlan = {_id: mongoose.Types.ObjectId(),wrktPlan: plan,cDATE: Date(),User:user};
                 
 
-  wrktPlan.create(newPlan, function(err, newlyCreated){
-    if(err){
-      console.log(err)
+  wrktPlan.create(newPlan, function(error, newlyCreated){
+    if(error){
+      console.log(error)
     }else{
       
-        wrktPlan.find({'User':user},function(err,rows){
-          if(err){
-            console.log('error');
+        wrktPlan.find({'User':user},function(error,rows){
+          if(error){
+            console.log(error);
           }else{
-          // console.log(rows);
-            exercise.find({'User':user},function(err,rows2){
-              if(err){
-                console.log('error')
+            exercise.find({'User':user},function(error,rows2){
+              if(error){
+                console.log(error)
               }else{
-              // console.log(rows2);
                 res.render('newWrktPlan', {result: rows,result2: rows2});
               }
             });
@@ -401,15 +376,14 @@ app.post('/insrtPlan',  isLoggedIn, function(req,res){
 
 
 app.get('/delete/Plan/:id',  isLoggedIn, function(req,res){
-  //console.log(req.params.id);
+
   let id = req.params.id;
 
-
-  wrktPlan.findByIdAndDelete(id, function(err, crrntlyRemoved){
-    if(err){
-      console.log(err)
+  wrktPlan.findByIdAndDelete(id, function(error, crrntlyRemoved){
+    if(error){
+      console.log(error)
     }else{
-      console.log('succes');
+      console.log('PlanDeleted!');
     };
   });
 });
@@ -422,9 +396,9 @@ app.get('/register',function(req,res){
 app.post('/register',function(req,res){
   req.body.username;
   req.body.password;
-  User.register(new User({username: req.body.username}), req.body.password, function(err, user){
-    if(err){
-      console.log(err);
+  User.register(new User({username: req.body.username}), req.body.password, function(error, user){
+    if(error){
+      console.log(error);
       let message = 'Użytkownik o podanej nazwie jest już zarejestrowany.';
       return res.render('register', {message: message});
     };
@@ -437,7 +411,6 @@ app.post('/register',function(req,res){
 
 app.get('/login',function(req,res){
   res.render('login');
-  //console.log(res);
 });
 
 app.get('/logout',function(req,res){
@@ -446,14 +419,13 @@ app.get('/logout',function(req,res){
 });
 
 app.post('/login',passport.authenticate('local',{
-    successRedirect: '/', //middleware part checking if user + password matches - passport does the whole stuff
+    successRedirect: '/',
     successMessage: 'Cześć!',
     failureRedirect: '/login'
   }),function(req,res){
 
 });
     
-//login middleware
 function isLoggedIn(req,res,next){
   if(req.isAuthenticated()){
     return next();
@@ -463,8 +435,6 @@ function isLoggedIn(req,res,next){
 
 }
     
-    
-//add the router
 app.use('/', router);
 // app.listen(process.env.port || 3000);
 app.listen(3000, '0.0.0.0');

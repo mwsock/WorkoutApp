@@ -14,7 +14,7 @@
           <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
           <% }) %> 
       </select>
-      <select class="selectBttn" name="variant" id="variantID" disabled onchange="/*this.form.submit();*/ ajaxSeries('GET','tRows')">
+      <select class="selectBttn" name="variant" id="variantID" disabled onchange="ajaxSeries('GET','tRows')">
           <option hidden disabled selected value>Dzień</option>
       </select>
     </div>
@@ -24,7 +24,7 @@
 
 
   <div class="wrktTbl hiddenElem">
-    <!-- <h2 class="tblHdr" id="saveWrktHdr">Podaj ilość wykonanych serii: </h2> -->
+
   <hr>
   
   <table class="lastWrkt">

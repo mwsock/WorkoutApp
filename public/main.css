@@ -87,7 +87,7 @@
   
   #wrktDate {
     -webkit-appearance: none;
-    background:#fff url('images/calendar.png') 97% 50% no-repeat ;
+    background:#fff url('images/calendar.png') 98% 50% no-repeat ;
   }
   
   #wrktDate::-webkit-clear-button,#wrktDate::-webkit-inner-spin-button

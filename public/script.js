@@ -366,10 +366,13 @@ window.onload = function(){
             };
         };
 
-
-     let validInput = document.getElementsByClassName('WrktIDopt');
-     for(let i = 0;i<validInput.length;i++){
-        validInput[i].addEventListener('invalid',function(){alert('Zaznaczone pole wymaga wprowadzenia conajmniej 3 znaków.')});
+        if(location.pathname.substring(0,19)!='/edit_selected_wrkt'){
+            
+            let validInput = document.getElementsByClassName('WrktIDopt');
+            for(let i = 0;i<validInput.length;i++){
+                validInput[i].addEventListener('invalid',function(){alert('Zaznaczone pole wymaga wprowadzenia conajmniej 3 znaków.')});
+            };
         };
     };   
+
 

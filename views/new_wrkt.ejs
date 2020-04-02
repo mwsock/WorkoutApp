@@ -6,7 +6,6 @@
   <form action='/insrtWrkt' method='POST'>
     <table class="lastWrkt">
       <thead>
-       <!-- <th class="text-left">Dzień Treningowy</th> -->
         <th class="text-left">Nazwa Ćwiczenia</th>
         <th class="text-left">Numer Serii</th>
         <th class="text-left">Ilość Powtórzeń</th>
@@ -28,7 +27,6 @@
                 <% var i = 0; %>
                 <% for(i; i < liczba; i++){ %>
                     <tr>
-                    <!--  <td class="text-left"><%= select["DzienTreningowy"] %></td> -->
                       <td class="text-left"><%= select["NazwaCwiczenia"] %></td>
                       <td style='display:none;'><input type="hidden" name='WrktId' value ='<%= select["SchemaId"] %>'></td>
                       <td style='display:none;'><input type="hidden" name='NumerSerii' value ='<%=i+1%>'></td>

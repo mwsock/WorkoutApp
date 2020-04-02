@@ -13,13 +13,9 @@
 
 
 table {
-    /* border: 2px solid rgba(204, 204, 204, 0.918);  */
-    /* border-collapse: collapse;  */
     margin: 0;
     padding: 0;
-    /* width: 100%; */
     table-layout: fixed;
-    /* border-radius: 10px; */
   }
   
 
@@ -33,11 +29,9 @@ table {
   }
 
   table tr {
-    background-color: white
+    background-color: white;
     color: black;
-    /* border: 1px solid #ddd; */
-    padding: .35em;
-    /* border-radius: 10px; */
+    padding: 0.35em;
   }
 
 
@@ -49,10 +43,8 @@ table {
 
 table th {
     font-size: 0.75em;
-    /* letter-spacing: .1em; */
     text-transform: uppercase;
     background-color:white;
-    /* border-radius: 10px; */
   }
 
 
@@ -62,7 +54,6 @@ table td {
 
 table li{
   list-style-type: none;
-  /* border-bottom: 1px solid rgb(136, 136, 136); */
 }
 
 tr:nth-child(odd) td {
@@ -157,7 +148,6 @@ text-transform: uppercase;
 
     table li{
       list-style-type: none;
-      /* border-bottom: 1px solid rgb(136, 136, 136); */
     }
 
     tr{
@@ -187,4 +177,3 @@ text-transform: uppercase;
     }
 
   }
-

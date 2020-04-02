@@ -21,23 +21,51 @@
           <th  class="text-left">Nazwa Ćwiczenia</th>
           <th  class="text-left">Powtórzenia</th>
           <th  class="text-left">Ciężar</th>
+          <th  class="text-left">Objętość</th>
       </thead>
 
         <tbody class="table-hover">
           <% cwiczenia.forEach(function(cwiczenie){ %>
         <tr class="">  
           <td data-label="Nazwa Ćwiczenia" class="text-left wrktInfo"><%= cwiczenie["Nazwa"] %></td>
-          <!-- <td  class="text-left wrktInfo"><%= cwiczenie["Info"].length %></td> -->
-          <td data-label="Ilość Powtórzeń" class="text-left wrktInfo">
-            <% cwiczenie["Info"].forEach(function(rep){ %>
-            <li class='repList'> <%= rep['IloscPowtorzen'] %></li> 
-            <%  })  %>
+          <td data-label="Ilość Powtórzeń" class="text-left wrktInfo"> 
+            <% let repInt = 0; %>
+            <% let repVolInt = 0; %>
+              <% cwiczenie["Info"].forEach(function(rep){ %>
+                <% repInt =  parseInt(rep['IloscPowtorzen']) %>
+                <% repVolInt = repVolInt + parseInt(rep['IloscPowtorzen']) %>
+                  <li class='repList'>
+                    <%= repInt %>
+                  </li> 
+                <%  repInt = ""; %>
+              <%  })  %>
+                  <li class='repList'>
+                    <%= repInt %>
+                  </li> 
           </td>
           <td data-label="Ciężar" class="text-left wrktInfo">
+            <% let weightInt = 0; %>
             <% cwiczenie["Info"].forEach(function(rep){ %>
-            <li class='repList'> <%= rep['Ciezar'] %> kg</li> 
+              <% weightInt =  parseFloat(rep['Ciezar']) %> 
+                <li class='repList'> 
+                  <%= weightInt %> kg
+                </li> 
+              <% weightInt = ""; %>
             <%  })  %>
-        </td>
+                <li class='repList'> 
+                  <% if(weightInt === 0){weightInt= '0 kg'}; %>
+                  <%= weightInt %>  
+                </li>  
+          </td>
+          <td data-label="Objętość" class="text-left wrktInfo">
+            <% let volumeInt = 0; %>
+            <% cwiczenie["Info"].forEach(function(rep){ %>
+              <% volumeInt = repVolInt * parseFloat(rep['Ciezar']) %> 
+            <%  })  %>
+                <li class='repList'> 
+                  <%= volumeInt %> kg
+                </li> 
+          </td>
         </tr>
         <% }) %> 
       </tbody>
@@ -46,6 +74,5 @@
     </div>
     <%};%>
 
-   
 <% include partials/footer %>
          
