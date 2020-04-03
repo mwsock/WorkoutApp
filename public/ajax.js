@@ -275,7 +275,7 @@ function deleteElem(event,name,page){
     console.log(name);
     
     
-    var url = "/delete/"+name+"/"+id;
+    var url = name+"/delete/"+id;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function() {

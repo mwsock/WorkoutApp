@@ -6,13 +6,13 @@
       <div class="">
       <ul>
       <% result.forEach(function(exercise){ %>
-        <li class='item' id='<%= exercise["_id"] %>'> <%= exercise["dtype"] %> <button class='delete' name='Exercise' page='exercices'>X</button></li> 
+        <li class='item' id='<%= exercise["_id"] %>'> <%= exercise["dtype"] %> <button class='delete' name='exercices' page='exercices'>X</button></li> 
       <% }) %> 
     </ul>
     </div>  
     <div class='formContainer'>
       <h2><%= info %></h2>
-      <form action='/insrt' method='POST'>
+      <form action='/exercices/insrt' method='POST'>
         <div class='rowBttns'>
           <input type='text' name='search' class="WrktIDopt" placeholder="Dodaj nowe ćwiczenie..." required pattern=".{3,}">
           <input type="submit" class='button' value="Zatwierdź">
