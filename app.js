@@ -64,7 +64,7 @@ app.use(indexRoute);
 
 
 app.use('/', router);
-app.listen(process.env.port || 3000);
+app.listen(process.env.PORT || 3000);
 // app.listen(3000, '0.0.0.0');
 
-console.log(process.env.port);
+console.log(process.env.PORT);
