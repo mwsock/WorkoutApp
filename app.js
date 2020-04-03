@@ -68,3 +68,5 @@ app.listen(process.env.PORT || 3000);
 // app.listen(3000, '0.0.0.0');
 
 console.log(process.env.PORT);
+
+console.log(process.env.DATABASEURL);
