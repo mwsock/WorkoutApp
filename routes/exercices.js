@@ -1,15 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const exercise = require('../models/exercise');
+const middleWare = require('../middleware');
 
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-      res.redirect('/login');
-  }
-
-router.get('/', isLoggedIn, function(req,res){
+router.get('/', middleWare.isLoggedIn, function(req,res){
 
     let user = req.user.username;
   
@@ -25,7 +19,7 @@ router.get('/', isLoggedIn, function(req,res){
   });
   
   
-  router.post('/insrt', isLoggedIn, function(req,res){
+  router.post('/insrt', middleWare.isLoggedIn, function(req,res){
   
     const exerc = req.body.search;
     let user = req.user.username;
@@ -42,7 +36,7 @@ router.get('/', isLoggedIn, function(req,res){
   });
   
   
-  router.get('/delete/:id',  isLoggedIn, function(req,res){
+  router.get('/delete/:id', middleWare.isLoggedIn, function(req,res){
     
     let id = req.params.id;
   

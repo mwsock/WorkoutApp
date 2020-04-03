@@ -2,17 +2,11 @@ const express = require('express');
 const router = express.Router();
 const plan = require('../models/plan');
 const exercise = require('../models/exercise');
-
-    
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-      res.redirect('/login');
-  }
+const middleWare = require('../middleware');
+const mongoose = require('mongoose');
 
 
-router.get('/newWrktPlan', isLoggedIn, function(req,res){
+router.get('/newWrktPlan', middleWare.isLoggedIn, function(req,res){
   let user = req.user.username;
 
   plan.find({'User':user},function(error,rows){
@@ -34,7 +28,7 @@ router.get('/newWrktPlan', isLoggedIn, function(req,res){
 
 
 
-router.post('/insrtPlan',  isLoggedIn, function(req,res){
+router.post('/insrtPlan', middleWare.isLoggedIn, function(req,res){
 
     let planName = req.body.plan;
     let user = req.user.username;
@@ -65,7 +59,7 @@ router.post('/insrtPlan',  isLoggedIn, function(req,res){
   });
   
   
-router.get('/Plan/delete/:id',  isLoggedIn, function(req,res){
+router.get('/Plan/delete/:id', middleWare.isLoggedIn, function(req,res){
   
     let id = req.params.id;
   

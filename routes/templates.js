@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const template = require('../models/template');
+const middleWare = require('../middleware');
 
-    
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-      res.redirect('/login');
-  }
-
-router.get('/addWrkt/:id', isLoggedIn, function(req,res){
+router.get('/addWrkt/:id', middleWare.isLoggedIn, function(req,res){
 
     let id = (req.params["id"])
     let user = req.user.username;
@@ -26,7 +19,7 @@ router.get('/addWrkt/:id', isLoggedIn, function(req,res){
 });
   
 
-router.post('/insrtWrktPlan', isLoggedIn, function(req,res){
+router.post('/insrtWrktPlan', middleWare.isLoggedIn, function(req,res){
 
     let name = req.body['WrktName']
     let day = req.body['DzienTreningowy']

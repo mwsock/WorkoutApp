@@ -4,17 +4,10 @@ const plan = require('../models/plan');
 const wrkt = require('../models/wrkt');
 const exercise = require('../models/exercise');
 const template = require('../models/template');
+const middleWare = require('../middleware');
 
 
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-      res.redirect('/login');
-  }
-
-
-router.get('/crrnt_wrkt', isLoggedIn,function(req,res){
+router.get('/crrnt_wrkt', middleWare.isLoggedIn,function(req,res){
 
     let user = req.user.username;
   
@@ -29,7 +22,7 @@ router.get('/crrnt_wrkt', isLoggedIn,function(req,res){
       });
 
 
-router.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
+router.get("/addWrkt/:planId/:variantId", middleWare.isLoggedIn, function(req,res){
 
   let planId = req.params["planId"];
   let variantId = req.params["variantId"];
@@ -53,7 +46,7 @@ router.get("/addWrkt/:planId/:variantId", isLoggedIn, function(req,res){
 });
 
 
-router.post('/addWrkt', isLoggedIn, function(req,res){
+router.post('/addWrkt', middleWare.isLoggedIn, function(req,res){
 
  const wrktLog = req.body;
  const user = req.user.username;

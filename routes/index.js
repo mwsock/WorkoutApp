@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const wrkt = require('../models/wrkt');
-
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-      res.redirect('/login');
-  }
+const middleWare = require('../middleware');
 
 
-router.get('/', isLoggedIn , function(req, res) {
+router.get('/', middleWare.isLoggedIn, function(req, res) {
 
   let wrktObj = '';
   let cwiczenia = '';
