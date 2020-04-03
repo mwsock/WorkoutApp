@@ -11,7 +11,7 @@ const User = require('./public/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-mongoose.connect('mongodb+srv://tstUser1:tstUser1@cluster0-miupn.mongodb.net/test?retryWrites=true&w=majority',{
+mongoose.connect(process.env.DATABASEURL,{
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
@@ -65,8 +65,6 @@ app.use(indexRoute);
 
 app.use('/', router);
 app.listen(process.env.PORT || 3000);
-// app.listen(3000, '0.0.0.0');
 
 console.log(process.env.PORT);
 
-console.log(process.env.DATABASEURL);
