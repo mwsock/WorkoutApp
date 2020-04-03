@@ -11,7 +11,7 @@ const User = require('./public/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-mongoose.connect('mongodb://localhost/WRKT_LOG',{
+mongoose.connect('mongodb+srv://admin:Bartolini2.@cluster0-miupn.mongodb.net/test?retryWrites=true&w=majority',{
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
