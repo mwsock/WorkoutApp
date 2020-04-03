@@ -12,7 +12,7 @@ const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
 mongoose.connect('mongodb+srv://tstUser1:tstUser1@cluster0-miupn.mongodb.net/test?retryWrites=true&w=majority',{
-  useUnifiedTopology: true,
+ // useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
 });
