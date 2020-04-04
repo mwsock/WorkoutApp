@@ -11,7 +11,7 @@ const User = require('./public/scripts/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-mongoose.connect(process.env.DATABASEURL,{
+mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
