@@ -11,7 +11,7 @@ const User = require('./public/scripts/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-mongoose.connect(proces.env.DATABASEURL,{
+mongoose.connect(DATABASEURL,{
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
