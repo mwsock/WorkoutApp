@@ -7,7 +7,7 @@ const template = require('../models/template');
 const middleWare = require('../middleware');
 
 
-router.get('/crrnt_wrkt', middleWare.isLoggedIn,function(req,res){
+router.get('/new', middleWare.isLoggedIn,function(req,res){
 
     let user = req.user.username;
   
@@ -15,14 +15,32 @@ router.get('/crrnt_wrkt', middleWare.isLoggedIn,function(req,res){
             if(error){
               console.log(error)
             }else{
-              res.render('current_wrkt', {result: rows}); 
+              res.render('new_wrkt', {result: rows}); 
             }
           });
          
       });
 
 
-router.get("/addWrkt/:planId/:variantId", middleWare.isLoggedIn, function(req,res){
+
+router.get('/new/:id', middleWare.isLoggedIn, function(req,res){
+
+    let id = (req.params["id"])
+    let user = req.user.username;
+  
+      template.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(error,rows){
+        if(error){
+          console.log(error)
+        }else{
+          res.send(rows);
+        }
+      });
+  
+});
+        
+
+
+router.get("/new/:planId/:variantId", middleWare.isLoggedIn, function(req,res){
 
   let planId = req.params["planId"];
   let variantId = req.params["variantId"];
@@ -46,7 +64,7 @@ router.get("/addWrkt/:planId/:variantId", middleWare.isLoggedIn, function(req,re
 });
 
 
-router.post('/addWrkt', middleWare.isLoggedIn, function(req,res){
+router.post('/new/insrt', middleWare.isLoggedIn, function(req,res){
 
  const wrktLog = req.body;
  const user = req.user.username;

@@ -3,23 +3,7 @@ const router = express.Router();
 const template = require('../models/template');
 const middleWare = require('../middleware');
 
-router.get('/addWrkt/:id', middleWare.isLoggedIn, function(req,res){
-
-    let id = (req.params["id"])
-    let user = req.user.username;
-  
-      template.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(error,rows){
-        if(error){
-          console.log(error)
-        }else{
-          res.send(rows);
-        }
-      });
-  
-});
-  
-
-router.post('/insrtWrktPlan', middleWare.isLoggedIn, function(req,res){
+router.post('/insrt', middleWare.isLoggedIn, function(req,res){
 
     let name = req.body['WrktName']
     let day = req.body['DzienTreningowy']
@@ -41,7 +25,7 @@ router.post('/insrtWrktPlan', middleWare.isLoggedIn, function(req,res){
        }
      });
 
- res.redirect('/newWrktPlan');
+ res.redirect('/plan');
 
 });
 

@@ -10,6 +10,7 @@
 
           <h3 class="tblHdr">Brak zapisanych treningów!</h3>
 
+          </div>
         <%}else{%>
 
           <h2 class="tblHdr"> Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
@@ -24,10 +25,12 @@
           <th  class="text-left">Objętość</th>
       </thead>
 
-        <tbody class="table-hover">
+      <tbody class="table-hover">
           <% cwiczenia.forEach(function(cwiczenie){ %>
         <tr class="">  
-          <td data-label="Nazwa Ćwiczenia" class="text-left wrktInfo"><%= cwiczenie["Nazwa"] %></td>
+          <td data-label="Nazwa Ćwiczenia" class="text-left wrktInfo">
+            <%= cwiczenie["Nazwa"] %>
+          </td>
           <td data-label="Ilość Powtórzeń" class="text-left wrktInfo"> 
             <% let repInt = 0; %>
             <% let repVolInt = 0; %>

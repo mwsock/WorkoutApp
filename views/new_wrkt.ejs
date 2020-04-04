@@ -1,53 +1,48 @@
 <% include partials/header %>
 
+
+
+  <form class="wrktForm"  action="" method="">
+
+  <h2 class='tblHdr'>Dodaj nowy trening:</h2> 
+
+  <div class="selectWrktToSave"> 
+    <div>
+      <select class="selectBttn" name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
+        <option hidden disabled selected value>Trening</option>
+          <% result.forEach(function(select){ %>
+          <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
+          <% }) %> 
+      </select>
+      <select class="selectBttn" name="variant" id="variantID" disabled onchange="ajaxSeries('GET','tRows')">
+          <option hidden disabled selected value>Dzień</option>
+      </select>
+    </div>
+      <input type='date' id='wrktDate' name='wrktDate' required>
+  </div>
+
+
+
+  <div class="wrktTbl hiddenElem">
+
+  <hr>
   
-  <div class="wrktTbl">
-    <h2 class="tblHdr"><%=result[0]["DTYPE"]%> Dzień Treningowy: <%=result[0]["DzienTreningowy"] %> </h2>
-  <form action='/insrtWrkt' method='POST'>
-    <table class="lastWrkt">
-      <thead>
-        <th class="text-left">Nazwa Ćwiczenia</th>
-        <th class="text-left">Numer Serii</th>
-        <th class="text-left">Ilość Powtórzeń</th>
-        <th class="text-left">Ciężar</th>
-      </thead>
-      <tbody class="table-hover" >
-    <% result.forEach(function(select){ %>   
+  <table class="lastWrkt">
+    <thead>
+        <th class="text-left">Ćwiczenie</th>
+        <th class="text-left">Ilość serii</th>
+    </thead>
+    <tbody id='tRows' class="table-hover">
 
-    <% var t = 0 %>
-
-        <% for(const key of keys){ %>
-
-        <% t=t+1 %>
-
-            <% if(key ==  select["SchemaId"]) { %>
-
-            <% var liczba =  values[key]; %>
- 
-                <% var i = 0; %>
-                <% for(i; i < liczba; i++){ %>
-                    <tr>
-                      <td class="text-left"><%= select["NazwaCwiczenia"] %></td>
-                      <td style='display:none;'><input type="hidden" name='WrktId' value ='<%= select["SchemaId"] %>'></td>
-                      <td style='display:none;'><input type="hidden" name='NumerSerii' value ='<%=i+1%>'></td>
-                      <td class="text-left"> <%=i+1%> </td>
-                      <td class="text-left"> <input type="number" name="IloscPowtorzen" placeholder="Ilość Powtórzeń" min="1" max="100" required></td>
-                      <td class="text-left"> <input type="number" name="Ciezar" placeholder="Ciężar" min="1" max="1000" step="0.25" required></td>
-                    </tr>
-                <% }; %>
-
-            <% }; %>
-            
-        <% }; %> 
-
-
-      <% }) %>   
-      </tbody>
-    </table>
-    <input class='wrktBttn' id='wrktAddbttn' type="submit" value="Dodaj">
-
+    </tbody>
+  </table>
+  </div>
+  
+  <div class='rowBttns hiddenElem'>
+    <input type='submit' class='wrktBttn button' id='wrktSeriesBttn' value='Zapisz Trening'  onclick='sendWrkt()'>
+  </div>
 </form>
-</div>
+
   
 <% include partials/footer %>
          

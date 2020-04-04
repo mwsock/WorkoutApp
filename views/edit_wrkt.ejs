@@ -13,7 +13,7 @@
         <div class='listContainer'>
             <ul>
                 <% recordPlan.forEach(function(plan){ %>
-                <li class='recordPlan item' id='<%= plan._id %>'><span class='selectedRecord'><%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %></span><button class='delete' name='Wrkt' page='edit_wrkt'>X</button> </li> 
+                <li class='recordPlan item' id='<%= plan._id %>'><span class='selectedRecord'><%= plan.CDate %> | Plan: <%= plan.wlog['RodzajTreningu'] %> | Dzień Treningowy: <%= plan.wlog['DzienTreningowy']  %></span><button class='delete' name='wrkt' page='wrkt/edit'>X</button> </li> 
                 <% }) %> 
             </ul>  
         </div>  

@@ -3,7 +3,7 @@ const router = express.Router();
 const wrkt = require('../models/wrkt');
 const middleWare = require('../middleware');
 
-router.get('/edit_wrkt', middleWare.isLoggedIn, function(req,res){
+router.get('/edit', middleWare.isLoggedIn, function(req,res){
   
   let wrktDay = '';
   let wrktDate = '';
@@ -27,7 +27,7 @@ router.get('/edit_wrkt', middleWare.isLoggedIn, function(req,res){
 });
 
 
-router.get("/edit_selected_wrkt/:id", middleWare.isLoggedIn, function(req,res){
+router.get("/edit/:id", middleWare.isLoggedIn, function(req,res){
 
   let id = req.params['id'];
 
@@ -40,7 +40,7 @@ router.get("/edit_selected_wrkt/:id", middleWare.isLoggedIn, function(req,res){
 });
 
 
-router.put("/edit_selected_wrkt/:id/update", middleWare.isLoggedIn, function(req,res){
+router.put("/edit/:id/update", middleWare.isLoggedIn, function(req,res){
 
   let id = req.params['id'];
 
@@ -57,7 +57,7 @@ router.put("/edit_selected_wrkt/:id/update", middleWare.isLoggedIn, function(req
 });
 
 
-router.get('/delete/Wrkt/:id', middleWare.isLoggedIn, function(req,res){
+router.get('/delete/:id', middleWare.isLoggedIn, function(req,res){
 
   let id = req.params.id;
 

@@ -7,11 +7,12 @@ const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const User = require('./public/user');
+const User = require('./public/scripts/user');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 
-mongoose.connect(process.env.DATABASEURL,{
+//proces.env.DATABASEURL
+mongoose.connect('mongodb://localhost/WRKT_LOG',{
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false 
@@ -55,10 +56,10 @@ app.set('view engine','ejs');
 
 app.use(loginRoutes);
 app.use('/exercices',exerciseRoutes);
-app.use(templateRoutes);
-app.use(planRoutes);
-app.use(wrktRoutes);
-app.use(editWrktRoutes);
+app.use('/template',templateRoutes);
+app.use('/plan',planRoutes);
+app.use('/wrkt',wrktRoutes);
+app.use('/wrkt',editWrktRoutes);
 app.use(indexRoute);
 
 
@@ -66,5 +67,5 @@ app.use(indexRoute);
 app.use('/', router);
 app.listen(process.env.PORT || 3000);
 
-console.log(process.env.PORT);
+console.log('PORT' + (process.env.PORT || '3000'));
 

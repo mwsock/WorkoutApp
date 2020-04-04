@@ -6,7 +6,7 @@ const middleWare = require('../middleware');
 const mongoose = require('mongoose');
 
 
-router.get('/newWrktPlan', middleWare.isLoggedIn, function(req,res){
+router.get('/', middleWare.isLoggedIn, function(req,res){
   let user = req.user.username;
 
   plan.find({'User':user},function(error,rows){
@@ -17,7 +17,7 @@ router.get('/newWrktPlan', middleWare.isLoggedIn, function(req,res){
         if(error){
           console.log(error)
         }else{
-          res.render('newWrktPlan', {result: rows,result2: rows2});
+          res.render('new_plan', {result: rows,result2: rows2});
         }
       });
     }
@@ -28,7 +28,7 @@ router.get('/newWrktPlan', middleWare.isLoggedIn, function(req,res){
 
 
 
-router.post('/insrtPlan', middleWare.isLoggedIn, function(req,res){
+router.post('/insrt', middleWare.isLoggedIn, function(req,res){
 
     let planName = req.body.plan;
     let user = req.user.username;
@@ -48,7 +48,7 @@ router.post('/insrtPlan', middleWare.isLoggedIn, function(req,res){
                 if(error){
                   console.log(error)
                 }else{
-                  res.render('newWrktPlan', {result: rows,result2: rows2});
+                  res.render('new_plan', {result: rows,result2: rows2});
                 }
               });
             }
@@ -59,7 +59,7 @@ router.post('/insrtPlan', middleWare.isLoggedIn, function(req,res){
   });
   
   
-router.get('/Plan/delete/:id', middleWare.isLoggedIn, function(req,res){
+router.get('/delete/:id', middleWare.isLoggedIn, function(req,res){
   
     let id = req.params.id;
   
