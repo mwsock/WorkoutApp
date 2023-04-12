@@ -276,13 +276,12 @@ function deleteElem(event,name,page){
     xhr.open('GET', url);
     xhr.onload = function() {
         if (xhr.status === 200) {
-            
+            window.location.href = '/' + page;
         } else {
             alert('Request failed.  Returned status of ' + xhr.status);
         };
     };
     xhr.send();
 
-    window.location.href = '/'+page;
-
+    // window.location.href = '/'+page;
 };

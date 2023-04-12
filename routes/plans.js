@@ -70,6 +70,9 @@ router.get('/delete/:id', middleWare.isLoggedIn, function(req,res){
         console.log('PlanDeleted!');
       };
     });
+
+    res.redirect('/');
+
   });
 
 module.exports = router;

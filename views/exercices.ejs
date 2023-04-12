@@ -6,7 +6,7 @@
       <div class="">
       <ul>
       <% result.forEach(function(exercise){ %>
-        <li class='item' id='<%= exercise["_id"] %>'> <%= exercise["dtype"] %> <button class='delete' name='exercices' page='exercices'>X</button></li> 
+        <li class='item' id='<%= exercise["id"] %>'> <%= exercise["name"] %> <button class='delete' name='exercices' page='exercices'>X</button></li> 
       <% }) %> 
     </ul>
     </div>  
