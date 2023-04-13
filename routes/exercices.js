@@ -2,27 +2,20 @@ const express = require('express');
 const router = express.Router();
 const middleWare = require('../middleware');
 const httpRequest = require('./httpRequests.js');
-
-let options = {  
-  //host: '192.168.0.213',
-  host:'localhost',
-  port:80,
-  path: '',
-  method: '',
-  headers: {
-      'Content-type': 'application/json'
-  }
-}
-
+  
   router.get('/', middleWare.isLoggedIn, function(req,response){
 
+    let options = httpRequest.options;
     options.path = '/exercise';
     options.method = 'GET';
 
-    httpRequest.getRequest(options,'exercices',response);
+    httpRequest.getRequest(options).then((exercices)=>{
+      console.log(JSON.parse(exercices));
+      response.render('exercices', {result: JSON.parse(exercices), info:''});
+    });
+
   });
   
-
   
   router.post('/insrt', middleWare.isLoggedIn, function(req,response){
   
@@ -32,8 +25,9 @@ let options = {
     }
     let newExercise = {name: exerc, user:user};
 
-    options.path = '/exercise/add';
-    options.method = 'POST';
+    let options = httpRequest.options;
+    httpRequest.options.path = '/exercise/add';
+    httpRequest.options.method = 'POST';
 
     httpRequest.postRequest(options,'/exercices',newExercise,response);
 
@@ -44,8 +38,9 @@ let options = {
     
     let id = req.params.id;
 
-    options.path = '/exercise/delete/' + id;
-    options.method = 'DELETE';
+    let options = httpRequest.options;
+    httpRequest.options.path = '/exercise/delete/' + id;
+    httpRequest.options.method = 'DELETE';
 
     httpRequest.deleteRequest(options,'/',response);
 
