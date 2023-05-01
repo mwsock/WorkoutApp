@@ -245,19 +245,18 @@ Array.from(records).forEach(record =>{
 
 function editWrkt(event){
 
-    let e = window.event;
-    let et = e.target;
+    let et = window.event.target;
 
-    let id = et.parentNode.getAttribute('id');
+    let planId = et.parentNode.getAttribute('planId');
+    let createDate = et.parentNode.getAttribute('createDate');
 
-    getWrkt(id);
-
+    getWrkt(planId, createDate);
 
 };
 
 
-function getWrkt(id){
-    window.location.href = '/wrkt/edit/'+id;
+function getWrkt(planId,createDate){
+    window.location.href = '/wrkt/edit/' + planId + '/' + createDate;
 };
 
 

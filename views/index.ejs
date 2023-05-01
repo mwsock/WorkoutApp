@@ -6,15 +6,15 @@
         <h1 class="tblHdr">Cześć <%= user %>! Twój ostatni trening: </h1>
         
 
-        <% if(typeof result._id === 'undefined' || result._id === null){ %>
+        <% if(typeof planId === 'undefined' || planId === null){ %>
 
           <h3 class="tblHdr">Brak zapisanych treningów!</h3>
 
           </div>
         <%}else{%>
 
-          <h2 class="tblHdr"> Plan: <%=planName%> | Dzień Treningowy: <%=result.wlog["DzienTreningowy"] %> </h2>
-          <h3 class="tblHdr">Data: <%=wrktDate%></h3>
+          <h2 class="tblHdr"> Plan: <%=planName%> | Dzień Treningowy: <%=workoutDay %> </h2>
+          <h3 class="tblHdr">Data: <%=workoutDate%></h3>
           <hr>
       <table class="lastWrkt">
        
@@ -26,17 +26,17 @@
       </thead>
 
       <tbody class="table-hover">
-          <% cwiczenia.forEach(function(cwiczenie){ %>
+          <% exercises.forEach(function(exercise){ %>
         <tr class="">  
           <td data-label="Nazwa Ćwiczenia" class="text-left wrktInfo">
-            <%= cwiczenie["Nazwa"] %>
+            <%= exercise.exerciseName %>
           </td>
           <td data-label="Ilość Powtórzeń" class="text-left wrktInfo"> 
             <% let repInt = 0; %>
             <% let repVolInt = 0; %>
-              <% cwiczenie["Info"].forEach(function(rep){ %>
-                <% repInt =  parseInt(rep['IloscPowtorzen']) %>
-                <% repVolInt = repVolInt + parseInt(rep['IloscPowtorzen']) %>
+              <% exercise.exerciseLogList.forEach(function(exerciseLog){ %>
+                <% repInt =  parseInt(exerciseLog.numberOfRepetitions) %>
+                <% repVolInt = repVolInt + parseInt(exerciseLog.numberOfRepetitions) %>
                   <li class='repList'>
                     <%= repInt %>
                   </li> 
@@ -48,8 +48,8 @@
           </td>
           <td data-label="Ciężar" class="text-left wrktInfo">
             <% let weightInt = 0; %>
-            <% cwiczenie["Info"].forEach(function(rep){ %>
-              <% weightInt =  parseFloat(rep['Ciezar']) %> 
+            <% exercise.exerciseLogList.forEach(function(exerciseLog){ %>
+              <% weightInt =  parseFloat(exerciseLog.weight) %> 
                 <li class='repList'> 
                   <%= weightInt %> kg
                 </li> 
@@ -62,8 +62,8 @@
           </td>
           <td data-label="Objętość" class="text-left wrktInfo">
             <% let volumeInt = 0; %>
-            <% cwiczenie["Info"].forEach(function(rep){ %>
-              <% volumeInt = repVolInt * parseFloat(rep['Ciezar']) %> 
+            <% exercise.exerciseLogList.forEach(function(exerciseLog){ %>
+              <% volumeInt = repVolInt * parseFloat(exerciseLog.weight) %> 
             <%  })  %>
                 <li class='repList'> 
                   <%= volumeInt %> kg

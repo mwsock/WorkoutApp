@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const middleWare = require('../middleware');
-const httpRequest = require('./httpRequests.js');
-  
-  router.get('/', middleWare.isLoggedIn, function(req,response){
+const httpRequest = require('../server_scripts/httpRequests.js');
 
-    let options = httpRequest.options;
+
+let options = httpRequest.options;
+
+  router.get('/', function(req,res){
+
     options.path = '/exercise';
     options.method = 'GET';
 
     httpRequest.getRequest(options).then((exercices)=>{
-      console.log(JSON.parse(exercices));
-      response.render('exercices', {result: JSON.parse(exercices), info:''});
+      res.render('exercices', {result: JSON.parse(exercices), info:''});
     });
 
   });
   
   
-  router.post('/insrt', middleWare.isLoggedIn, function(req,response){
+  router.post('/insrt', function(req,res){
   
     let exerc = req.body.search;
     let user = {
@@ -25,24 +25,22 @@ const httpRequest = require('./httpRequests.js');
     }
     let newExercise = {name: exerc, user:user};
 
-    let options = httpRequest.options;
     httpRequest.options.path = '/exercise/add';
     httpRequest.options.method = 'POST';
 
-    httpRequest.postRequest(options,'/exercices',newExercise,response);
+    httpRequest.postRequest(options,true,'/exercices',newExercise,res);
 
   });
   
   
-  router.get('/delete/:id', middleWare.isLoggedIn, function(req,response){
+  router.get('/delete/:id', function(req,res){
     
     let id = req.params.id;
 
-    let options = httpRequest.options;
     httpRequest.options.path = '/exercise/delete/' + id;
     httpRequest.options.method = 'DELETE';
 
-    httpRequest.deleteRequest(options,'/',response);
+    httpRequest.deleteRequest(options,'/',res);
 
   });
   

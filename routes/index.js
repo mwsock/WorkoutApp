@@ -1,43 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const wrkt = require('../models/wrkt');
-const middleWare = require('../middleware');
+const httpRequest = require('../server_scripts/httpRequests.js');
+const middleWare = require('../server_scripts/middleware.js');
 
+
+let options = httpRequest.options;
 
 router.get('/', middleWare.isLoggedIn, function(req, res) {
 
-  let wrktObj = '';
-  let cwiczenia = '';
-  let wrktDate = '';
-  let planName = '';
-  let user = req.user.username;
+  console.log(req.cookies);
 
+  let workoutDay;
+  let exercises;
+  let workoutDate;
+  let planName;
+  let planId;
+  let user = req.cookies.user;;
 
-      wrkt.find({'User' : user},{},{sort:{CDate:-1}}, function(error, wLog){
-          if(error){
-            console.log(error);
-          }else{
-            let tstLog = wLog[0];
-           if(typeof tstLog === 'undefined' || tstLog === null) {
-            let user = req.user.username;
-            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
-         
-           }else{
-           
-            let wrktObj = JSON.parse(JSON.stringify(wLog[0]));
+  options.path = '/workout/' + user + "/last";
+  options.method = 'GET';
 
-            let planName = wrktObj.wlog['RodzajTreningu'];
-            let cwiczenia = wrktObj.wlog['Cwiczenia'];
-            let user = req.user.username;
+  httpRequest.getRequest(options).then((workout)=>{
+    console.log(workout);
+  
+    workout = JSON.parse(workout);
+    workout.forEach(element => {
+      planName = element.planName;
+      planId = element.planId;
+      exercises = typeof element.exercises !== "undefined" ? element.exercises : [];
+      workoutDay = element.day;
+      workoutDate = element.createDate;
+    });
 
-            let date = new Date(wrktObj.CDate);
-            const options = {year: 'numeric', month: 'long', day: 'numeric'};
-            let wrktDate = date.toLocaleDateString('pl-PL', options);
-       
-            res.render('index' , {result: wrktObj, planName: planName, wrktDate:wrktDate, cwiczenia:cwiczenia, user:user});
-           };  
-          };
-      });
+    res.render('index' , {result: workout, workoutDay:workoutDay, planId:planId, planName: planName, workoutDate:workoutDate, exercises:exercises, user:user});
+
+  });
+
 });
 
 

@@ -1,32 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const template = require('../models/template');
-const middleWare = require('../middleware');
+const httpRequest = require('../server_scripts/httpRequests.js');
 
-router.post('/insrt', middleWare.isLoggedIn, function(req,res){
+router.post('/insrt', function(req,res){
 
-    let name = req.body['WrktName']
-    let day = req.body['DzienTreningowy']
-    let exec = req.body['Cwiczenie']
-    let user = req.user.username;
-     
-     const newTemplate = {
-       WrktNameId: name,
-       WrktDay: day,
-       exerciseId: exec,
-       User: user
-     };
+  let name = req.body['WrktName']
+  let day = req.body['DzienTreningowy']
+  let exec = req.body['Cwiczenie']
+  let user = {
+    name : req.user.username,
+  }
+  let exercises = [];
+  for (let index = 0; index < exec.length; index++) {
+    exercises[index] = {id : exec[index]};
+  }
 
-   template.create(newTemplate, function(error, newlyCreated){
-       if(error){
-         console.log(error)
-       }else{
-         console.log('WrktTemplateCreated!')
-       }
-     });
+  let template = {
+    plan: {id: name},
+    day: day,
+    exercises: exercises,
+    user: user
+  };
 
- res.redirect('/plan');
 
+  console.log(template);
+
+  let options = httpRequest.options;
+  httpRequest.options.path = '/template/add';
+  httpRequest.options.method = 'POST';
+
+  httpRequest.postRequest(options,true,'/plan',template,res);
 });
 
 module.exports = router;

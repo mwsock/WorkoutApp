@@ -6,15 +6,17 @@
   <h2>Edytuj trening:</h2>  
 
   <div class="selectWrktToSave">
+    <% result.forEach(field =>{  %>
     <div>
-        <select class="selectBttn"  disabled name="WrktName" id="WrktID" wrktID="<%= wLog._id %>">
-            <option hidden disabled selected value><%= wLog.wlog['RodzajTreningu'] %></option>
+        <select class="selectBttn"  disabled name="WrktName" id="WrktID" wrktID="<%= field.planId %>">
+            <option hidden disabled selected value><%= field.planName %></option>
         </select>
         <select class="selectBttn"  name="variant" id="variantID" disabled>
-            <option hidden disabled selected value><%= wLog.wlog['DzienTreningowy'] %></option>
+            <option hidden disabled selected value><%= field.day %></option>
         </select>
     </div>    
-        <input type='date' id='wrktDate' name='wrktDate' value="<%= wLog.CDate %>" readonly>
+        <input type='date' id='wrktDate' name='wrktDate' value="<%= field.createDate %>" readonly>
+    <% }); %> 
   </div>
 
 
@@ -29,37 +31,38 @@
       <th class="text-left">Ilość serii</th>
   </thead>
   <tbody id='tRows' class="table-hover">
-      <% wLog.wlog['Cwiczenia'].forEach(cwiczenie =>{  %>
+      <% result.forEach(field =>{  %>
+        <% field.exercises.forEach(exercise =>{  %>
         <tr class='execRow'>
             <td data-label="Nazwa Ćwiczenia" class='text-left'>
-                <div class='execName' name='<%= cwiczenie.Nazwa %>' title='Naciśnij by rozwinąć.' ><%= cwiczenie.Nazwa %></div>
-                <input readonly='readonly' hidden name='exec' value='<%= cwiczenie.Nazwa %>'>
+                <div class='execName' name='<%= exercise.exerciseName %>' title='Naciśnij by rozwinąć.' ><%= exercise.exerciseName %></div>
+                <input readonly='readonly' hidden name='exec' value='<%= exercise.exerciseName %>'>
             </td> 
             <td data-label="Ilość Serii" class='text-left'> 
-                <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='0' max='100' value='<%= cwiczenie.Info.length %>' ></tr>
+                <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='0' max='100' value='<%= exercise.exerciseLogList.length %>' ></tr>
         
         <tr class='filledUp hidden' >
         <% let dataRep = ""; %>
-              <% if( cwiczenie.Info.length > 0 ){dataRep = "Ilość Powtórzeń"}  %>
+              <% if( exercise.exerciseLogList.length > 0 ){dataRep = "Ilość Powtórzeń"}  %>
               <td data-label='<%= dataRep %>'>
-                    <% cwiczenie.Info.forEach(info =>{  %>  
+                    <% exercise.exerciseLogList.forEach(exerciseLog =>{  %>  
                     <li>
-                        <input class="WrktIDopt detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= info.IloscPowtorzen %>'>
+                        <input class="WrktIDopt detailsReps" required="" placeholder="Ilość Powtórzeń" type="Number" step="1" min="1" name="Reps" value ='<%= exerciseLog.numberOfRepetitions %>'>
                     </li> 
                     <% }); %>  
                 </td>
          <% let dataWeight = ""; %>
-              <% if( cwiczenie.Info.length > 0 ){dataWeight = "Ciężar"}  %>        
+              <% if( exercise.exerciseLogList.length > 0 ){dataWeight = "Ciężar"}  %>        
                 <td data-label='<%= dataWeight %>'>
-                    <% cwiczenie.Info.forEach(info =>{  %>
+                    <% exercise.exerciseLogList.forEach(exerciseLogList =>{  %>
                     <li>
-                        <input class="WrktIDopt detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= info.Ciezar %>'>
+                        <input class="WrktIDopt detailsWeight" required="" placeholder="Ciężar" type="Number" step="0.25" min="1" name="Weight" value ='<%= exerciseLogList.weight %>'>
                     </li> 
                     <% }); %>  
                 </td>
             
         </tr>
-        
+        <% }); %>  
       <% }); %>  
   </tbody>
   </table>

@@ -1,77 +1,54 @@
 const express = require('express');
 const router = express.Router();
-const plan = require('../models/plan');
-const exercise = require('../models/exercise');
-const middleWare = require('../middleware');
-const mongoose = require('mongoose');
+const httpRequest = require('../server_scripts/httpRequests.js');
+const middleWare = require('../server_scripts/middleware.js');
 
+let options = httpRequest.options;
 
 router.get('/', middleWare.isLoggedIn, function(req,res){
-  let user = req.user.username;
+  let user = req.cookies.user;
 
-  plan.find({'User':user},function(error,rows){
-    if(error){
-       console.log(error);
-    }else{
-      exercise.find({'User':user},function(error,rows2){
-        if(error){
-          console.log(error)
-        }else{
-          res.render('new_plan', {result: rows,result2: rows2});
-        }
-      });
-    }
+
+  options.path = '/plan';
+  options.method = 'GET';
+
+  httpRequest.getRequest(options).then((plans)=>{
+    let rows;
+    let rows2;
+    
+    rows = JSON.parse(plans);
+    options.path = '/exercise';
+
+    httpRequest.getRequest(options).then((exercices)=>{
+      rows2 = JSON.parse(exercices);
+      res.render('new_plan', {result: rows,result2: rows2});
+    });
+
   });
-
 });
 
+router.post('/insrt', function(req,res){
 
+    let user = {
+      name : req.cookies.user
+    }
+    let plan = {name: req.body.plan,user:user};
 
+    httpRequest.options.path = '/plan/add';
+    httpRequest.options.method = 'POST';
 
-router.post('/insrt', middleWare.isLoggedIn, function(req,res){
-
-    let planName = req.body.plan;
-    let user = req.user.username;
-    let newPlan = {_id: mongoose.Types.ObjectId(),wrktPlan: planName,cDATE: Date(),User:user};
-                  
-  
-    plan.create(newPlan, function(error, newlyCreated){
-      if(error){
-        console.log(error)
-      }else{
-        
-          plan.find({'User':user},function(error,rows){
-            if(error){
-              console.log(error);
-            }else{
-              exercise.find({'User':user},function(error,rows2){
-                if(error){
-                  console.log(error)
-                }else{
-                  res.render('new_plan', {result: rows,result2: rows2});
-                }
-              });
-            }
-          });
-      }
-    });
-  
+    httpRequest.postRequest(options,true,'/plan',plan,res);
   });
   
   
-router.get('/delete/:id', middleWare.isLoggedIn, function(req,res){
+router.get('/delete/:id', function(req,res){
   
     let id = req.params.id;
-  
-    plan.findByIdAndDelete(id, function(error, crrntlyRemoved){
-      if(error){
-        console.log(error)
-      }else{
-        console.log('PlanDeleted!');
-      };
-    });
 
-    res.redirect('/');
+    httpRequest.options.path = '/plan/delete/' + id;
+    httpRequest.options.method = 'DELETE';
+
+    httpRequest.deleteRequest(options,'/',res);
 
   });
 

@@ -11,7 +11,7 @@
       <select class="selectBttn" name="WrktName" id="WrktID" onchange="selectUnblock(), ajaxVariant('GET','variantID')">
         <option hidden disabled selected value>Trening</option>
           <% result.forEach(function(select){ %>
-          <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
+          <option class="WrktIDopt" value='<%= select["id"] %>'><%= select["name"] %></option>
           <% }) %> 
       </select>
       <select class="selectBttn" name="variant" id="variantID" disabled onchange="ajaxSeries('GET','tRows')">

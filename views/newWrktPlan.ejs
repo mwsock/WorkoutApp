@@ -5,7 +5,7 @@
     <h2 class='tblHdr'>Plany Treningowe: </h2>
       <ul>
       <% result.forEach(function(plan){ %>
-        <li class='item' id='<%= plan["_id"] %>'> <%= plan["wrktPlan"] %><button class='delete' name='Plan' page='newWrktPlan'>X</button></li>  
+        <li class='item' id='<%= plan["id"] %>'> <%= plan["name"] %><button class='delete' name='Plan' page='newWrktPlan'>X</button></li>  
       <% }) %> 
       </ul>
   </div>
@@ -29,7 +29,7 @@
              <select class="selectBttn" name="WrktName" id="WrktID">
               <option hidden disabled selected value> Wybierz Trening</option>
               <% result.forEach(function(select){ %>
-              <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["wrktPlan"] %></option>
+              <option class="WrktIDopt" value='<%= select["id"] %>'><%= select["name"] %></option>
               <% }) %> 
             </select>
             <input class="inputDay" type="number" name="DzienTreningowy" placeholder="Dzień" min="1" max="5" required>
@@ -47,7 +47,7 @@
                      <select class="selectBttn" name="Cwiczenie" id="exerciseID">
                             <option hidden disabled selected value> Wybierz Ćwiczenie</option>
                             <% result2.forEach(function(select){ %>
-                            <option class="WrktIDopt" value='<%= select["_id"] %>'><%= select["dtype"] %></option>
+                            <option class="WrktIDopt" value='<%= select["id"] %>'><%= select["name"] %></option>
                             <% }) %> 
                     </select>
                   <input type='button' class='button' onclick='removeField()' value='-'>

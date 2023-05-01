@@ -1,85 +1,73 @@
 const express = require('express');
 const router = express.Router();
-const plan = require('../models/plan');
-const wrkt = require('../models/wrkt');
-const exercise = require('../models/exercise');
-const template = require('../models/template');
-const middleWare = require('../middleware');
+const httpRequest = require('../server_scripts/httpRequests.js');
 
+let options = httpRequest.options;
 
-router.get('/new', middleWare.isLoggedIn,function(req,res){
+router.get('/new',function(req,res){
+  let user = req.user.username;
 
-    let user = req.user.username;
-  
-      plan.find({'User' : user},function(error,rows){
-            if(error){
-              console.log(error)
-            }else{
-              res.render('new_wrkt', {result: rows}); 
-            }
-          });
-         
-      });
+  options.path = '/plan';
+  options.method = 'GET';
+
+  httpRequest.getRequest(options).then((plans)=>{
+    let rows = JSON.parse(plans);
+    res.render('new_wrkt', {result: rows}); 
+  });
+});
 
 
 
-router.get('/new/:id', middleWare.isLoggedIn, function(req,res){
+router.get('/new/:id', function(req,res){
 
-    let id = (req.params["id"])
-    let user = req.user.username;
-  
-      template.find({"WrktNameId" : id, 'User':user}, "-_id WrktDay", function(error,rows){
-        if(error){
-          console.log(error)
-        }else{
-          res.send(rows);
-        }
-      });
-  
+  let planId = (req.params["id"])
+  let user = req.user.username;
+
+  options.path = '/template/' + planId;
+  options.method = 'GET';
+
+  httpRequest.getRequest(options).then((templates)=>{
+    console.log(templates);
+    res.send(templates);
+  });
+
 });
         
 
 
-router.get("/new/:planId/:variantId", middleWare.isLoggedIn, function(req,res){
+router.get("/new/:planId/:variantId", function(req,res){
 
   let planId = req.params["planId"];
-  let variantId = req.params["variantId"];
+  let day = req.params["variantId"];
   let user = req.user.username;
-  
-  template.findOne({"WrktNameId" : planId, "WrktDay" : variantId, 'User':user}, "-_id exerciseId", function(error,rows){
-      if(error){
-        console.log(error)
-      }else{
-  
-          let id = rows['exerciseId'];
-     
-          exercise.find({"_id": id, 'User':user},"-_id dtype", function(error,rows2){
-            if(error){
-              console.log(error)
-            }else{
-              res.send({rows2});
-            }}); 
-          }
-    });
+
+  options.path = '/template/' + planId + "/" + day;
+  options.method = 'GET';
+
+  httpRequest.getRequest(options).then((exercices)=>{
+    res.send(exercices);
+  });
+
 });
 
 
-router.post('/new/insrt', middleWare.isLoggedIn, function(req,res){
+router.post('/new/insrt', function(req,res){
 
- const wrktLog = req.body;
- const user = req.user.username;
-
- wrktLog.User=user;
-
-  wrkt.create(wrktLog, function(error, newlyCreated){
-    if(error){
-      console.log(error)
-    }else{
-      console.log('WrktAdded!')
-    }
+  let workout = req.body;
+  let user = {
+    name : req.user.username,
+  }
+  workout.forEach(log => {
+    log.user = user;
   });
- 
 
+  console.log(workout);
+
+  options.path = '/workout/add';
+  options.method = 'POST';
+
+  httpRequest.postRequest(options,false,'',workout,res);
+  
 });
 
 

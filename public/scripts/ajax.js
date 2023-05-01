@@ -10,9 +10,7 @@ function ajaxVariant(type,element){
             var ajaxObject = JSON.parse(xhr.responseText);
 
             ajaxObject.forEach(function(arrayObj){
-                Object.values(arrayObj).forEach(function(WrktDay){   
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + " <option class='WrktIDopt'> " + WrktDay + "</option>";
-                });
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + " <option class='WrktIDopt' templateId='"+ arrayObj.id + "'> " + arrayObj.day + "</option>";
             });
         }
         else {
@@ -38,9 +36,7 @@ function ajaxSeries(type,element){
             
             let ajaxObject = JSON.parse(xhr.responseText);
             
-            Object.values(ajaxObject).forEach(function(rslt){
-
-                rslt.forEach(function(arrayObj){
+            ajaxObject.forEach(function(arrayObj){
                    
                 function optNmbr(){
                     var i = 0;
@@ -59,12 +55,12 @@ function ajaxSeries(type,element){
                     </tr>" 
                 };  
                                                                                                                                                              
-                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td data-label='Nazwa Ćwiczenia' class='text-left'><div class='execName' name='"+ arrayObj['dtype'] +"' title='Naciśnij by rozwinąć.'>"+ arrayObj['dtype'] + "</div>\
-                                                            <input readonly='readonly' hidden name='exec' value='"+ arrayObj['dtype'] + "'></td> <td data-label='Ilość Serii' class='text-left'> \
+                document.getElementById(element).innerHTML = document.getElementById(element).innerHTML + "<tr class='execRow'><td data-label='Nazwa Ćwiczenia' class='text-left'><div class='execName' execid='"+ arrayObj.id +"' name='"+ arrayObj.name +"' title='Naciśnij by rozwinąć.'>"+ arrayObj.name + "</div>\
+                                                            <input readonly='readonly' hidden name='exec' value='"+ arrayObj.name + "'></td> <td data-label='Ilość Serii' class='text-left'> \
                                                             <input class='WrktIDopt WrktSeriesOpt' type='number' name='IloscSerii' title='Naciśnij by rozwinąć.' placeholder='0' min='1' max='100'  onchange ='expandDetails()' ></tr><tr class='toFill'></tr>" //+ details;  
                                                                                                   
                 
-                });
+             
             });  
         }
         else {
@@ -91,6 +87,7 @@ function sendWrkt(){
     if(check!=1){
 
         var log = getValues();
+        console.log(log);
 
         var url = "/wrkt/new/insrt";
         var xhr = new XMLHttpRequest();
@@ -107,10 +104,7 @@ function sendWrkt(){
 
 function getValues(){
 
-    var e = document.getElementById('WrktID');
-    var wrkt = e.options[e.selectedIndex].text;
-
-    var variant = document.getElementById('variantID').value;
+    var templateId = document.getElementById('variantID').options[document.getElementById('variantID').selectedIndex].getAttribute('templateid');
     
     var wrktDate = document.getElementById('wrktDate').value;
     if(wrktDate===null || wrktDate === ''){
@@ -120,7 +114,7 @@ function getValues(){
     
     var z = document.getElementsByClassName('execRow');
 
-    var exercices = [];
+    var wrktLog = [];
     
 
     for(i=0;i<z.length;i++){
@@ -128,47 +122,37 @@ function getValues(){
         if(z[i].children[1].children[0].hasAttribute('disabled')){
            
         }else{
-            var execName = z[i].children[0].children[0].textContent;
+            var execId = z[i].children[0].children[0].getAttribute('execid');;
             var seriesNum = z[i].children[1].children[0].value;
    
             var execTD = z[i].nextSibling.children[0];
             var weigthTD = z[i].nextSibling.children[1];
-
-            var info = [];
 
                 for(ii=0;ii<seriesNum;ii++){
                     var repNum = execTD.children[ii].children[0].value;
                     var weigthNum = weigthTD.children[ii].children[0].value;
 
                     
-                    var infoEXT = {
-                        "NumerSerii": ii+1,
-                        "IloscPowtorzen": repNum,
-                        "Ciezar": weigthNum
+                    var execInfo = {
+                        "templateExercise": {
+                            "templateId":templateId,
+                            "exerciseId":execId
+                        },
+                        "workSet": ii+1,
+                        "numberOfRepetitions": repNum,
+                        "weight": weigthNum,
+                        "createDate": wrktDate
                         };
-                    info.push(infoEXT);
+
+                    wrktLog.push(execInfo);
 
                 };
-
-                var exercise =  {
-                    "Nazwa": execName,
-                    "Info": info
-                    };
-
-                exercices.push(exercise);
         };
 
 
     };
-            var wrkt_log =  {"CDate": wrktDate,
-                             "wlog": 
-                                {"RodzajTreningu": wrkt,
-                                "DzienTreningowy": variant,
-                                "Cwiczenia": exercices
-                                }
-                            };
-
-            return wrkt_log;
+            console.log(wrktLog);
+            return wrktLog;
 };
 
 

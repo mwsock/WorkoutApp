@@ -1,4 +1,5 @@
 const http = require('http');
+const util = require('util')
 
 let options = {  
   //host: '192.168.0.213',
@@ -38,10 +39,8 @@ async function getRequest(options) {
   return await promiseData;
 }
 
-   
-  //Dorobić drugą wersję getRequest, która zwraca dane i można je zapisać do obiektu. Zmienić logikę w exercices
 
-  function postRequest(options,redirect,data,response){
+  function postRequest(options,redirect,redirectUrl,data,response){
     var req = http.request(options, function(res){
       res.setEncoding('utf8');
       res.on('data', function (error,chunk) {
@@ -52,12 +51,19 @@ async function getRequest(options) {
       });
       res.on('end', () => {
         console.log('No more data in response.');
-        response.redirect(redirect); 
+        //console.log(util.inspect(res.headers['set-cookie'], {showHidden: false, depth: 2, colors: true}));
+        let responseCookies = res.headers['set-cookie'];
+        responseCookies.forEach(element => {
+          console.log(element);
+          response.cookie(element);
+        });
+        if(redirect) response.redirect(redirectUrl); 
       });
     });
 
     req.write(JSON.stringify(data));
     req.end();
+
   }
 
   function deleteRequest(options,redirect,response){
@@ -70,6 +76,11 @@ async function getRequest(options) {
           };
       });
       res.on('end', () => {
+        let responseCookies = res.headers['set-cookie'];
+        responseCookies.forEach(element => {
+          console.log(element);
+          response.cookie(element);
+        });
         console.log('Deleted!');
         response.redirect(redirect);
       });
