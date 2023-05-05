@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const httpRequest = require('../server_scripts/httpRequests.js');
 
+let options = httpRequest.options;
+
 router.post('/insrt', function(req,res){
 
   let name = req.body['WrktName']
   let day = req.body['DzienTreningowy']
   let exec = req.body['Cwiczenie']
   let user = {
-    name : req.user.username,
+    name : req.cookies.user,
   }
   let exercises = [];
   for (let index = 0; index < exec.length; index++) {
@@ -25,9 +27,12 @@ router.post('/insrt', function(req,res){
 
   console.log(template);
 
-  let options = httpRequest.options;
-  httpRequest.options.path = '/template/add';
-  httpRequest.options.method = 'POST';
+  options.path = '/template/add';
+  options.method = 'POST';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.postRequest(options,true,'/plan',template,res);
 });

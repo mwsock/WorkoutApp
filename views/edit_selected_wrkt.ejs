@@ -8,14 +8,14 @@
   <div class="selectWrktToSave">
     <% result.forEach(field =>{  %>
     <div>
-        <select class="selectBttn"  disabled name="WrktName" id="WrktID" wrktID="<%= field.planId %>">
+        <select class="selectBttn"  disabled name="WrktName" id="WrktID" wrktID="<%= field.planId %>" templateId="<%= field.templateId %>">
             <option hidden disabled selected value><%= field.planName %></option>
         </select>
         <select class="selectBttn"  name="variant" id="variantID" disabled>
             <option hidden disabled selected value><%= field.day %></option>
         </select>
     </div>    
-        <input type='date' id='wrktDate' name='wrktDate' value="<%= field.createDate %>" readonly>
+        <input type='date' id='wrktDate' name='wrktDate' value="<%= field.createDate %>" readonly disabled style="color: gray; background-color: whitesmoke;">
     <% }); %> 
   </div>
 
@@ -35,7 +35,7 @@
         <% field.exercises.forEach(exercise =>{  %>
         <tr class='execRow'>
             <td data-label="Nazwa Ćwiczenia" class='text-left'>
-                <div class='execName' name='<%= exercise.exerciseName %>' title='Naciśnij by rozwinąć.' ><%= exercise.exerciseName %></div>
+                <div class='execName' name='<%= exercise.exerciseName %>' execId='<%= exercise.exerciseId %>' title='Naciśnij by rozwinąć.' ><%= exercise.exerciseName %></div>
                 <input readonly='readonly' hidden name='exec' value='<%= exercise.exerciseName %>'>
             </td> 
             <td data-label="Ilość Serii" class='text-left'> 

@@ -1,11 +1,12 @@
 const middlewareObj = {};
 
 middlewareObj.isLoggedIn = function(req,res,next){
-    if(req.cookies.user != undefined || req.cookies.user != null){
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
         return next();
+    }else{
+        console.log('NOT LOGGED IN')
+        res.redirect('/login');
     }
-    console.log('NOT LOGGED IN')
-    res.redirect('/login');
 };
 
 module.exports = middlewareObj;

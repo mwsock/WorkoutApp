@@ -13,7 +13,7 @@
         <div class='listContainer'>
             <ul>
                 <% result.forEach(function(plan){ %>
-                <li class='result item' planId='<%= plan.planId %>' createDate='<%= plan.createDate %>'><span class='selectedRecord'><%= plan.createDate %> | Plan: <%= plan.planName %> | Dzień Treningowy: <%= plan.day %></span><button class='delete' name='wrkt' page='wrkt/edit'>X</button> </li> 
+                <li class='result item' templateId='<%= plan.templateId %>' planId='<%= plan.planId %>' createDate='<%= plan.createDate %>'><span class='selectedRecord'><%= plan.createDate %> | Plan: <%= plan.planName %> | Dzień Treningowy: <%= plan.day %></span><button class='delete' name='wrkt' page='wrkt/edit'>X</button> </li> 
                 <% }) %> 
             </ul>  
         </div>  

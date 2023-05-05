@@ -11,6 +11,10 @@ router.get('/', middleWare.isLoggedIn, function(req,res){
 
   options.path = '/plan';
   options.method = 'GET';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.getRequest(options).then((plans)=>{
     let rows;
@@ -34,8 +38,12 @@ router.post('/insrt', function(req,res){
     }
     let plan = {name: req.body.plan,user:user};
 
-    httpRequest.options.path = '/plan/add';
-    httpRequest.options.method = 'POST';
+    options.path = '/plan/add';
+    options.method = 'POST';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
 
     httpRequest.postRequest(options,true,'/plan',plan,res);
   });
@@ -45,8 +53,12 @@ router.get('/delete/:id', function(req,res){
   
     let id = req.params.id;
 
-    httpRequest.options.path = '/plan/delete/' + id;
-    httpRequest.options.method = 'DELETE';
+    options.path = '/plan/delete/' + id;
+    options.method = 'DELETE';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
 
     httpRequest.deleteRequest(options,'/',res);
 

@@ -8,7 +8,8 @@ let options = {
   path: '',
   method: '',
   headers: {
-      'Content-type': 'application/json'
+      'Content-type':'application/json',
+      'Authorization':''
   }
 }
 
@@ -50,17 +51,19 @@ async function getRequest(options) {
           };
       });
       res.on('end', () => {
-        console.log('No more data in response.');
-        //console.log(util.inspect(res.headers['set-cookie'], {showHidden: false, depth: 2, colors: true}));
-        let responseCookies = res.headers['set-cookie'];
-        responseCookies.forEach(element => {
-          console.log(element);
-          response.cookie(element);
-        });
+        // console.log('No more data in response.');
+        // console.log(util.inspect(res, {showHidden: false, depth: 2, colors: true}));
+        // console.log(util.inspect(res.headers['set-cookie'], {showHidden: false, depth: 2, colors: true}));
+        if(res.headers['set-cookie'] != undefined || res.headers['set-cookie'] != null){
+          let responseCookies = res.headers['set-cookie'];
+          responseCookies.forEach(element => {
+            console.log(element);
+            response.cookie(element);
+          });
+        }
         if(redirect) response.redirect(redirectUrl); 
       });
     });
-
     req.write(JSON.stringify(data));
     req.end();
 
@@ -76,11 +79,6 @@ async function getRequest(options) {
           };
       });
       res.on('end', () => {
-        let responseCookies = res.headers['set-cookie'];
-        responseCookies.forEach(element => {
-          console.log(element);
-          response.cookie(element);
-        });
         console.log('Deleted!');
         response.redirect(redirect);
       });

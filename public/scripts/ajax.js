@@ -122,7 +122,7 @@ function getValues(){
         if(z[i].children[1].children[0].hasAttribute('disabled')){
            
         }else{
-            var execId = z[i].children[0].children[0].getAttribute('execid');;
+            var execId = z[i].children[0].children[0].getAttribute('execid');
             var seriesNum = z[i].children[1].children[0].value;
    
             var execTD = z[i].nextSibling.children[0];
@@ -182,18 +182,14 @@ function updateWrkt(){
 
 function getUpdatedValues(){
 
-    var e = document.getElementById('WrktID');
-    var wrkt = e.options[e.selectedIndex].text;
-
-    var e = document.getElementById('variantID');
-    var variant = e.options[e.selectedIndex].text;
+    var templateId = document.getElementById('WrktID').getAttribute('templateId');
 
     var wrktDate = document.getElementById('wrktDate').value;
     
     
     var z = document.getElementsByClassName('execRow');
 
-    var exercices = [];
+    var wrktLog = [];
     
 
     for(i=0;i<z.length;i++){
@@ -201,61 +197,56 @@ function getUpdatedValues(){
         if(z[i].children[1].children[0].hasAttribute('disabled')){
           
         }else{
-            var execName = z[i].children[0].children[0].textContent;
+            var execId = z[i].children[0].children[0].getAttribute('execid');
             var seriesNum = z[i].children[1].children[0].value;
          
             var execTD = z[i].nextSibling.nextSibling.children[0];
             var weigthTD = z[i].nextSibling.nextSibling.children[1];
-
-            var info = [];
 
                 for(ii=0;ii<seriesNum;ii++){
                     var repNum = execTD.children[ii].children[0].value;
                     var weigthNum = weigthTD.children[ii].children[0].value;
 
                     
-                    var infoEXT = {
-                        "NumerSerii": ii+1,
-                        "IloscPowtorzen": repNum,
-                        "Ciezar": weigthNum
+                    var execInfo = {
+                        "templateExercise": {
+                            "templateId":templateId,
+                            "exerciseId":execId
+                        },
+                        "workSet": ii+1,
+                        "numberOfRepetitions": repNum,
+                        "weight": weigthNum,
+                        "createDate": wrktDate
                         };
-                    info.push(infoEXT);
+
+                    wrktLog.push(execInfo);
 
                 };
-         
-                var exercise =  {
-                    "Nazwa": execName,
-                    "Info": info
-                    };
-
-                exercices.push(exercise);
+        
         };
 
-
     };
-            var wrkt_log =  {"CDate": wrktDate,
-                             "wlog": 
-                                {"RodzajTreningu": wrkt,
-                                "DzienTreningowy": variant,
-                                "Cwiczenia": exercices
-                                }
-                            };
 
-            return wrkt_log;
+        console.log(wrktLog);
+        return wrktLog;
 };
 
 
 
 function deleteElem(event,name,page){
 
-    let e = window.event;
-    var et = e.target;
- 
+    const et = window.event.target;
     const eN = document.getElementsByClassName('delete');
    
-    let id = et.parentNode.getAttribute('id');
+    const id = et.parentNode.getAttribute('id');
+    let url = "/"+name+"/delete/"+id;
+
+    if(name == 'wrkt'){
+        let templateId = et.parentNode.getAttribute('templateId');
+        let createDate = et.parentNode.getAttribute('createdate');
+        url = "/" + name + "/delete/" + templateId + "/" + createDate;
+    }
     
-    var url = "/"+name+"/delete/"+id;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = function() {

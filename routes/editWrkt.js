@@ -6,10 +6,14 @@ let options = httpRequest.options;
 
 router.get('/edit', function(req,res){
   
-  let user = req.user.username;
+  let user = req.cookies.user;
 
-  options.path = '/workout/' + user;
+  options.path = '/workout';
   options.method = 'GET';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.getRequest(options).then((workout)=>{
     console.log(workout);
@@ -33,10 +37,14 @@ router.get("/edit/:planId/:createDate", function(req,res){
   let createDate = req.params['createDate'];
 
 
-  let user = req.user.username;
+  let user = req.cookies.user;
 
   options.path = '/workout/' + planId + '/' + createDate;
   options.method = 'GET';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.getRequest(options).then((workout)=>{
     res.render('edit_selected_wrkt', {result: JSON.parse(workout)}); 
@@ -49,36 +57,36 @@ router.put("/edit/:id/update", function(req,res){
 
   let workout = req.body;
   let user = {
-    name : req.user.username,
+    name : req.cookies.user,
   }
   workout.forEach(log => {
     log.user = user;
   });
-
   console.log(workout);
 
   options.path = '/workout';
   options.method = 'PUT';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.postRequest(options,false,'',workout,res);
-
-  // wrkt.findByIdAndUpdate(id, { wlog: log },function(error,result){
-  //   if (error) { 
-  //     res.send(error);
-  //   } else {
-  //    console.log('WrktUpdated!');
-  //   }
-  // });
   
 });
 
 
-router.get('/delete/:id', function(req,res){
+router.get('/delete/:templateId/:createDate', function(req,res){
 
-  let id = req.params.id;
+  let templateId = req.params.templateId;
+  let createDate = req.params.createDate;
 
-  httpRequest.options.path = '/workout/' + id;
-  httpRequest.options.method = 'DELETE';
+  options.path = '/workout/' + templateId + '/' + createDate;
+  options.method = 'DELETE';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.deleteRequest(options,'/',res);
 

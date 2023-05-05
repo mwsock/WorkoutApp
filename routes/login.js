@@ -11,26 +11,14 @@ router.get('/register',function(req,res){
   router.post('/register',function(req,res){
 
     let user = {
-      name : req.user.username,
+      username : req.body.username,
       password: req.body.password
     }
 
-    httpRequest.options.path = '/user/register';
-    httpRequest.options.method = 'POST';
+    options.path = '/user/register';
+    options.method = 'POST';
 
     httpRequest.postRequest(options,true,'/login',user,res);
-
-
-    // User.register(new User({username: req.body.username}), req.body.password, function(error, user){
-    //   if(error){
-    //     console.log(error);
-    //     let message = 'Użytkownik o podanej nazwie jest już zarejestrowany.';
-    //     return res.render('register', {message: message});
-    //   };
-    //   passport.authenticate('local')(req,res,function(){
-    //     res.redirect('/login');
-    //   });
-    // });
   });
   
   
@@ -39,32 +27,29 @@ router.get('/register',function(req,res){
   });
   
   router.get('/logout',function(req,res){
-    res.writeHead(200, {
-      "Set-Cookie": 'user=; HttpOnly; path=/; max-age=0',
-    });
-    res.end();
+    options.path = '/user/logout';
+    options.method = 'POST';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
+    httpRequest.postRequest(options,true,'/',{},res);
   });
 
   router.post('/login',function(req,res){
     let user = {
-      name : req.body.username,
+      username : req.body.username,
       password: req.body.password
     }
 
-    httpRequest.options.path = '/user/login';
-    httpRequest.options.method = 'POST';
+    options.path = '/user/login';
+    options.method = 'POST';
+    options.headers.Authorization = '';
 
     httpRequest.postRequest(options,true,'/',user,res);
 
 
 });
-  
-  // router.post('/login',passport.authenticate('local',{
-  //     successRedirect: '/',
-  //     successMessage: 'Cześć!',
-  //     failureRedirect: '/login'
-  //   }),function(req,res){
-  
-  // });
+
 
   module.exports = router;

@@ -8,20 +8,21 @@ let options = httpRequest.options;
 
 router.get('/', middleWare.isLoggedIn, function(req, res) {
 
-  console.log(req.cookies);
-
   let workoutDay;
   let exercises;
   let workoutDate;
   let planName;
   let planId;
-  let user = req.cookies.user;;
+  let user = req.cookies.user;
 
-  options.path = '/workout/' + user + "/last";
+  options.path = '/workout/last';
   options.method = 'GET';
+  if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+    options.headers.Authorization = req.cookies.sessionId;
+  };
+
 
   httpRequest.getRequest(options).then((workout)=>{
-    console.log(workout);
   
     workout = JSON.parse(workout);
     workout.forEach(element => {

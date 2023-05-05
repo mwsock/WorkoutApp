@@ -9,6 +9,10 @@ let options = httpRequest.options;
 
     options.path = '/exercise';
     options.method = 'GET';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
 
     httpRequest.getRequest(options).then((exercices)=>{
       res.render('exercices', {result: JSON.parse(exercices), info:''});
@@ -21,12 +25,16 @@ let options = httpRequest.options;
   
     let exerc = req.body.search;
     let user = {
-      name : req.user.username,
+      name : req.cookies.user,
     }
     let newExercise = {name: exerc, user:user};
 
-    httpRequest.options.path = '/exercise/add';
-    httpRequest.options.method = 'POST';
+    options.path = '/exercise/add';
+    options.method = 'POST';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
 
     httpRequest.postRequest(options,true,'/exercices',newExercise,res);
 
@@ -37,8 +45,12 @@ let options = httpRequest.options;
     
     let id = req.params.id;
 
-    httpRequest.options.path = '/exercise/delete/' + id;
-    httpRequest.options.method = 'DELETE';
+    options.path = '/exercise/delete/' + id;
+    options.method = 'DELETE';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.Authorization = req.cookies.sessionId;
+    };
+
 
     httpRequest.deleteRequest(options,'/',res);
 
