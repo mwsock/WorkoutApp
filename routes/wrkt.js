@@ -5,66 +5,61 @@ const httpRequest = require('../server_scripts/httpRequests.js');
 let options = httpRequest.options;
 
 router.get('/new',function(req,res){
-  let user = req.cookies.user;
-
   options.path = '/plan';
   options.method = 'GET';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
-
 
   httpRequest.getRequest(options).then((plans)=>{
     let rows = JSON.parse(plans);
     res.render('new_wrkt', {result: rows}); 
+  })
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
   });
 });
 
-
-
 router.get('/new/:id', function(req,res){
-
   let planId = (req.params["id"])
-  let user = req.cookies.user;
 
   options.path = '/template/' + planId;
   options.method = 'GET';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
 
-
   httpRequest.getRequest(options).then((templates)=>{
-    console.log(templates);
     res.send(templates);
+  })
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
   });
-
 });
         
-
-
 router.get("/new/:planId/:variantId", function(req,res){
 
   let planId = req.params["planId"];
   let day = req.params["variantId"];
-  let user = req.cookies.user;
 
   options.path = '/template/' + planId + "/" + day;
   options.method = 'GET';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
-
 
   httpRequest.getRequest(options).then((exercices)=>{
     res.send(exercices);
+  })
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
   });
-
 });
 
-
 router.post('/new/insrt', function(req,res){
-
   let workout = req.body;
   let user = {
     name : req.cookies.user,
@@ -73,19 +68,18 @@ router.post('/new/insrt', function(req,res){
     log.user = user;
   });
 
-  console.log(workout);
-
   options.path = '/workout/add';
   options.method = 'POST';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
 
-
-  httpRequest.postRequest(options,false,'',workout,res);
-  
+  httpRequest.postRequest(options,false,'',workout,res)
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
+  });
 });
-
 
 module.exports = router;
 

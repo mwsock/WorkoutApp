@@ -5,7 +5,6 @@ const httpRequest = require('../server_scripts/httpRequests.js');
 let options = httpRequest.options;
 
 router.post('/insrt', function(req,res){
-
   let name = req.body['WrktName']
   let day = req.body['DzienTreningowy']
   let exec = req.body['Cwiczenie']
@@ -13,8 +12,13 @@ router.post('/insrt', function(req,res){
     name : req.cookies.user,
   }
   let exercises = [];
-  for (let index = 0; index < exec.length; index++) {
-    exercises[index] = {id : exec[index]};
+
+  if(!Array.isArray(exec)){
+    exercises[0]={id:exec};
+  }else{
+    exec.forEach(element => {
+      exercises.push({id:element})
+    });
   }
 
   let template = {
@@ -24,17 +28,17 @@ router.post('/insrt', function(req,res){
     user: user
   };
 
-
-  console.log(template);
-
   options.path = '/template/add';
   options.method = 'POST';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
 
-
-  httpRequest.postRequest(options,true,'/plan',template,res);
+  httpRequest.postRequest(options,true,'/plan',template,res)
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
+  });
 });
 
 module.exports = router;

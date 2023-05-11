@@ -6,15 +6,11 @@ const middleWare = require('../server_scripts/middleware.js');
 let options = httpRequest.options;
 
 router.get('/', middleWare.isLoggedIn, function(req,res){
-  let user = req.cookies.user;
-
-
-  options.path = '/plan';
+options.path = '/plan';
   options.method = 'GET';
   if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-    options.headers.Authorization = req.cookies.sessionId;
+    options.headers.sessionId = req.cookies.sessionId;
   };
-
 
   httpRequest.getRequest(options).then((plans)=>{
     let rows;
@@ -26,13 +22,19 @@ router.get('/', middleWare.isLoggedIn, function(req,res){
     httpRequest.getRequest(options).then((exercices)=>{
       rows2 = JSON.parse(exercices);
       res.render('new_plan', {result: rows,result2: rows2});
+    })
+    .catch((error)=>{
+      console.log('Error: ' + error);
+      res.redirect('/login');
     });
-
+  })
+  .catch((error)=>{
+    console.log('Error: ' + error);
+    res.redirect('/login');
   });
 });
 
 router.post('/insrt', function(req,res){
-
     let user = {
       name : req.cookies.user
     }
@@ -41,27 +43,30 @@ router.post('/insrt', function(req,res){
     options.path = '/plan/add';
     options.method = 'POST';
     if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-      options.headers.Authorization = req.cookies.sessionId;
+      options.headers.sessionId = req.cookies.sessionId;
     };
 
-
-    httpRequest.postRequest(options,true,'/plan',plan,res);
-  });
-  
+    httpRequest.postRequest(options,true,'/plan',plan,res)
+    .catch((error)=>{
+      console.log('Error: ' + error);
+      res.redirect('/login');
+    });
+});
   
 router.get('/delete/:id', function(req,res){
-  
     let id = req.params.id;
 
     options.path = '/plan/delete/' + id;
     options.method = 'DELETE';
     if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
-      options.headers.Authorization = req.cookies.sessionId;
+      options.headers.sessionId = req.cookies.sessionId;
     };
 
-
-    httpRequest.deleteRequest(options,'/',res);
-
+    httpRequest.deleteRequest(options,'/',res)
+    .catch((error)=>{
+      console.log('Error: ' + error);
+      res.redirect('/login');
+    });
   });
 
 module.exports = router;

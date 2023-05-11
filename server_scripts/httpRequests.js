@@ -9,7 +9,7 @@ let options = {
   method: '',
   headers: {
       'Content-type':'application/json',
-      'Authorization':''
+      'sessionId':''
   }
 }
 
@@ -41,50 +41,65 @@ async function getRequest(options) {
 }
 
 
-  function postRequest(options,redirect,redirectUrl,data,response){
-    var req = http.request(options, function(res){
-      res.setEncoding('utf8');
-      res.on('data', function (error,chunk) {
-          console.log("body: " + chunk);
-          if(error!=null){
-            console.log('error: ' + error);
-          };
+  async function postRequest(options,redirect,redirectUrl,data,response){
+    let promiseData = new Promise((resolve, reject) => {
+      var req = http.request(options, function(res){
+        res.setEncoding('utf8');
+        let data = '';
+        res.on('data', function(chunk) {
+            data += chunk;
+        });
+        res.on('end', () => {
+          if(res.headers['set-cookie'] != undefined || res.headers['set-cookie'] != null){
+            let responseCookies = res.headers['set-cookie'];
+            responseCookies.forEach(element => {
+              response.cookie(element);
+            });
+          }
+          console.log(data);
+          try {
+            resolve(data);
+          } catch (e) {
+            console.error(e.message);
+          }
+          if(redirect) response.redirect(redirectUrl); 
+        });
       });
-      res.on('end', () => {
-        // console.log('No more data in response.');
-        // console.log(util.inspect(res, {showHidden: false, depth: 2, colors: true}));
-        // console.log(util.inspect(res.headers['set-cookie'], {showHidden: false, depth: 2, colors: true}));
-        if(res.headers['set-cookie'] != undefined || res.headers['set-cookie'] != null){
-          let responseCookies = res.headers['set-cookie'];
-          responseCookies.forEach(element => {
-            console.log(element);
-            response.cookie(element);
-          });
-        }
-        if(redirect) response.redirect(redirectUrl); 
+      req.write(JSON.stringify(data));
+      req.on('error', (err) => {
+        reject(err);
       });
-    });
-    req.write(JSON.stringify(data));
-    req.end();
+      req.end();
+  });
 
+  return await promiseData;
   }
 
-  function deleteRequest(options,redirect,response){
-    var req = http.request(options, function(res){
-      res.setEncoding('utf8');
-      res.on('data', function (error,chunk) {
-          console.log("body: " + chunk);
-          if(error!=null){
-            console.log('error: ' + error);
-          };
+  async function deleteRequest(options,redirect,response){
+    let promiseData = new Promise((resolve, reject) => {
+      var req = http.request(options, function(res){
+        res.setEncoding('utf8');
+        let data = '';
+        res.on('data', function(chunk) {
+          data += chunk;
+        });
+        res.on('end', () => {
+          console.log(data);
+          try {
+            resolve(data);
+          } catch (e) {
+            console.error(e.message);
+          }
+          response.redirect(redirect);
+        });
       });
-      res.on('end', () => {
-        console.log('Deleted!');
-        response.redirect(redirect);
+      req.on('error', (err) => {
+        reject(err);
       });
+      req.end();
     });
 
-    req.end();
+    return await promiseData;
   }
 
   module.exports = { getRequest, postRequest, deleteRequest, options };

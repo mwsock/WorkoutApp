@@ -4,7 +4,6 @@ const router = express.Router();
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 
 const indexRoute = require('./routes/index');
@@ -15,23 +14,13 @@ const planRoutes = require('./routes/plans');
 const wrktRoutes = require('./routes/wrkt');
 const editWrktRoutes = require('./routes/editWrkt');
 
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cookieParser());
-
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
-
-
 app.use(methodOverride('_method'));
-app.use(expressSession({
-  secret: "WorkoutApp",
-  resave: false,
-  saveUninitialized: false
-}));
 
 app.set('view engine','ejs');
 
