@@ -9,7 +9,14 @@
         <li class='item' id='<%= exercise["id"] %>'> <%= exercise["name"] %> <button class='delete' name='exercices' page='exercices'>X</button></li> 
       <% }) %> 
     </ul>
-    </div>  
+    </div> 
+    <div class='formContainer'>
+      <form action='/exercices/samples' method='GET'>
+        <div class='rowBttns'>
+          <input type="submit" class='button' value="Pobierz zestaw losowych ćwiczeń">
+        </div>
+      </form>
+    </div> 
     <div class='formContainer'>
       <h2><%= info %></h2>
       <form action='/exercices/insrt' method='POST'>

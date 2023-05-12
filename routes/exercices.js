@@ -19,6 +19,23 @@ let options = httpRequest.options;
       res.redirect('/login');
     });
   });
+
+  router.get('/samples', function(req,res){
+    options.path = '/exercise/samples';
+    options.method = 'GET';
+    if(req.cookies.sessionId != undefined || req.cookies.sessionId != null){
+      options.headers.sessionId = req.cookies.sessionId;
+    };
+
+    httpRequest.getRequest(options).then((exercices)=>{
+      res.render('exercices', {result: JSON.parse(exercices), info:''})
+    })
+    .catch((error)=>{
+      console.log('Error: ' + error);
+      res.redirect('/login');
+    });
+  });
+
   
   router.post('/insrt', function(req,res){
     let exerc = req.body.search;
@@ -39,6 +56,7 @@ let options = httpRequest.options;
       res.redirect('/login');
     });
   });
+
   
   router.get('/delete/:id', function(req,res){
     let id = req.params.id;
